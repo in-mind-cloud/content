@@ -1,1 +1,69 @@
 
+{
+	"forceVisible": true,
+	"title" : {
+	"en" : "Improving our App"	
+	},
+	"content": [{
+			"title": {
+				"en": "What do you think of this survey?"
+			},
+			"id": "question1",
+			"type": "select",
+			"choice": [{
+					"title": {
+						"en": "Excellent"
+					},
+					"value": "excellent"
+				},
+				{
+					"title": {
+						"en": "Outstanding"
+					},
+					"value": "outstanding"
+				},
+				{
+					"title": {
+						"en": "Great"
+					},
+					"value": "great"
+				}
+			]
+		},
+		{
+			"title": {
+				"en": "What do you think of doing another survey?"
+			},
+			"id": "question2",
+			"type": "select",
+			"choice": [{
+					"title": {
+						"en": "Lets do it!"
+					},
+					"value": "lets_do_it"
+				},
+				{
+					"title": {
+						"en": "Bring it on"
+					},
+					"value": "bring_it_on"
+				},
+				{
+					"title": {
+						"en": "Nah"
+					},
+					"value": "no"
+				}
+			]
+
+		},
+		{
+			"title": {
+				"en": "What is your hobby?"
+			},
+			"id": "question3",
+			"type": "text"
+		}
+	]
+
+}
