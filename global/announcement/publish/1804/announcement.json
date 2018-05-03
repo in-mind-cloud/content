@@ -3,7 +3,7 @@
   "content": [
     {
       "title": "This is a new release!",
-      "body": "<h2><img style=\"float: left;\" src=\"https://user-images.githubusercontent.com/25289527/38794330-508b1a20-4187-11e8-8362-8c0b77a47056.gif\" alt=\"\" width=\"556\" height=\"232\" /><span style=\"background-color: #008000;\">Test 1.&nbsp;</span></h2>\n<p>Good announcement.</p>",
+      "body": "<h2><img style=\"float: left;\" src=\"http://via.placeholder.com/350x150\" alt=\"\" width=\"556\" height=\"232\" /><span style=\"background-color: #008000;\">Test 1.&nbsp;</span></h2>\n<p>Good announcement.</p>",
       "position": 0
     },
     {
