@@ -7,7 +7,7 @@
       "position": 0
     },
     {
-      "title": "This is announcement 2",
+      "title": "This is announcement 2 efited",
       "body": "<p>aefaefaef</p>\n<h2 style=\"text-align: center;\">The 'AggregatedDataStateChange' event is fired asynchronously when all 'datastateChanges' within the actual stack are done.</h2>\n<p>Note: Subclasses might add additional parameters to the event object. Optional parameters can be omitted.</p>",
       "position": 1
     }
