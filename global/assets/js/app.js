@@ -156,7 +156,7 @@ init = ( function() {
 					tinymce.init({
   selector: '#' + sID,
   height: 400,
-  
+   branding: false,
   menubar: false,
   plugins: [
     'advlist autolink lists link image charmap print preview anchor textcolor',
