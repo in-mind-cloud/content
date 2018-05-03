@@ -1,22 +1,10 @@
-
 {
-    "forceVisible" : true,
-    "content" : [
-         {
-            "title" : "OUr New Feature is Launched!",
-            "body" : "<p><button>Blog</button><img src='https://images.pexels.com/photos/327186/pexels-photo-327186.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260' /></p><p>Improved Search Algorithm and UI. We hear you! Now you are able to search for something quickly in the dashboard. Feature is included in this version for free.</p><p>fafafeaf</p>",
-            "position" : 1
-        },
-        {
-            "title" : "AI capability",
-            "body" : "<img src='https://techcrunch.com/wp-content/uploads/2016/04/facebook-chatbots.png?w=730&crop=1' /> <p>Our AI will now inform you which products underperform! Just kidding.</p>",
-            "position" : 1
-        },
-        {
-            "title" : "Chatbot",
-            "body" : "<h1>If you heard of Siri, you will understand this. Ask our chatbot any questions like 'Will you buy this product?' and get a smart response.</h1>",
-            "position" : 2
-        }
-        ]
-    
+  "forceVisible": true,
+  "content": [
+    {
+      "title": "This is a new release!",
+      "body": "<p><img style=\"float: left;\" src=\"https://user-images.githubusercontent.com/25289527/38794330-508b1a20-4187-11e8-8362-8c0b77a47056.gif\" alt=\"\" width=\"499\" height=\"252\" />Test 1</p>",
+      "position": 0
+    }
+  ]
 }
