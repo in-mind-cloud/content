@@ -2,19 +2,24 @@
   "forceVisible": true,
   "content": [
     {
-      "title": "This is a new release!",
-      "body": "<h2><img style=\"float: left;\" src=\"https://user-images.githubusercontent.com/25289527/38794330-508b1a20-4187-11e8-8362-8c0b77a47056.gif\" alt=\"\" width=\"556\" height=\"232\" /><span style=\"background-color: #008000;\">Test 1.&nbsp;</span></h2>\n<p>Good announcement.</p>",
+      "title": {
+        "en": "test en1",
+        "cn": "cn1"
+      },
+      "body": {
+        "en": "<p>test eng1 b</p>",
+        "cn": "<p>test</p>"
+      },
       "position": 0
     },
     {
-      "title": "This is announcement 2 efited",
-      "body": "<p>aefaefaef</p>\n<h2 style=\"text-align: center;\">The 'AggregatedDataStateChange' event is fired asynchronously when all 'datastateChanges' within the actual stack are done.</h2>\n<p>Note: Subclasses might add additional parameters to the event object. Optional parameters can be omitted.</p>",
-      "position": 1
-    },
-    {
-      "title": "Nature",
-      "body": "<p>test</p>\n<p><iframe src=\"//www.youtube.com/embed/4_L18YBefyI\" width=\"560\" height=\"315\" frameborder=\"0\" allowfullscreen=\"allowfullscreen\"></iframe></p>",
-      "position": 2
+      "title": {
+        "en": "eng 2"
+      },
+      "body": {
+        "en": "<p>en2222</p>"
+      },
+      "position": 0
     }
   ]
 }
