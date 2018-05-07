@@ -66,6 +66,22 @@ body {
 	    height: 100%;
     width: 100%;
         color: #323232;
+            font-family: Arial,Helvetica,sans-serif;
+}
+
+html {
+	    background-color: #fefefe;
+}
+
+nav {
+	padding : 20px;
+	background-color : #fff;
+	box-shadow: 0 0 12px rgba(0,0,0,.2);
+}
+
+nav img {
+	max-width : 200px;
+	width : 100%;
 }
 
 .announcementTextArea {
@@ -77,6 +93,10 @@ body {
 }
 #allAnnouncementWrapper.active {
 	display : block;
+
+    padding: 15px 0;
+    background-color: #f1f1f1;
+    border-bottom: solid 2px #ccc;
 }
 
 button#addNewAnnouncement {
@@ -84,11 +104,15 @@ button#addNewAnnouncement {
     padding: 15px;
     border-radius: 6px;
     color: #fff;
-    background-color: #2c77c8;
+    background-color: #3D85A5;
     box-shadow: 0 0 6px rgba(0,0,0,.2);
     margin: 20px;
     font-size: 1rem;
     cursor: pointer;
+}
+button#addNewAnnouncement:active{
+	box-shadow: none;
+	background-color: #357a99;
 }
 
 .announcementContainer {
@@ -157,13 +181,16 @@ button.importButton {
     padding: 15px;
     border-radius: 6px;
     color: #fff;
-    background-color: #1a76ca;
+    background-color: #3D85A5;
     font-size: 1rem;
     cursor : pointer;
     box-shadow: 0 0 14px rgba(0,0,0,.4);
     font-weight: bold;
 }
-
+button.importButton:active {
+	box-shadow : none;
+	background-color : #367794;
+}
 
 div.exportButtonWrapper .description {
 	    color: #8bf24f;
@@ -178,11 +205,15 @@ button.exportButton {
     padding: 15px;
     border-radius: 6px;
     color: #fff;
-    background-color: #3eab33;
+    background-color: #2b7d2b;
     font-size: 1rem;
     cursor : pointer;
     box-shadow: 0 0 14px rgba(0,0,0,.4);
     font-weight: bold;
+}
+button.exportButton:active {
+	box-shadow : none;
+	background-color : #246a24;
 }
 
 .exportDialog {
@@ -245,11 +276,11 @@ button#exportDialogCloseButton {
 
 
 .announcementContainerTitle {
-    font-size: 1.6rem;
-    margin-bottom: 20px;
+    font-size: 1.2rem;
+    
     margin-left : 20px;
     color: #5a5858;
-        height: 40px;
+        
 }
 
 .localeContainer {
@@ -273,6 +304,10 @@ cursor: pointer;
     line-height: 1.8rem;
 }
 
+#l10nTab{
+	margin-left : 20px;
+}
+
 #l10nTab, #addTab {
 	height : 48px;
 	margin-top : 20px;
@@ -280,7 +315,7 @@ cursor: pointer;
 }
 
 #addTab li {
-	background-color: #3fab33;
+	background-color: #2b7d2b;
     color: #fff;
 	border-radius: 0 6px 0 0;
 	 border :solid 1px green;
@@ -288,7 +323,9 @@ cursor: pointer;
 #addTab li:hover {
 	background-color: #409936;
 }
-
+#addTab li:active {
+	background-color: #36862d;
+}
 #l10nTab li, #addTab li {
 	    display: inline-block;
     padding: 10px;
@@ -300,17 +337,22 @@ cursor: pointer;
     }
 
     #l10nTab li.selected {
-    	background-color : #2b9be9;
+    	background-color : #397f9e;
     }
     #l10nTab li.selected:hover {
-    	background-color : #2b9be9;
+    	background-color : #3D85A5;
     }
 
 #l10nTab li:hover {
     	background-color : #f7f7f7;
 }
+#l10nTab li:active {
+    	background-color : #317492;
+}
 
 #l10nTab > li:first-child {
+	    border-radius: 6px 0 0 0;
+	border-left-color : #5892db;
 	border-left-style : solid;
 	border-left-width: 1px;
 }
@@ -326,6 +368,7 @@ cursor: pointer;
         background-color: #dd4f4f;
         color : #fff;
        right: -1px;
+       cursor : pointer;
     top: -1px;
     border-radius: 0 0 0 6px;
 }
@@ -334,21 +377,34 @@ cursor: pointer;
 	background-color: #e5e3e3;
     min-width: 40px;
     max-width : 60px;
+    padding-left : 6px;
     font-size: 1.2rem;
     border: dotted 1px #ccc;
 }
 
 
 hr {
-	margin-top : 0;
+	margin : 0;
 }
 
+.simpleInstruction {
+	display : inline-block;
+	vertical-align: top;
+	margin-left : 100px;
+	margin-bottom : 20px;
+}
+.simpleInstruction li {
+	    line-height: 1.4rem;
+    letter-spacing: .02rem;
+}
 </style>
 </head>
 
 
 <body>
-
+<nav>
+<img src='https://in-mind-cloud.github.io/content/global/assets/images/inmindcloud-logo.png' />
+</nav>
 <div>
 
 <ul id="l10nTab">
@@ -364,6 +420,15 @@ hr {
 <h2 class="announcementContainerTitle">En</h2>
 <button id="addNewAnnouncement">Add New Announcement</button>
 
+<div class="simpleInstruction">
+<h2>How to: </h2>
+<ol>
+<li>By default, announcement will only appear once. Force Visible - if <code>true</code>, it will appear again for users that have previously seen announcement from the same version.</li>
+<li>Locale ID is determined by the application language settings. default is 'en'.</li>
+	<li>When finish editing announcements in all Locales, click on export button to the bottom right.</li>
+	<li>Copy and paste the full JSON string into global/announcement/publish/xxxx/announcement.json</li>
+</ol>
+</div>
 </div>
 
 <div id="announcementContainer" class="announcementContainer">
