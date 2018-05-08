@@ -216,9 +216,24 @@ button.exportButton:active {
 	background-color : #246a24;
 }
 
+#exportDialogWrapper {
+	display : none;
+	position : fixed;
+	top : 0;
+	left : 0;
+	z-index : 1;
+	width : 100%;
+	height : 100%;
+	background-color : rgba(0,0,0,.2);
+}
+
+#exportDialogWrapper.active {
+	display : block;
+}
+
 .exportDialog {
 	position: absolute;
-    display: none;
+    display: block;
     width: 80%;
     max-width : 700px;
     height: 600px;
@@ -231,9 +246,6 @@ button.exportButton:active {
     right: 0;
     padding: 30px;
     box-shadow: 0 0 14px rgba(0,0,0,.2);
-}
-.exportDialog.active {
-	display : block;
 }
 
 .jsonPreview {
@@ -314,18 +326,30 @@ cursor: pointer;
 	display : inline-block;
 }
 
-#addTab li {
+#addTab li:first-child {
 	background-color: #2b7d2b;
-    color: #fff;
+	color: #fff;
+}
+#addTab li:first-child:hover {
+	background-color: #409936;
+}
+#addTab li:first-child:active {
+	background-color: #36862d;
+}
+
+#addTab li {
+	
+    
 	border-radius: 0 6px 0 0;
 	 border :solid 1px green;
 }
-#addTab li:hover {
-	background-color: #409936;
+
+input[type="checkbox"] {
+	    width: 20px;
+    height: 20px;
+    vertical-align: middle;
 }
-#addTab li:active {
-	background-color: #36862d;
-}
+
 #l10nTab li, #addTab li {
 	    display: inline-block;
     padding: 10px;
@@ -412,6 +436,7 @@ hr {
 </ul>
 <ul id="addTab">
 	<li id="addL10n"><div readonly>+ L10N</div></li>
+	<li id="forceVisible" class="forceVisible"><div>force visible <input id="forceVisibleInput" type="checkbox"/></div></li>
 </ul>
 
 <hr>
@@ -442,12 +467,15 @@ hr {
 	
 </div>
 
+
+<div id="exportDialogWrapper">
 <div id="exportDialog" class="exportDialog" >
 <textarea id="jsonPreview" class="jsonPreview" readonly ></textarea>
 
 <div class="exportDialogFooter">
 	<button id="loadReplaceButton" >Load and Replace</button>
 	<button id="exportDialogCloseButton" >Close</button>
+</div>
 </div>
 </div>
 <script>
