@@ -8,7 +8,34 @@ init = ( function() {
 		initiateAnnouncement = ( function(){
 
 			announcement = {
+				forceVisible : {
+					toggle : function( oEvent )
+					{
+						
+						if ( oEvent.srcElement.id === 'forceVisibleInput' )
+						{
+							return;
+						}
 
+						var checkboxDOM = document.getElementById( 'forceVisibleInput' );
+						if ( checkboxDOM.checked )
+						{
+							checkboxDOM.checked = false;
+						}
+						else
+						{
+							checkboxDOM.checked = true;
+						}
+					},
+					getValue : function(){
+						var checkboxDOM = document.getElementById( 'forceVisibleInput' );
+						return checkboxDOM.checked;
+					},
+					setValue : function( bValue ){
+						var checkboxDOM = document.getElementById( 'forceVisibleInput' );
+						checkboxDOM.checked = bValue;
+					}
+				},
 				l10n : {
 					addNew : function( oEvent, sL10nKey )
 					{
@@ -184,7 +211,7 @@ init = ( function() {
 					announcement.exportDialog.getJsonPreview().placeholder = 'Paste your JSON here';
 					announcement.exportDialog.getJsonPreview().removeAttribute( 'readonly' );
 
-					announcement.exportDialog.get().classList.add( 'active' );
+					announcement.exportDialog.getWrapper().classList.add( 'active' );
 					selectAll( announcement.exportDialog.getJsonPreview().id );
 					document.getElementById( 'loadReplaceButton' ).classList.add( 'active' );
 
@@ -195,6 +222,10 @@ init = ( function() {
 					var sValue = announcement.exportDialog.getJsonPreview().value;
 					var oParsed = JSON.parse( sValue );
 					var aL10nKey = [];
+
+					var bForceVisible = oParsed.forceVisible || false;
+
+					announcement.forceVisible.setValue( bForceVisible );
 
 					announcement.removeAll();
 					var iDataIndex = 0;
@@ -233,12 +264,6 @@ init = ( function() {
 							
 						}
 
-
-
-							
-						
-
-							
 							
 						
 					}
@@ -251,7 +276,7 @@ init = ( function() {
 				export : function( oEvent ){
 
 					var oExportSchema = {
-						forceVisible : true,
+						forceVisible : announcement.forceVisible.getValue(),
 						content : []
 					};
 
@@ -318,17 +343,33 @@ init = ( function() {
 					
 					announcement.exportDialog.getJsonPreview().value = JSON.stringify( oExportSchema, null, 2 );
 					announcement.exportDialog.getJsonPreview().setAttribute( 'readonly', true );
-					announcement.exportDialog.get().classList.add( 'active' );
+					announcement.exportDialog.getWrapper().classList.add( 'active' );
 					selectAll( announcement.exportDialog.getJsonPreview().id );
 
 
 				},
 				exportDialog : {
+					getWrapper : function(){
+						return document.getElementById( 'exportDialogWrapper' );
+					},
 					get : function(){
 						return document.getElementById( 'exportDialog' );
 					},
 					getJsonPreview : function(){
 						return document.getElementById( 'jsonPreview' );
+					},
+					bindEscapeKey : function( oEvent ){
+						var iKeyCode = oEvent.keyCode;
+						var oDialogWrapperDOM = announcement.exportDialog.getWrapper();
+
+						switch ( iKeyCode ) {
+							case 27:
+								if ( oDialogWrapperDOM.classList.contains( 'active' ) )
+									oDialogWrapperDOM.classList.remove( 'active' );
+								break;
+						}
+						
+
 					}
 				},
 				getAnnouncementContainerDOM : function(){
@@ -464,6 +505,8 @@ init = ( function() {
 			}
 			
 			document.getElementById( 'addL10n' ).addEventListener( 'click', this.announcement.l10n.addNew );
+			document.getElementById( 'forceVisible' ).addEventListener( 'click', this.announcement.forceVisible.toggle );
+
 			document.getElementById( 'addNewAnnouncement' ).addEventListener( 'click', this.announcement.addNew );
 			document.getElementById( 'importButton' ).addEventListener( 'click', this.announcement.import );
 			document.getElementById( 'loadReplaceButton' ).addEventListener( 'click', this.announcement.loadJSONAnnouncement );
@@ -471,7 +514,7 @@ init = ( function() {
 			document.getElementById( 'exportButton' ).addEventListener( 'click', this.announcement.export );
 			document.getElementById( 'exportDialogCloseButton' ).addEventListener( 'click', function( oEvent ){
 
-				document.getElementById( 'exportDialog' ).classList.remove( 'active' );
+				document.getElementById( 'exportDialogWrapper' ).classList.remove( 'active' );
 				document.getElementById( 'jsonPreview' ).innerHTML = "";
 			} );
 			
@@ -479,6 +522,7 @@ init = ( function() {
 			 selectAll( this.id )
 			} );
 
+			document.getElementById( 'exportDialogWrapper' ).addEventListener( 'keyup', announcement.exportDialog.bindEscapeKey );
 
 			announcement.l10n.addNew();
 
