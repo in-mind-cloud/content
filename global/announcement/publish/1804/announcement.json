@@ -1,23 +1,21 @@
 {
-  "forceVisible": true,
+  "forceVisible": false,
   "content": [
     {
       "title": {
-        "en": "test en1",
-        "cn": "cn1"
+        "en": "In Mind License Feature"
       },
       "body": {
-        "en": "<p>test eng1 bb</p>",
-        "cn": "<p>test</p>"
+        "en": "<p><img src=\"https://www.alt-codes.net/images/dollar-sign.png\" /></p>\n<p>&nbsp;</p>\n<p>Using In Mind 1804 release the customers can choose to assign licences to the necessary users.</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>"
       },
       "position": 0
     },
     {
       "title": {
-        "en": "eng 2"
+        "en": "Audit Feature - Beta"
       },
       "body": {
-        "en": "<p>en2222</p>"
+        "en": "<p><img src=\"https://cdn2.iconfinder.com/data/icons/business-insurance-1/256/Insurance_Audit-512.png\" /></p>\n<p>&nbsp;</p>\n<p>Audit is a beta feature right now. The audit statements would be generated in the background and kept for inspection.</p>"
       },
       "position": 0
     }
