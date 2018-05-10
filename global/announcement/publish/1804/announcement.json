@@ -6,7 +6,7 @@
         "en": "In Mind License Feature"
       },
       "body": {
-        "en": "<p><img src=\"https://www.alt-codes.net/images/dollar-sign.png\" /></p>\n<p>&nbsp;</p>\n<p>Using In Mind 1804 release the customers can choose to assign licences to the necessary users.</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>"
+        "en": "<p><img src=\"https://www.alt-codes.net/images/dollar-sign.png\" width=\"162\" height=\"162\" /></p>\n<p>&nbsp;</p>\n<p>Using In Mind 1804 release the customers can choose to assign licences to the necessary users.</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>"
       },
       "position": 0
     },
@@ -15,7 +15,16 @@
         "en": "Audit Feature - Beta"
       },
       "body": {
-        "en": "<p><img src=\"https://cdn2.iconfinder.com/data/icons/business-insurance-1/256/Insurance_Audit-512.png\" /></p>\n<p>&nbsp;</p>\n<p>Audit is a beta feature right now. The audit statements would be generated in the background and kept for inspection.</p>"
+        "en": "<p><img src=\"https://cdn2.iconfinder.com/data/icons/business-insurance-1/256/Insurance_Audit-512.png\" width=\"267\" height=\"267\" /></p>\n<p>&nbsp;</p>\n<p>Audit is a beta feature right now. The audit statements would be generated in the background and kept for inspection.</p>"
+      },
+      "position": 0
+    },
+    {
+      "title": {
+        "en": "Introduction Video"
+      },
+      "body": {
+        "en": "<p><iframe src=\"//www.youtube.com/embed/logFpPr01bE\" width=\"560\" height=\"314\" allowfullscreen=\"allowfullscreen\"></iframe></p>"
       },
       "position": 0
     }
