@@ -24,7 +24,7 @@
         "en": "Introduction Video"
       },
       "body": {
-        "en": "<p><iframe src=\"//www.youtube.com/embed/logFpPr01bE\" width=\"560\" height=\"314\" allowfullscreen=\"allowfullscreen\"></iframe></p>"
+        "en": "<p><iframe src=\"//www.youtube.com/embed/logFpPr01bE?rel=0\" width=\"560\" height=\"315\" frameborder=\"0\" ></iframe></p>"
       },
       "position": 0
     }
