@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+<title>Announcement RichText Editor</title>
+<script src='https://in-mind-cloud.github.io/content/global/assets/js/tinymce/js/tinymce/tinymce.min.js'></script>
+
+<style>
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*RESET ENDS */
+
+* {
+	box-sizing : border-box;
+}
+
+body {
+	    height: 100%;
+    width: 100%;
+        color: #323232;
+            font-family: Arial,Helvetica,sans-serif;
+}
+
+html {
+	    background-color: #fefefe;
+}
+
+nav {
+	padding : 20px;
+	background-color : #fff;
+	box-shadow: 0 0 12px rgba(0,0,0,.2);
+}
+
+nav img {
+	max-width : 200px;
+	width : 100%;
+}
+
+.announcementTextArea {
+
+}
+
+#allAnnouncementWrapper{
+	display : none;
+}
+#allAnnouncementWrapper.active {
+	display : block;
+
+    padding: 15px 0;
+    background-color: #f1f1f1;
+    border-bottom: solid 2px #ccc;
+}
+
+button#addNewAnnouncement {
+	border: solid 2px #166de1;
+    padding: 15px;
+    border-radius: 6px;
+    color: #fff;
+    background-color: #3D85A5;
+    box-shadow: 0 0 6px rgba(0,0,0,.2);
+    margin: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+button#addNewAnnouncement:active{
+	box-shadow: none;
+	background-color: #357a99;
+}
+
+.announcementContainer {
+	margin : 20px;
+	border: dotted 2px #9a9999;
+	min-height : 500px;
+	background-color: #fcfcfc;
+    padding: 20px;
+}
+
+.announcementWrapper{
+	max-width : 550px;
+	position : relative;
+	    background-color: #f4f4f4;
+    padding: 15px;
+    border: solid 1px #ccc;
+    box-shadow: 0 0 6px rgba(0,0,0,.2);
+    display: inline-block;
+    margin-right: 20px;
+}
+button.removeAnnouncementButton {
+	position: absolute;
+   right: -10px;
+    top: -5px;
+    box-shadow: 0 0 6px rgba(0,0,0,.2);
+    border: none;
+    background-color: #dd4f4f;
+    color: #fff;
+    padding: 6px;
+    border-radius: 6px;
+    cursor : pointer;
+
+}
+
+input.position {
+	margin-bottom : 10px;
+	padding : 2px 10px;
+	max-width : 90px;
+}
+
+input.title {
+	width : 100%;
+	max-width : 100%;
+	font-size : 1.2rem;
+	padding : 10px;
+	margin-bottom : 10px;
+}
+
+
+div.exportButtonWrapper {
+position: fixed;
+    right: 30px;
+    bottom: 30px;
+}
+
+
+div.exportButtonWrapper .descriptionImport {
+	    color: #082e58;
+    font-size: .8rem;
+    margin-left : 15px;
+    margin-top: 6px;
+    letter-spacing: .04rem;
+}
+button.importButton {
+	border: solid 2px #0f5fb8;
+    padding: 15px;
+    border-radius: 6px;
+    color: #fff;
+    background-color: #3D85A5;
+    font-size: 1rem;
+    cursor : pointer;
+    box-shadow: 0 0 14px rgba(0,0,0,.4);
+    font-weight: bold;
+}
+button.importButton:active {
+	box-shadow : none;
+	background-color : #367794;
+}
+
+div.exportButtonWrapper .description {
+	    color: #8bf24f;
+    font-size: .8rem;
+    margin-left : 15px;
+    margin-top: 6px;
+    letter-spacing: .04rem;
+}
+
+button.exportButton {
+	border: solid 2px #329913;
+    padding: 15px;
+    border-radius: 6px;
+    color: #fff;
+    background-color: #2b7d2b;
+    font-size: 1rem;
+    cursor : pointer;
+    box-shadow: 0 0 14px rgba(0,0,0,.4);
+    font-weight: bold;
+}
+button.exportButton:active {
+	box-shadow : none;
+	background-color : #246a24;
+}
+
+#exportDialogWrapper {
+	display : none;
+	position : fixed;
+	top : 0;
+	left : 0;
+	z-index : 1;
+	width : 100%;
+	height : 100%;
+	background-color : rgba(0,0,0,.2);
+}
+
+#exportDialogWrapper.active {
+	display : block;
+}
+
+.exportDialog {
+	position: absolute;
+    display: block;
+    width: 80%;
+    max-width : 700px;
+    height: 600px;
+    top: 10%;
+    margin: 0 auto;
+    background-color: #fff;
+    border: solid 1px #ccc;
+    border-radius: 6px;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    box-shadow: 0 0 14px rgba(0,0,0,.2);
+}
+
+.jsonPreview {
+	    height: 100%;
+    max-height: 500px;
+    background-color: #f4f4f4;
+    padding: 15px;
+    overflow-y: auto;
+    border-radius: 6px;
+    width : 100%;
+        resize: none;
+
+}
+
+.exportDialogFooter {
+	padding : 15px 0;
+}
+button#loadReplaceButton {
+	border: solid 2px #166de1;
+	    padding: 8px 15px;
+    border-radius: 6px;
+    display : none;
+    color : #fff;
+      background-color: #2c77c8;
+     cursor: pointer;
+}
+button#loadReplaceButton.active {
+	display : inline-block;
+}
+
+button#exportDialogCloseButton {
+	    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    float: right;
+    color : #fff;
+     background-color: #dd4f4f;
+     cursor: pointer;
+}
+
+
+.announcementContainerTitle {
+    font-size: 1.2rem;
+    
+    margin-left : 20px;
+    color: #5a5858;
+        
+}
+
+.localeContainer {
+	display : none;
+}
+
+.localeContainer.active {
+	display: block;
+}
+
+#addTab li {
+margin-left : -2px;
+cursor: pointer;
+}
+#addTab li:hover {
+	color : #fff;
+	background-color : #1879bd;
+}
+
+#addTab li:first-child div{
+    line-height: 1.8rem;
+}
+
+#l10nTab{
+	margin-left : 20px;
+}
+
+#l10nTab, #addTab {
+	height : 48px;
+	margin-top : 20px;
+	display : inline-block;
+}
+
+#addTab li:first-child {
+	background-color: #2b7d2b;
+	color: #fff;
+}
+#addTab li:first-child:hover {
+	background-color: #409936;
+}
+#addTab li:first-child:active {
+	background-color: #36862d;
+}
+
+#addTab li {
+	
+    
+	border-radius: 0 6px 0 0;
+	 border :solid 1px green;
+}
+
+input[type="checkbox"] {
+	    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+#l10nTab li, #addTab li {
+	    display: inline-block;
+    padding: 10px;
+    border :solid 1px #5892db;
+        border-bottom: none;
+        border-left : none;
+        cursor: pointer;
+
+    }
+
+    #l10nTab li.selected {
+    	background-color : #397f9e;
+    }
+    #l10nTab li.selected:hover {
+    	background-color : #3D85A5;
+    }
+
+#l10nTab li:hover {
+    	background-color : #f7f7f7;
+}
+#l10nTab li:active {
+    	background-color : #317492;
+}
+
+#l10nTab > li:first-child {
+	    border-radius: 6px 0 0 0;
+	border-left-color : #5892db;
+	border-left-style : solid;
+	border-left-width: 1px;
+}
+
+#l10nTab li {
+	position: relative;
+	padding-right : 60px;
+}
+
+.removeL10nButton{
+	border: none;
+    position: absolute;
+        background-color: #dd4f4f;
+        color : #fff;
+       right: -1px;
+       cursor : pointer;
+    top: -1px;
+    border-radius: 0 0 0 6px;
+}
+
+#l10nTab .l10nEditable {
+	background-color: #e5e3e3;
+    min-width: 40px;
+    max-width : 60px;
+    padding-left : 6px;
+    font-size: 1.2rem;
+    border: dotted 1px #ccc;
+}
+
+
+hr {
+	margin : 0;
+}
+
+.simpleInstruction {
+	display : inline-block;
+	vertical-align: top;
+	margin-left : 100px;
+	margin-bottom : 20px;
+}
+.simpleInstruction li {
+	    line-height: 1.4rem;
+    letter-spacing: .02rem;
+}
+</style>
+</head>
+
+
+<body>
+<nav>
+<img src='https://in-mind-cloud.github.io/content/global/assets/images/inmindcloud-logo.png' />
+</nav>
+<div>
+
+<ul id="l10nTab">
+	
+</ul>
+<ul id="addTab">
+	<li id="addL10n"><div readonly>+ L10N</div></li>
+	<li id="forceVisible" class="forceVisible"><div>force visible <input id="forceVisibleInput" type="checkbox"/></div></li>
+</ul>
+
+<hr>
+<div id="allAnnouncementWrapper" class="active">
+
+<h2 class="announcementContainerTitle">En</h2>
+<button id="addNewAnnouncement">Add New Announcement</button>
+
+<div class="simpleInstruction">
+<h2>How to: </h2>
+<ol>
+<li>By default, announcement will only appear once. Force Visible - if <code>true</code>, it will appear again for users that have previously seen announcement from the same version.</li>
+<li>Locale ID is determined by the application language settings. default is 'en'.</li>
+	<li>When finish editing announcements in all Locales, click on export button to the bottom right.</li>
+	<li>Copy and paste the full JSON string into global/announcement/publish/xxxx/announcement.json</li>
+</ol>
+</div>
+</div>
+
+<div id="announcementContainer" class="announcementContainer">
+</div>
+
+</div>
+
+<div class="exportButtonWrapper">
+<button id="importButton" class="importButton">Import JSON<div class="descriptionImport">*paste existing JSON</div></button>
+	<button id="exportButton" class="exportButton">Export All Announcements<div class="description">*export as JSON</div></button>
+	
+</div>
+
+
+<div id="exportDialogWrapper">
+<div id="exportDialog" class="exportDialog" >
+<textarea id="jsonPreview" class="jsonPreview" readonly ></textarea>
+
+<div class="exportDialogFooter">
+	<button id="loadReplaceButton" >Load and Replace</button>
+	<button id="exportDialogCloseButton" >Close</button>
+</div>
+</div>
+</div>
+<script>
+
+</script>
+
+<!-- <script src='app.js'></script> -->
+<script src='https://in-mind-cloud.github.io/content/global/assets/js/app.js?'></script>
+</body>
+
+
+
+</html>
