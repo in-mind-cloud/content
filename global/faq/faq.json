@@ -8,7 +8,7 @@
         "en": "How do I log out?"
       },
       "body": {
-        "en": "<p>Click on Profile, then click on Log out</p>"
+        "en": "<p>Click on Profile, then click on Log out. All your current session will be ended safely.</p>\n<p>Thank you!</p>"
       },
       "position": 0
     }
