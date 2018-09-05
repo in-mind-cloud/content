@@ -1,5 +1,5 @@
 {
-  "forceVisible": false,
+  "forceVisible": true,
   "content": [
     {
       "title": {
@@ -18,6 +18,33 @@
         "en": "<p>Enables sales managers to set up sales team and allocate products to be sold by that sales team.</p>\n<p>Available on sales office level as well.</p>"
       },
       "position": 1
+    },
+    {
+      "title": {
+        "en": "New DA Profile"
+      },
+      "body": {
+        "en": "<p>Hides Attribute and Attribute value for a user role in configuration.</p>\n<p>Useful for controlling what sales rep in various org units can see.</p>"
+      },
+      "position": 2
+    },
+    {
+      "title": {
+        "en": "Product Finder for ERP Vairants"
+      },
+      "body": {
+        "en": "<p>With 1808 In Mind also supports product finder feature with SAP Classfication data for material variants.</p>\n<p>Customers can re-use the ERP variants in In Mind, and match them based on partial configuration.</p>"
+      },
+      "position": 3
+    },
+    {
+      "title": {
+        "en": "Enhanced configurator with pagination and search"
+      },
+      "body": {
+        "en": "<p>Configurator is further enhanced with pagination preference and attribute search capability. Users have the options to hide attribute code and comment field. The pagination group will help for larger configurations in terms of navigation and performance.</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>"
+      },
+      "position": 4
     }
   ]
 }
