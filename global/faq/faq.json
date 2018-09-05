@@ -1,15 +1,16 @@
-
-[
-  {
-    "category" : {
-    "value" : "UI",
-      "en" : "UI"
-    },
-    "title" : {
-    "en" : "How do I log out?"
-    },
-    "comment" : {
-    "en" : "Click on Profile, then click on Log out"
-    }  
-  }
-]
+{
+  "content": [
+    {
+      "category": {
+        "en": "UI"
+      },
+      "title": {
+        "en": "How do I log out?"
+      },
+      "body": {
+        "en": "<p>Click on Profile, then click on Log out</p>"
+      },
+      "position": 0
+    }
+  ]
+}
