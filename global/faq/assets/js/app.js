@@ -172,6 +172,7 @@ init = ( function() {
 					oDOMWrapper.classList.add( 'announcementWrapper' );
 					
 					oDOMWrapper.appendChild( announcement._createPositionInputDOM() );
+					oDOMWrapper.appendChild( announcement._createCategoryInputDOM() );
 					oDOMWrapper.appendChild( announcement._createTitleInputDOM() );
 					oDOMWrapper.appendChild( announcement._createRemoveButtonDOM() );
 
@@ -255,7 +256,9 @@ init = ( function() {
 								announcement.current[iDataIndex].body = oParsed.content[i].body[sL10nKey];
 								announcement.current[iDataIndex].title = oParsed.content[i].title[sL10nKey];
 								announcement.current[iDataIndex].position = oParsed.content[i].position;
+								announcement.current[iDataIndex].category = oParsed.content[i].category[sL10nKey];
 
+								document.querySelector( '.category[data-index="' + iDataIndex + '"]' ).value = oParsed.content[i].category[sL10nKey];
 									document.querySelector( '.title[data-index="' + iDataIndex + '"]' ).value = oParsed.content[i].title[sL10nKey];
 								document.querySelector( '.position[data-index="' + iDataIndex + '"]' ).value = oParsed.content[i].position;
 								iDataIndex++;
@@ -276,7 +279,6 @@ init = ( function() {
 				export : function( oEvent ){
 
 					var oExportSchema = {
-						forceVisible : announcement.forceVisible.getValue(),
 						content : []
 					};
 
@@ -291,6 +293,10 @@ init = ( function() {
 						var currentSelectedL10n = document.querySelector( '#' + announcement.current[i].localeContainerId ).getAttribute( 'data-l10n' );
 
 						announcement.current[i].body = tinymce.get( announcement.current[i].id ).getContent();
+						announcement.current[i].category = document.querySelector( '.category[data-index="' + i + '"]' ).value
+
+						//announcement.current[i].category[ currentSelectedL10n ] = document.querySelector( '.category[data-index="' + i + '"]' ).value;
+
 						announcement.current[i].title = document.querySelector( '.title[data-index="' + i + '"]').value;
 						announcement.current[i].position = parseInt( document.querySelector( '.position[data-index="' + i + '"]').value ) || 0;
 
@@ -313,6 +319,7 @@ init = ( function() {
 					for ( var i = 0; i < iMaxAnnouncementWidget; i++ )
 					{
 						var oContentSchema = {
+							category : { en : '' },
 						title : { en : '' },
 						body : { en : '' },
 						position : 0
@@ -328,6 +335,8 @@ init = ( function() {
 							oSortedByL10n[sL10nKey].forEach( function( oObj, index ){
 
 								if ( index === i ) {
+
+									oExportSchema.content[i].category[ sL10nKey ] = oObj.category;
 									oExportSchema.content[i].title[ sL10nKey ] = oObj.title;
 									oExportSchema.content[i].body[ sL10nKey ] = oObj.body;
 									oExportSchema.content[i].position = oObj.position;
@@ -385,6 +394,35 @@ init = ( function() {
 
 					return oDOM;
 
+				},
+				_createCategoryInputDOM : function(){
+					var iIndex = announcement.current.length;
+					var oDOM = document.createElement( 'select' );
+					oDOM.classList.add( 'category' );
+					oDOM.setAttribute( 'data-index', iIndex );
+
+
+					var aCategory = [
+						{
+							id : 'UI',
+							en : 'UIen'
+						},
+						{
+							id : 'Getting Started',
+							en : 'Getting started'
+						}
+					];
+
+					for ( var i = 0; i < aCategory.length; i++ )
+					{
+						var optionDOM = document.createElement( 'option' );
+						optionDOM.value = aCategory[i].id;
+						optionDOM.innerHTML = aCategory[i].en;
+						optionDOM.setAttribute( 'data-l10n', aCategory[i].en );
+						oDOM.appendChild( optionDOM );
+					}
+
+					return oDOM;
 				},
 				_createTitleInputDOM : function(){
 
