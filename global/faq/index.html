@@ -153,6 +153,14 @@ input.position {
 	max-width : 90px;
 }
 
+select.category {
+	width : 100%;
+	max-width : 100%;
+	font-size : 1.2rem;
+	padding : 10px;
+	margin-bottom : 10px;
+}
+
 input.title {
 	width : 100%;
 	max-width : 100%;
@@ -436,22 +444,21 @@ hr {
 </ul>
 <ul id="addTab">
 	<li id="addL10n"><div readonly>+ L10N</div></li>
-	<li id="forceVisible" class="forceVisible"><div>force visible <input id="forceVisibleInput" type="checkbox"/></div></li>
+	<li id="forceVisible"  style="display : none;" class="forceVisible"><div>force visible <input id="forceVisibleInput" type="checkbox"/></div></li>
 </ul>
 
 <hr>
 <div id="allAnnouncementWrapper" class="active">
 
 <h2 class="announcementContainerTitle">En</h2>
-<button id="addNewAnnouncement">Add New Announcement</button>
+<button id="addNewAnnouncement">Add New FAQ</button>
 
 <div class="simpleInstruction">
 <h2>How to: </h2>
 <ol>
-<li>By default, announcement will only appear once. Force Visible - if <code>true</code>, it will appear again for users that have previously seen announcement from the same version.</li>
 <li>Locale ID is determined by the application language settings. default is 'en'.</li>
 	<li>When finish editing announcements in all Locales, click on export button to the bottom right.</li>
-	<li>Copy and paste the full JSON string into global/announcement/publish/xxxx/announcement.json</li>
+	<li>Copy and paste the full JSON string into global/faq/faq.json</li>
 </ol>
 </div>
 </div>
@@ -463,7 +470,7 @@ hr {
 
 <div class="exportButtonWrapper">
 <button id="importButton" class="importButton">Import JSON<div class="descriptionImport">*paste existing JSON</div></button>
-	<button id="exportButton" class="exportButton">Export All Announcements<div class="description">*export as JSON</div></button>
+	<button id="exportButton" class="exportButton">Export All FAQ<div class="description">*export as JSON</div></button>
 	
 </div>
 
@@ -483,7 +490,7 @@ hr {
 </script>
 
 <!-- <script src='app.js'></script> -->
-<script src='https://in-mind-cloud.github.io/content/global/assets/js/app.js?'></script>
+<script src='assets/js/app.js?'></script>
 </body>
 
 
