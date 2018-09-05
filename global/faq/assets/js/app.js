@@ -405,7 +405,7 @@ init = ( function() {
 					var aCategory = [
 						{
 							id : 'UI',
-							en : 'UIen'
+							en : 'UI'
 						},
 						{
 							id : 'Getting Started',
