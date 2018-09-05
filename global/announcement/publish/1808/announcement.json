@@ -6,7 +6,7 @@
         "en": "Unified Product Catalogue (UPC)"
       },
       "body": {
-        "en": "<p>New product catalogue design with e-Commerce look and feel.</p>\n<p>Allows users to easily find the related products (e.g. accessories and spare parts) for certain product.</p>\n<p>The related products can be further categorized in multiple groups.</p>\n<p>The products in group point to their own related products.</p>\n<p>&nbsp;</p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/UPC.png\" width=\"442\" height=\"271\" /></p>"
+        "en": "<ul>\n<li>New product catalogue design with e-Commerce look and feel.</li>\n<li>Allows users to easily find the related products (e.g. accessories and spare parts) for certain product.</li>\n<li>The related products can be further categorized in multiple groups.</li>\n<li>The products in group point to their own related products.</li>\n</ul>\n<p>&nbsp;</p>\n<p style=\"padding-left: 30px;\"><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/UPC.png\" width=\"442\" height=\"271\" /></p>"
       },
       "position": 0
     },
@@ -15,7 +15,7 @@
         "en": "Product list based on sales team/sales office"
       },
       "body": {
-        "en": "<p>Enables sales managers to set up sales team and allocate products to be sold by that sales team.</p>\n<p>Available on sales office level as well.</p>\n<p>&nbsp;</p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2Product%20List%20based%20on%20sales%20office.JPG\" width=\"442\" height=\"271\" /></p>"
+        "en": "<ul>\n<li>Enables sales managers to set up sales team and allocate products to be sold by that sales team.</li>\n<li>Available on sales office level as well.</li>\n</ul>\n<p>&nbsp;</p>\n<p style=\"padding-left: 30px;\"><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2Product%20List%20based%20on%20sales%20office.JPG\" width=\"442\" height=\"271\" /></p>"
       },
       "position": 1
     },
@@ -24,7 +24,7 @@
         "en": "New DA Profile"
       },
       "body": {
-        "en": "<p>Hides Attribute and Attribute value for a user role in configuration.</p>\n<p>Useful for controlling what sales rep in various org units can see.</p>\n<p>Available on sales office level as well.</p>\n<p>&nbsp;</p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/3%20DA%20Profile.JPG\" width=\"442\" height=\"271\" /></p>"
+        "en": "<ul>\n<li>Hides Attribute and Attribute value for a user role in configuration.</li>\n<li>Useful for controlling what sales rep in various org units can see.</li>\n<li>Available on sales office level as well.</li>\n</ul>\n<p style=\"padding-left: 30px;\"><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/3%20DA%20Profile.JPG\" width=\"442\" height=\"271\" /></p>"
       },
       "position": 2
     },
@@ -33,7 +33,7 @@
         "en": "Product Finder for ERP Vairants"
       },
       "body": {
-        "en": "<p>With 1808 In Mind also supports product finder feature with SAP Classfication data for material variants.</p>\n<p>Customers can re-use the ERP variants in In Mind, and match them based on partial configuration.</p>\n<p>Available on sales office level as well.</p>\n<p>&nbsp;</p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/4%20Product%20finder%20with%20variants.JPG\" width=\"442\" height=\"271\" /></p>"
+        "en": "<ul>\n<li>With 1808 In Mind also supports product finder feature with SAP Classfication data for material variants.</li>\n<li>Customers can re-use the ERP variants in In Mind, and match them based on partial configuration.</li>\n<li>Available on sales office level as well.</li>\n</ul>\n<p>&nbsp;</p>\n<p style=\"padding-left: 30px;\"><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/4%20Product%20finder%20with%20variants.JPG\" width=\"442\" height=\"271\" /></p>"
       },
       "position": 3
     },
@@ -42,7 +42,7 @@
         "en": "Enhanced configurator with pagination and search"
       },
       "body": {
-        "en": "<p>Configurator is further enhanced with pagination preference and attribute search capability. Users have the options to hide attribute code and comment field. The pagination group will help for larger configurations in terms of navigation and performance.</p>\n<p>&nbsp;</p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/5%20new%20Configurator.JPG\" width=\"442\" height=\"271\" /></p>"
+        "en": "<ul>\n<li>Configurator is further enhanced with pagination preference and attribute search capability. Users have the options to hide attribute code and comment field.</li>\n<li>The pagination group will help for larger configurations in terms of navigation and performance.</li>\n</ul>\n<p>&nbsp;</p>\n<p style=\"padding-left: 30px;\"><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/5%20new%20Configurator.JPG\" width=\"442\" height=\"271\" /></p>"
       },
       "position": 4
     }
