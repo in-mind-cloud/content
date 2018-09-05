@@ -1,1 +1,14 @@
 
+[
+  {
+    "category" : {
+    "value" : "UI"
+    },
+    "title" : {
+    "value" : "How do I log out?"
+    },
+    "comment" : {
+    "value" : "Click on Profile, then click on Log out"
+    }  
+  }
+]
