@@ -2,13 +2,14 @@
 [
   {
     "category" : {
-    "value" : "UI"
+    "value" : "UI",
+      "en" : "UI"
     },
     "title" : {
-    "value" : "How do I log out?"
+    "en" : "How do I log out?"
     },
     "comment" : {
-    "value" : "Click on Profile, then click on Log out"
+    "en" : "Click on Profile, then click on Log out"
     }  
   }
 ]
