@@ -24,7 +24,7 @@
         "en": "New DA Profile"
       },
       "body": {
-        "en": "<ul>\n<li>Hides Attribute and Attribute value for a user role in configuration.</li>\n<li>Useful for controlling what sales rep in various org units can see.</li>\n<li>Available on sales office level as well.</li>\n</ul>\n<p style=\"padding-left: 30px;\"><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/3%20DA%20Profile.JPG\" width=\"442\" height=\"271\" /></p>"
+        "en": "<ul>\n<li>Hides Attribute and Attribute value for a user role in configuration.</li>\n<li>Useful for controlling what sales rep in various org units can see.</li>\n</ul>\n<p style=\"padding-left: 30px;\"><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/3%20DA%20Profile.JPG\" width=\"442\" height=\"271\" /></p>"
       },
       "position": 2
     },
