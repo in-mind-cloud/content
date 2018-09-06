@@ -2,7 +2,7 @@
   "content": [
     {
       "category": {
-        "en": "UI"
+        "en": "User Profile"
       },
       "title": {
         "en": "How to enable/disable interactive pricing?"
@@ -14,7 +14,7 @@
     },
     {
       "category": {
-        "en": "UI"
+        "en": "User Profile"
       },
       "title": {
         "en": "How to enable/disable Configurator in page mode?"
@@ -26,7 +26,7 @@
     },
     {
       "category": {
-        "en": "UI"
+        "en": "User Profile"
       },
       "title": {
         "en": "How to control notification mail preferences?"
@@ -38,7 +38,7 @@
     },
     {
       "category": {
-        "en": "UI"
+        "en": "User Profile"
       },
       "title": {
         "en": "How can user select default report templates"
