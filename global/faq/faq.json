@@ -51,32 +51,6 @@
         "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>Select default report templates in the report remplate section.</p>"
       },
       "position": 0
-    },
-    {
-      "category": {
-        "messageKey": "faq.category.commonQuestions",
-        "en": "Common Questions"
-      },
-      "title": {
-        "en": "t"
-      },
-      "body": {
-        "en": "<p>t</p>"
-      },
-      "position": 0
-    },
-    {
-      "category": {
-        "messageKey": "faq.category.commonQuestions",
-        "en": "Common Questions"
-      },
-      "title": {
-        "en": "tt"
-      },
-      "body": {
-        "en": "<p>tt</p>"
-      },
-      "position": 0
     }
   ]
 }
