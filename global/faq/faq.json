@@ -2,8 +2,8 @@
   "content": [
     {
       "category": {
-      	"messageKey" : "faq.category.userProfile",
-        "en": "User Profile"
+        "messageKey": "faq.category.userProfile",
+        "en": "Common Questions"
       },
       "title": {
         "en": "How to enable/disable interactive pricing?"
@@ -15,8 +15,8 @@
     },
     {
       "category": {
-      "messageKey" : "faq.category.userProfile",
-        "en": "User Profile"
+        "messageKey": "faq.category.userProfile",
+        "en": "Common Questions"
       },
       "title": {
         "en": "How to enable/disable Configurator in page mode?"
@@ -28,8 +28,8 @@
     },
     {
       "category": {
-      "messageKey" : "faq.category.userProfile",
-        "en": "User Profile"
+        "messageKey": "faq.category.userProfile",
+        "en": "Common Questions"
       },
       "title": {
         "en": "How to control notification mail preferences?"
@@ -41,14 +41,40 @@
     },
     {
       "category": {
-      "messageKey" : "faq.category.userProfile",
-        "en": "User Profile"
+        "messageKey": "faq.category.userProfile",
+        "en": "Common Questions"
       },
       "title": {
         "en": "How can user select default report templates"
       },
       "body": {
         "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>Select default report templates in the report remplate section.</p>"
+      },
+      "position": 0
+    },
+    {
+      "category": {
+        "messageKey": "faq.category.commonQuestions",
+        "en": "Common Questions"
+      },
+      "title": {
+        "en": "t"
+      },
+      "body": {
+        "en": "<p>t</p>"
+      },
+      "position": 0
+    },
+    {
+      "category": {
+        "messageKey": "faq.category.commonQuestions",
+        "en": "Common Questions"
+      },
+      "title": {
+        "en": "tt"
+      },
+      "body": {
+        "en": "<p>tt</p>"
       },
       "position": 0
     }
