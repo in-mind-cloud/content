@@ -293,9 +293,10 @@ init = ( function() {
 						var currentSelectedL10n = document.querySelector( '#' + announcement.current[i].localeContainerId ).getAttribute( 'data-l10n' );
 
 						announcement.current[i].body = tinymce.get( announcement.current[i].id ).getContent();
-						announcement.current[i].category = document.querySelector( '.category[data-index="' + i + '"]' ).value
-
-						//announcement.current[i].category[ currentSelectedL10n ] = document.querySelector( '.category[data-index="' + i + '"]' ).value;
+						announcement.current[i].category = {
+							messageKey : document.querySelector( '.category[data-index="' + i + '"]' ).value,
+							en : document.querySelector( '.category[data-index="' + i + '"]' ).getAttribute( 'data-l10n' )
+						};
 
 						announcement.current[i].title = document.querySelector( '.title[data-index="' + i + '"]').value;
 						announcement.current[i].position = parseInt( document.querySelector( '.position[data-index="' + i + '"]').value ) || 0;
@@ -319,7 +320,7 @@ init = ( function() {
 					for ( var i = 0; i < iMaxAnnouncementWidget; i++ )
 					{
 						var oContentSchema = {
-							category : { en : '' },
+						category : { messageKey : '', en : '' },
 						title : { en : '' },
 						body : { en : '' },
 						position : 0
@@ -336,7 +337,8 @@ init = ( function() {
 
 								if ( index === i ) {
 
-									oExportSchema.content[i].category[ sL10nKey ] = oObj.category;
+									oExportSchema.content[i].category[ 'messageKey' ] = oObj.category.messageKey;
+									oExportSchema.content[i].category[ sL10nKey ] = oObj.category[ sL10nKey ];
 									oExportSchema.content[i].title[ sL10nKey ] = oObj.title;
 									oExportSchema.content[i].body[ sL10nKey ] = oObj.body;
 									oExportSchema.content[i].position = oObj.position;
@@ -401,26 +403,43 @@ init = ( function() {
 					oDOM.classList.add( 'category' );
 					oDOM.setAttribute( 'data-index', iIndex );
 
+					oDOM.addEventListener( 'change', function( oEvent ){
+
+						var oSelectDOM = oEvent.srcElement;
+						var oSelectedOptionDOM = oSelectDOM.options[ oSelectDOM.selectedIndex ];
+						oSelectDOM.setAttribute( 'data-l10n', oSelectedOptionDOM.getAttribute( 'data-l10n' ) );
+
+					} )
 
 					var aCategory = [
 						{
-							id : 'UI',
-							en : 'UI'
+							messageKey : 'faq.category.commonQuestions',
+							en : 'Common Questions'
 						},
 						{
-							id : 'Getting Started',
-							en : 'Getting started'
-						}
+							messageKey : 'faq.category.quote',
+							en : 'Quote'
+						},
+						{
+							messageKey : 'faq.category.support',
+							en : 'Support'
+						},
+						{
+							messageKey : 'faq.category.userProfile',
+							en : 'User Profile'
+						},
 					];
 
 					for ( var i = 0; i < aCategory.length; i++ )
 					{
 						var optionDOM = document.createElement( 'option' );
-						optionDOM.value = aCategory[i].id;
+						optionDOM.value = aCategory[i].messageKey;
 						optionDOM.innerHTML = aCategory[i].en;
 						optionDOM.setAttribute( 'data-l10n', aCategory[i].en );
 						oDOM.appendChild( optionDOM );
 					}
+
+					oDOM.setAttribute( 'data-l10n', aCategory[0].en );
 
 					return oDOM;
 				},
