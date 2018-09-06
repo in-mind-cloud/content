@@ -2,6 +2,7 @@
   "content": [
     {
       "category": {
+      	"messageKey" : "faq.category.userProfile",
         "en": "User Profile"
       },
       "title": {
@@ -14,6 +15,7 @@
     },
     {
       "category": {
+      "messageKey" : "faq.category.userProfile",
         "en": "User Profile"
       },
       "title": {
@@ -26,6 +28,7 @@
     },
     {
       "category": {
+      "messageKey" : "faq.category.userProfile",
         "en": "User Profile"
       },
       "title": {
@@ -38,6 +41,7 @@
     },
     {
       "category": {
+      "messageKey" : "faq.category.userProfile",
         "en": "User Profile"
       },
       "title": {
