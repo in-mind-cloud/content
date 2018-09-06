@@ -5,10 +5,46 @@
         "en": "UI"
       },
       "title": {
-        "en": "How do I log out?"
+        "en": "How to enable/disable interactive pricing?"
       },
       "body": {
-        "en": "<p>Click on Profile, then click on Log out. All your current session will be ended safely.</p>\n<p>Thank you!</p>"
+        "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>Turn on/off the setting Enable Interactive Pricing</p>"
+      },
+      "position": 0
+    },
+    {
+      "category": {
+        "en": "UI"
+      },
+      "title": {
+        "en": "How to enable/disable Configurator in page mode?"
+      },
+      "body": {
+        "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>Turn on/off the setting&nbsp;Configurator Pagination Mode</p>"
+      },
+      "position": 1
+    },
+    {
+      "category": {
+        "en": "UI"
+      },
+      "title": {
+        "en": "How to control notification mail preferences?"
+      },
+      "body": {
+        "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>There are four settings to control notification mail preferences. Turning of Recieve Email will switch off all notification emails.</p>"
+      },
+      "position": 0
+    },
+    {
+      "category": {
+        "en": "UI"
+      },
+      "title": {
+        "en": "How can user select default report templates"
+      },
+      "body": {
+        "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>Select default report templates in the report remplate section.</p>"
       },
       "position": 0
     }
