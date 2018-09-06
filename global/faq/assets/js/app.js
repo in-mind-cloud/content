@@ -258,6 +258,8 @@ init = ( function() {
 								announcement.current[iDataIndex].position = oParsed.content[i].position;
 								announcement.current[iDataIndex].category = oParsed.content[i].category[sL10nKey];
 
+
+								document.querySelector( '.category[data-index="' + iDataIndex + '"]' ).setAttribute( 'data-l10n', oParsed.content[i].category[ 'en' ] );
 								document.querySelector( '.category[data-index="' + iDataIndex + '"]' ).value = oParsed.content[i].category.messageKey;
 									document.querySelector( '.title[data-index="' + iDataIndex + '"]' ).value = oParsed.content[i].title[sL10nKey];
 								document.querySelector( '.position[data-index="' + iDataIndex + '"]' ).value = oParsed.content[i].position;
@@ -409,7 +411,7 @@ init = ( function() {
 						var oSelectedOptionDOM = oSelectDOM.options[ oSelectDOM.selectedIndex ];
 						oSelectDOM.setAttribute( 'data-l10n', oSelectedOptionDOM.getAttribute( 'data-l10n' ) );
 
-					} )
+					} );
 
 					var aCategory = [
 						{
@@ -489,7 +491,7 @@ init = ( function() {
   height: 400,
    branding: false,
   menubar: false,
-paste_data_images: true,
+						paste_data_images: true,
   plugins: [
     'advlist autolink lists link image charmap print preview anchor textcolor',
     'searchreplace visualblocks code fullscreen',
