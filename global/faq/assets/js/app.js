@@ -258,7 +258,7 @@ init = ( function() {
 								announcement.current[iDataIndex].position = oParsed.content[i].position;
 								announcement.current[iDataIndex].category = oParsed.content[i].category[sL10nKey];
 
-								document.querySelector( '.category[data-index="' + iDataIndex + '"]' ).value = oParsed.content[i].category[sL10nKey];
+								document.querySelector( '.category[data-index="' + iDataIndex + '"]' ).value = oParsed.content[i].category.messageKey;
 									document.querySelector( '.title[data-index="' + iDataIndex + '"]' ).value = oParsed.content[i].title[sL10nKey];
 								document.querySelector( '.position[data-index="' + iDataIndex + '"]' ).value = oParsed.content[i].position;
 								iDataIndex++;
