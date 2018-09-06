@@ -64,6 +64,20 @@
         "en": "<p>A dynamic attribute (DA) is any data point which is non standard to In Mind. Its is primarily created to be used in configuration of a product.</p>\n<p>It also has two types: Dynamic Data Attribute and Dynamic Symbolic Attribute.</p>"
       },
       "position": 0
+    },
+    {
+      "category": {
+        "messageKey": "faq.category.commonQuestions",
+        "en": "Common Questions"
+      },
+      "title": {
+        "en": "What is a pricing scheme?"
+      },
+      "body": {
+        "en": "<p>Pricing scheme is used in internal price engine to price a quote. It is a set of steps that determine how a quote can be priced or costed.</p>\n<p>It comes with built in support to define the logic of getting data from a table, defining calculations etc.</p>\n<p>For more information go to: Pricing-&gt;Pricing Scheme</p>"
+        "de": "<p>Pricing scheme is used in internal price engine to price a quote. It is a set of steps that determine how a quote can be priced or costed.</p>\n<p>It comes with built in support to define the logic of getting data from a table, defining calculations etc.</p>\n<p>For more information go to: Pricing-&gt;Pricing Scheme</p>"
+      },
+      "position": 1
     }
   ]
 }
