@@ -75,7 +75,6 @@
       },
       "body": {
         "en": "<p>Pricing scheme is used in internal price engine to price a quote. It is a set of steps that determine how a quote can be priced or costed.</p>\n<p>It comes with built in support to define the logic of getting data from a table, defining calculations etc.</p>\n<p>For more information go to: Pricing-&gt;Pricing Scheme</p>"
-        "de": "<p>Pricing scheme is used in internal price engine to price a quote. It is a set of steps that determine how a quote can be priced or costed.</p>\n<p>It comes with built in support to define the logic of getting data from a table, defining calculations etc.</p>\n<p>For more information go to: Pricing-&gt;Pricing Scheme</p>"
       },
       "position": 1
     }
