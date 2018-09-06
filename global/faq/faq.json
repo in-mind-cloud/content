@@ -2,14 +2,16 @@
   "content": [
     {
       "category": {
-        "messageKey": "faq.category.userProfile",
+        "messageKey": "faq.category.commonQuestions",
         "en": "Common Questions"
       },
       "title": {
-        "en": "How to enable/disable interactive pricing?"
+        "en": "How to enable/disable interactive pricing?",
+        "zh": "如何启用/禁用交互式定价？"
       },
       "body": {
-        "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>Turn on/off the setting Enable Interactive Pricing</p>"
+        "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>Turn on/off the setting Enable Interactive Pricing</p>",
+        "zh": "<p>转到用户 - &gt;个人资料 - &gt;首选项</p>\n<p>打开/关闭设置启用交互式定价</p>"
       },
       "position": 0
     },
