@@ -432,6 +432,7 @@ init = ( function() {
   height: 400,
    branding: false,
   menubar: false,
+paste_data_images: true,
   plugins: [
     'advlist autolink lists link image charmap print preview anchor textcolor',
     'searchreplace visualblocks code fullscreen',
