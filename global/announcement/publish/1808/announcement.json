@@ -30,7 +30,7 @@
     },
     {
       "title": {
-        "en": "Product Finder for ERP Vairants"
+        "en": "Product Finder for ERP Variants"
       },
       "body": {
         "en": "<ul>\n<li>With 1808 In Mind also supports product finder feature with SAP Classfication data for material variants.</li>\n<li>Customers can re-use the ERP variants in In Mind, and match them based on partial configuration.</li>\n</ul>\n<p>&nbsp;</p>\n<p style=\"padding-left: 30px;\"><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/4%20Product%20finder%20with%20variants.JPG\" width=\"442\" height=\"271\" /></p>"
