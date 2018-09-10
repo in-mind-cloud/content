@@ -8,12 +8,12 @@
       "title": {
         "en": "How to enable/disable interactive pricing?",
         "zh": " 如何啟用/禁用交互式定價？",
-        "de": " Wie aktiviere / deaktiviere ich die interaktive Preisgestaltung?"
+        "de": "Wie aktiviere / deaktiviere ich die interaktive Preisgberechnung der Internen Preis Engine?"
       },
       "body": {
         "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>Turn on/off the setting Enable Interactive Pricing</p>",
         "zh": "<div id=\"tw-source\">\n<p id=\"u4EBdf\" class=\"tw-lang-selector-wrapper\" style=\"text-align: left;\"><select id=\"tw-sl\" class=\"tw-lang-selector Uekwlc\" data-dslc=\"\" data-dsln=\"\" data-uiln=\"English\" data-url=\"/setprefs?sig=0_-6jZZU1B1PhTeg3xO0r5qUSD2mE%3D&amp;prev=https://www.google.com.sg/search?q%3Dtranslate%2Bgoogle%26rlz%3D1C1CHBF_enSG785SG785%26pf%3Dgwoc\" data-dlm=\"Detect language\" data-ved=\"2ahUKEwjhpu6j8aXdAhVM0FQKHUdNAqwQ8TQwAHoECAUQBQ\">\n<option disabled=\"disabled\" value=\"---\">---------------</option>\n<option id=\"tw-dslo\" selected=\"selected\" value=\"auto\">Detect language</option>\n<option value=\"af\">Afrikaans</option>\n<option value=\"sq\">Albanian</option>\n<option value=\"am\">Amharic</option>\n<option value=\"ar\">Arabic</option>\n<option value=\"hy\">Armenian</option>\n<option value=\"az\">Azerbaijani</option>\n<option value=\"bn\">Bangla</option>\n<option value=\"eu\">Basque</option>\n<option value=\"be\">Belarusian</option>\n<option value=\"bs\">Bosnian</option>\n<option value=\"bg\">Bulgarian</option>\n<option value=\"my\">Burmese</option>\n<option value=\"ca\">Catalan</option>\n<option value=\"ceb\">Cebuano</option>\n<option value=\"zh-CN\">Chinese (Simplified)</option>\n<option value=\"zh-TW\">Chinese (Traditional)</option>\n<option value=\"co\">Corsican</option>\n<option value=\"hr\">Croatian</option>\n<option value=\"cs\">Czech</option>\n<option value=\"da\">Danish</option>\n<option value=\"nl\">Dutch</option>\n<option value=\"en\">English</option>\n<option value=\"eo\">Esperanto</option>\n<option value=\"et\">Estonian</option>\n<option value=\"tl\">Filipino</option>\n<option value=\"fi\">Finnish</option>\n<option value=\"fr\">French</option>\n<option value=\"gl\">Galician</option>\n<option value=\"ka\">Georgian</option>\n<option value=\"de\">German</option>\n<option value=\"el\">Greek</option>\n<option value=\"gu\">Gujarati</option>\n<option value=\"ht\">Haitian Creole</option>\n<option value=\"ha\">Hausa</option>\n<option value=\"haw\">Hawaiian</option>\n<option value=\"iw\">Hebrew</option>\n<option value=\"hi\">Hindi</option>\n<option value=\"hmn\">Hmong</option>\n<option value=\"hu\">Hungarian</option>\n<option value=\"is\">Icelandic</option>\n<option value=\"ig\">Igbo</option>\n<option value=\"id\">Indonesian</option>\n<option value=\"ga\">Irish</option>\n<option value=\"it\">Italian</option>\n<option value=\"ja\">Japanese</option>\n<option value=\"jv\">Javanese</option>\n<option value=\"kn\">Kannada</option>\n<option value=\"kk\">Kazakh</option>\n<option value=\"km\">Khmer</option>\n<option value=\"ko\">Korean</option>\n<option value=\"ku\">Kurdish</option>\n<option value=\"ky\">Kyrgyz</option>\n<option value=\"lo\">Lao</option>\n<option value=\"la\">Latin</option>\n<option value=\"lv\">Latvian</option>\n<option value=\"lt\">Lithuanian</option>\n<option value=\"lb\">Luxembourgish</option>\n<option value=\"mk\">Macedonian</option>\n<option value=\"mg\">Malagasy</option>\n<option value=\"ms\">Malay</option>\n<option value=\"ml\">Malayalam</option>\n<option value=\"mt\">Maltese</option>\n<option value=\"mi\">Maori</option>\n<option value=\"mr\">Marathi</option>\n<option value=\"mn\">Mongolian</option>\n<option value=\"ne\">Nepali</option>\n<option value=\"no\">Norwegian</option>\n<option value=\"ny\">Nyanja</option>\n<option value=\"ps\">Pashto</option>\n<option value=\"fa\">Persian</option>\n<option value=\"pl\">Polish</option>\n<option value=\"pt\">Portuguese</option>\n<option value=\"pa\">Punjabi</option>\n<option value=\"ro\">Romanian</option>\n<option value=\"ru\">Russian</option>\n<option value=\"sm\">Samoan</option>\n<option value=\"gd\">Scottish Gaelic</option>\n<option value=\"sr\">Serbian</option>\n<option value=\"sn\">Shona</option>\n<option value=\"sd\">Sindhi</option>\n<option value=\"si\">Sinhala</option>\n<option value=\"sk\">Slovak</option>\n<option value=\"sl\">Slovenian</option>\n<option value=\"so\">Somali</option>\n<option value=\"st\">Southern Sotho</option>\n<option value=\"es\">Spanish</option>\n<option value=\"su\">Sundanese</option>\n<option value=\"sw\">Swahili</option>\n<option value=\"sv\">Swedish</option>\n<option value=\"tg\">Tajik</option>\n<option value=\"ta\">Tamil</option>\n<option value=\"te\">Telugu</option>\n<option value=\"th\">Thai</option>\n<option value=\"tr\">Turkish</option>\n<option value=\"uk\">Ukrainian</option>\n<option value=\"ur\">Urdu</option>\n<option value=\"uz\">Uzbek</option>\n<option value=\"vi\">Vietnamese</option>\n<option value=\"cy\">Welsh</option>\n<option value=\"fy\">Western Frisian</option>\n<option value=\"xh\">Xhosa</option>\n<option value=\"yi\">Yiddish</option>\n<option value=\"yo\">Yoruba</option>\n<option value=\"zu\">Zulu</option>\n</select><select class=\"tw-lang-selector Uekwlc vk_dgy tw-dl\">\n<option>English</option>\n</select></p>\n<p id=\"tw-smenu\" class=\"tw-menu\" style=\"text-align: left;\">轉到用戶 - &gt;個人資料 - &gt;首選項。</p>\n<p class=\"tw-menu\" style=\"text-align: left;\">打開/關閉設置啟用交互式定價。</p>\n</div>",
-        "de": "<div id=\"tw-source\">\n<div id=\"u4EBdf\" class=\"tw-lang-selector-wrapper\">\n<div class=\"DHcWmd\">Gehe zu Benutzer-&gt; Profil-&gt; Einstellungen</div>\n<div class=\"DHcWmd\">&nbsp;</div>\n<div class=\"DHcWmd\">Aktivieren / deaktivieren Sie die Einstellung Interaktive Preisgestaltung aktivieren</div>\n</div>\n<div id=\"tw-smenu\" class=\"tw-menu\">&nbsp;</div>\n</div>\n<div class=\"tw-swapa\">\n<div class=\"DHcWmd\">&nbsp;</div>\n</div>"
+        "de": "<div id=\"tw-source\">\n<div id=\"u4EBdf\" class=\"tw-lang-selector-wrapper\">\n<div class=\"DHcWmd\">\n<p>Gehe zu Benutzer-&gt; Profil-&gt; Einstellungen</p>\n<p>Aktivieren / deaktivieren Sie die Einstellung Interaktive Preisgberechnung aktivieren</p>\n</div>\n</div>\n</div>"
       },
       "position": 0
     },
@@ -25,12 +25,12 @@
       "title": {
         "en": "How to enable/disable Configurator in page mode?",
         "zh": " 如何在頁面模式下啟用/禁用配置器？",
-        "de": "Wie kann ich den Konfigurator im Seitenmodus aktivieren / deaktivieren?"
+        "de": "Wie kann ich den Seitenmodus für den Konfigurator im aktivieren / deaktivieren, so dass nur eine Gruppe gleichyeitig unf viele Attribute Seitenweise angezeigt werden?"
       },
       "body": {
         "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>Turn on/off the setting&nbsp;Configurator Pagination Mode</p>",
         "zh": "<p>轉到用戶 - &gt;個人資料 - &gt;首選項</p>\n<p>打開/關閉設置配置器分頁模式。</p>",
-        "de": "<div id=\"gt-c\" class=\"g-section\">\n<div id=\"gt-form-c\"><form id=\"gt-form\" action=\"https://translate.google.com/\" enctype=\"application/x-www-form-urlencoded\" method=\"post\" name=\"text_form\">\n<div id=\"gt-text-all\">\n<div id=\"gt-main\">\n<div id=\"gt-text-c\">\n<div id=\"gt-text-top\">\n<div id=\"gt-res-c\" class=\"g-unit\">\n<div id=\"gt-res-p\">\n<div id=\"gt-res-data\">\n<div id=\"gt-res-wrap\">\n<div id=\"gt-res-content\">\n<div id=\"gt-res-dir-ctr\" class=\"trans-verified-button-small\" dir=\"ltr\"><span id=\"result_box\" class=\"\" lang=\"de\">Gehe zu Benutzer-&gt; Profil-&gt; Einstellungen<br /><br />Aktivieren / deaktivieren Sie den konfigurationsabh&auml;ngigen Paginierungsmodus</span></div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</form></div>\n</div>"
+        "de": "<div id=\"gt-c\" class=\"g-section\">\n<div id=\"gt-form-c\"><form id=\"gt-form\" action=\"https://translate.google.com/\" enctype=\"application/x-www-form-urlencoded\" method=\"post\" name=\"text_form\">\n<div id=\"gt-text-all\">\n<div id=\"gt-main\">\n<div id=\"gt-text-c\">\n<div id=\"gt-text-top\">\n<div id=\"gt-res-c\" class=\"g-unit\">\n<div id=\"gt-res-p\">\n<div id=\"gt-res-data\">\n<div id=\"gt-res-wrap\">\n<div id=\"gt-res-content\">\n<div id=\"gt-res-dir-ctr\" class=\"trans-verified-button-small\" dir=\"ltr\">Gehe zu Benutzer-&gt; Profil-&gt; Einstellungen</div>\n<div class=\"trans-verified-button-small\" dir=\"ltr\">&nbsp;</div>\n<div class=\"trans-verified-button-small\" dir=\"ltr\">Aktivieren / deaktivieren Sie &bdquo;Configurator Pagination Mode&ldquo;</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</form></div>\n</div>"
       },
       "position": 0
     },
@@ -42,12 +42,12 @@
       "title": {
         "en": "How to control notification mail preferences?",
         "zh": " 如何控制通知郵件首選項？",
-        "de": "So steuern Sie die Benachrichtigungs-E-Mail-Einstellungen?"
+        "de": "So steuern Sie die Einstellungen für Benachrichtigungs-E-Mail?"
       },
       "body": {
         "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>There are four settings to control notification mail preferences. Turning of Recieve Email will switch off all notification emails.</p>",
         "zh": "<pre id=\"tw-target-text\" class=\"tw-data-text tw-ta tw-text-small\" dir=\"ltr\" data-placeholder=\"Translation\" data-fulltext=\"\"><span lang=\"zh-TW\">轉到用戶 - &gt;個人資料 - &gt;首選項\n\n有四種設置可用於控制通知郵件首選項。<br />轉動接收電子郵件將關閉所有通知電子郵件。</span></pre>",
-        "de": "<p>Gehe zu Benutzer-&gt; Profil-&gt; Einstellungen</p>\n<p>Es gibt vier Einstellungen, um Benachrichtigungs-Mail-Einstellungen zu steuern. Durch das Drehen von \"E-Mail empfangen\" werden alle Benachrichtigungs-E-Mails deaktiviert.</p>"
+        "de": "<p>Gehe zu Benutzer-&gt; Profil-&gt; Einstellungen</p>\n<p>Es gibt vier Einstellungen, um Einstellungen f&uuml;r Benachrichtigungs-Mails zu steuern. Durch das Deaktivieren von \"E-Mail empfangen\" werden alle Benachrichtigungs-E-Mails deaktiviert.</p>"
       },
       "position": 0
     },
@@ -59,12 +59,12 @@
       "title": {
         "en": "How can user select default report templates?",
         "zh": "用戶如何選擇默認報告模板？",
-        "de": "1  45/5000 Wie kann der Benutzer Standardberichtvorlagen auswählen?"
+        "de": "Wie kann der Benutzer sein bevorzugtes Standard-Template für den Excel oder PDF Export auswählen?"
       },
       "body": {
         "en": "<p>Go to User-&gt;Profile-&gt;Preferences</p>\n<p>Select default report templates in the report templates section.</p>",
         "zh": "<p>轉到用戶 - &gt;個人資料 - &gt;首選項</p>\n<p>在報告模板部分中選擇默認報告模板。</p>",
-        "de": "<p>Gehe zu Benutzer-&gt; Profil-&gt; Einstellungen</p>\n<p>W&auml;hlen Sie im Bereich Berichtsvorlagen Standard-Berichtsvorlagen aus.</p>"
+        "de": "<p>Gehe zu Benutzer-&gt; Profil-&gt; Einstellungen</p>\n<p>W&auml;hlen Sie im Bereich Reportvorlage ein Angebotstemplate oder Excel-Template aus.</p>"
       },
       "position": 0
     },
@@ -76,12 +76,12 @@
       "title": {
         "en": "What is a Dynamic Attribute?",
         "zh": "什麼是動態屬性？",
-        "de": "Was ist ein dynamisches Attribut?"
+        "de": "Was ist ein Dynamic Attribut?"
       },
       "body": {
         "en": "<p>A dynamic attribute (DA) is any data point which is non-standard to In Mind. It is primarily created to be used in the configuration of a product.</p>\n<p>It also has two types: Dynamic Data Attribute and Dynamic Symbolic Attribute.</p>",
         "zh": "<p>動態屬性（DA）是In Mind中非標準的任何數據點。 它主要用於產品配置。</p>\n<p>它還有兩種類型：動態數據屬性和動態符號屬性。</p>",
-        "de": "<div id=\"gt-src-c\" class=\"g-unit\">\n<div id=\"gt-src-p\">\n<div id=\"gt-src-wrap\" class=\"\">\n<div>\n<div class=\"_1BN1N Kzi1t MoE_1 _2DJZN\">\n<div class=\"_1HjH7\">\n<div class=\"_3qe6h\" title=\"Protected by Grammarly\">&nbsp;</div>\n</div>\n</div>\n</div>\n<div id=\"gt-src-cc\">\n<div id=\"gt-src-cc-ctr\" class=\"cc-ctr gt-src-cc-normal\">Ein dynamisches Attribut (DA) ist ein beliebiger Datenpunkt, der f&uuml;r In Mind nicht standardisiert ist.&nbsp;Es wird haupts&auml;chlich erstellt, um in der Konfiguration eines Produkts verwendet zu werden.</div>\n</div>\n</div>\n</div>\n</div>\n<div id=\"gt-res-c\" class=\"g-unit\">\n<div id=\"gt-res-p\">\n<div id=\"gt-res-data\">\n<div id=\"gt-res-wrap\">\n<div id=\"gt-res-content\">\n<div id=\"gt-res-dir-ctr\" class=\"trans-verified-button-small\" dir=\"ltr\"><span id=\"result_box\" class=\"\" lang=\"de\"><br /><span class=\"\">Es gibt auch zwei Arten: Dynamisches Datenattribut und Dynamisches Symbolisches Attribut.</span></span></div>\n</div>\n</div>\n</div>\n</div>\n</div>"
+        "de": "<div id=\"gt-src-c\" class=\"g-unit\">\n<div id=\"gt-src-p\">\n<div id=\"gt-src-wrap\" class=\"\">\n<div>\n<div class=\"_1BN1N Kzi1t MoE_1 _2DJZN\">\n<div class=\"_1HjH7\">\n<div class=\"_3qe6h\" title=\"Protected by Grammarly\">&nbsp;</div>\n</div>\n</div>\n</div>\n<div id=\"gt-src-cc\">\n<div id=\"gt-src-cc-ctr\" class=\"cc-ctr gt-src-cc-normal\">\n<p>Ein Dynamic Attribut (DA) ist ein beliebiger Datenpunkt, der f&uuml;r In Mind nicht standardisiert ist. Es wird haupts&auml;chlich erstellt, um in der Konfiguration eines Produkts verwendet zu werden.</p>\n<p>Es gibt auch zwei Arten: Dynamisches Datenattribut und Dynamisches Symbolisches Attribut.</p>\n</div>\n</div>\n</div>\n</div>\n</div>"
       },
       "position": 0
     },
@@ -98,7 +98,7 @@
       "body": {
         "en": "<p>Pricing scheme is used in internal price engine to price a quote. It is a set of steps that determine how a quote can be priced or cost.</p>\n<p>It comes with built-in support to define the logic of getting data from a table, defining calculations etc.</p>\n<p>For more information go to Pricing-&gt;Pricing Scheme</p>",
         "zh": "<div id=\"gt-src-c\" class=\"g-unit\">\n<div id=\"gt-src-p\">\n<div id=\"src-translit\" class=\"translit\" dir=\"ltr\">定價方案用於內部價格引擎為報價定價。&nbsp;這是一組確定報價如何定價或成本的步驟。</div>\n<div class=\"translit\" dir=\"ltr\">&nbsp;</div>\n<div class=\"translit\" dir=\"ltr\">它內置支持，用於定義從表中獲取數據的邏輯，定義計算等。</div>\n</div>\n</div>",
-        "de": "<p>Das Preismodell wird in der internen Preis-Engine verwendet, um ein Angebot zu bewerten. Es ist eine Reihe von Schritten, die bestimmen, wie ein Angebot Preis oder Kosten sein kann.</p>\n<p>Es verf&uuml;gt &uuml;ber eine integrierte Unterst&uuml;tzung, um die Logik zum Abrufen von Daten aus einer Tabelle, zum Definieren von Berechnungen usw. zu definieren.</p>\n<p>Weitere Informationen finden Sie unter Preise-&gt; Preisschema</p>"
+        "de": "<p>Das Preisschema wird in der internen Preis-Engine verwendet, um den Preis eines Angebot zu bestimmen. Es besteht aus einer Reihe von Schritten (Pricing Steps), die bestimmen, wie ein Preis oder Kosten berechnet werden.</p>\n<p>Es definiert die Logik zum Abrufen von Daten aus Preistabelle, zum Definieren von Berechnungen usw. zu definieren.</p>\n<p>Weitere Informationen finden Sie unter Preis-&gt; Preisschema &Uuml;berblick</p>"
       },
       "position": 0
     }
