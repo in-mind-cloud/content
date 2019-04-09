@@ -10,4 +10,6 @@ com.imc.iss.groovy.partnerfunction
 com.imc.iss.groovy.rangeValues
 com.imc.iss.groovy.salesitem
 com.imc.iss.groovy.user
+com.imc.iss.maps
+com.imc.iss.web.services.commands.quote
 com.imc.vocabulary
