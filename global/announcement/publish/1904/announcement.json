@@ -1,14 +1,14 @@
 {
-  "forceVisible": true,
-  "content": [
-    {
-      "title": {
-        "en": "Customizable Layout for Sales Item Configurator"
-      },
-      "body": {
-        "en": "<h3>Define Your Own Custom Layout for Sales Item Configurator</h3>\n<p><strong><img src=\"assets/images/customlayout/customlayout_fluid_layout.png\" alt=\"\" width=\"1378\" height=\"475\" /></strong></p>\n<p>The Customizable Layout allows administrator to re-organise the product configuration layout information (Group, Sub Group, position of group, subgroup and dynamic attributes) coming from ERP/IMC model (SSC/ IMC configurable product, Classified product).</p>\n<p>&nbsp;</p>\n<h3>New UI controls for Configurator ( also includes the all new Fluid Layout View )</h3>\n<p>Select the control that you want to use per characteristic. For certain characteristics, you may want to show all options upfront instead of a dropdown. Now you can have it.</p>\n<p><img src=\"assets/images/customlayout/customlayout_select_custom_control.png\" alt=\"\" /></p>\n<p>&nbsp;</p>\n<p>Illustration of the new controls in Configurator -&nbsp;</p>\n<p><img src=\"assets/images/customlayout/customlayout_new_control_dda.png\" alt=\"\" /></p>\n<p><img src=\"assets/images/customlayout/customlayout_new_control_multivalue.png\" alt=\"\" /></p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>By enabling Fluid Layout View, you're able to see more attributes at a glance. Each UI control's width will adapt to the length of the values.</p>\n<p><img src=\"https://github.com/in-mind-cloud/content/blob/master/global/assets/images/customlayout/customlayout_fluid_layout.png\" alt=\"\" /><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/customlayout/customlayout_fluid_layout.png\" alt=\"\" /></p>\n<p>&nbsp;</p>"
-      },
-      "position": 0
-    }
-  ]
+	"forceVisible": true,
+	"content": [
+	{
+		"title": {
+			"en": "Customizable Layout for Sales Item Configurator"
+		},
+		"body": {
+			"en": "<h3>Define Your Own Custom Layout for Sales Item Configurator</h3>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/customlayout/customlayout_fluid_layout.png\" alt=\"\" width=\"1378\" height=\"475\" /></strong></p>\n<p>The Customizable Layout allows administrator to re-organise the product configuration layout information (Group, Sub Group, position of group, subgroup and dynamic attributes) coming from ERP/IMC model (SSC/ IMC configurable product, Classified product).</p>\n<p>&nbsp;</p>\n<h3>New UI controls for Configurator ( also includes the all new Fluid Layout View )</h3>\n<p>Select the control that you want to use per characteristic. For certain characteristics, you may want to show all options upfront instead of a dropdown. Now you can have it.</p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/customlayout/customlayout_select_custom_control.png\" alt=\"\" /></p>\n<p>&nbsp;</p>\n<p>Illustration of the new controls in Configurator -&nbsp;</p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/customlayout/customlayout_new_control_dda.png\" alt=\"\" /></p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/customlayout/customlayout_new_control_multivalue.png\" alt=\"\" /></p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>By enabling Fluid Layout View, you're able to see more attributes at a glance. Each UI control's width will adapt to the length of the values.</p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/customlayout/customlayout_fluid_layout.png\" alt=\"\" /><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/customlayout/customlayout_fluid_layout.png\" alt=\"\" /></p>\n<p>&nbsp;</p>"
+		},
+		"position": 0
+	}
+]
 }
