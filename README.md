@@ -12,4 +12,4 @@ Access announcement editor at https://in-mind-cloud.github.io/content/global
 ## FAQ
 
 - Q : How do I serve media assets?
-- A : You can copy and paste image into the editor ( will be encoded as base64 ) or you can add in image link into the editor. If you want to host the images yourself, you may upload to this path - https://github.com/in-mind-cloud/content/tree/master/global/assets/images
+- A : You can copy and paste image into the editor ( will be encoded as base64 ) or you can add in image link into the editor. If you want to host the images yourself, you may upload to this path - https://github.com/in-mind-cloud/content/tree/master/global/assets/images and access the images like https://in-mind-cloud.github.io/content/global/assets/images/<fileName.xxx>
