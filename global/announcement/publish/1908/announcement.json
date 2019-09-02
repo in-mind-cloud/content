@@ -1,1 +1,104 @@
-
+{
+  "forceVisible": false,
+  "content": [
+    {
+      "title": {
+        "en": "Product Features"
+      },
+      "body": {
+        "en": "<p><strong>Pricing Scheme/Procedure determination</strong></p>\n<p>MSP now supports multiple pricing schemes or pricing procedure. The scheme/procedure is auto determined based on quote sales area parameters which include, sales document type, sales organization, distribution channel, and division. One can also make account specific determination.</p>\n<p>For more information on this feature please see the guide: 1908_PricingScheme_Determination_Guide. The guide explains in detail how to set up the system and make use of the capabilities.</p>\n<p>&nbsp;</p>\n<p><strong>Performance Improvements</strong></p>\n<ul>\n<li><strong>Save and reload SSC cache from the database</strong></li>\n</ul>\n<p>MSP can now save the last cached data in SSC engine. The data is saved into MSP database and upon system start is restored back to SSC. This significantly reduces the time taken to reload the data from ERP.</p>\n<ul>\n<li><strong>Save time in a load of attributes metadata from SSC</strong></li>\n</ul>\n<p>Most of the meta-information from SSC was reloaded on every transaction, this has been improved and now only loaded once.</p>\n<ul>\n<li><strong>Gridline item view</strong></li>\n</ul>\n<p>To give an improved performance on the quote line item table grid view is also supported with all features of the responsive view. This view can be enabled using a setting. This new line items table which uses a simple grid-like table that supports rendering for 1000+ line items quickly.</p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/16.png\" width=\"100%\" height=\"\" /></p>"
+      },
+      "position": 0
+    },
+    {
+      "title": {
+        "en": "Product Features"
+      },
+      "body": {
+        "en": "<ul>\n<li><strong>MSP Home Page:</strong></li>\n</ul>\n<p>From 1908 release MSP brings out a highly customizable home page. Admin of the system can define what widgets need to show up on the home page. The widgets could be a table of quote or opportunities etc.</p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/0.png\" width=\"100%\" height=\"\" /></p>\n<ul>\n<li><strong>Admin change user preferences:</strong></li>\n</ul>\n<p>From 1908 release MSP also supports the change of user preferences by the administrator. An administrator can mass change user preferences of:</p>\n<ul>\n<li>Receive email</li>\n<li>Receive approval email</li>\n<li>Receive routing email</li>\n<li>Receive notification email</li>\n<li>Enable interactive pricing</li>\n<li>Configurator pagination mode</li>\n<li>Use fluid layout</li>\n<li>Value option threshold and more</li>\n</ul>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/1.png\" width=\"100%\" height=\"\" /></p>"
+      },
+      "position": 1
+    },
+    {
+      "title": {
+        "en": "Product Features"
+      },
+      "body": {
+        "en": "<p><strong>Quote Duplicate Check</strong></p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/2.png\" width=\"100%\" height=\"\" /></p>\n<p>This feature provides a very customized way of search for similar quotes. Users can search based on quote header parameters, quote partners, line items (products) and dynamic attribute values.</p>\n<p>The results are ranked in terms of direct hits based on each search term. The feature is very helpful in finding like related quotes.</p>\n<p>&nbsp;</p>\n<p><strong>Quote Overview View</strong></p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/3.png\" width=\"100%\" height=\"\" /></strong></p>\n<p>The former quote overview and additional attribute views are merged into a combined Quote overview tab. With a separate section to control Quote pricing scheme/procedure determination.</p>\n<p>&nbsp;</p>"
+      },
+      "position": 2
+    },
+    {
+      "title": {
+        "en": "Product Features"
+      },
+      "body": {
+        "en": "<p><strong>OAuth based authentication to consume In Mind API&rsquo;s</strong></p>\n<p>With this enhancement In Mind now supports all API&rsquo;s for configuration and pricing to be consumed directly from third-party applications.</p>\n<p>Consumers need to register their system with an In Mind system and get a client id using which the authentication will be authorized. For more details please see the guide: 1908_General_System_Features_Guide</p>\n<p><strong>Account and Partner Function Enhancement from ERP</strong></p>\n<p>In 1908 following enhancements were done:</p>\n<ul>\n<li>Accounts page has more columns namely main address country and city.</li>\n<li>Create Quote view also shows the country and city.</li>\n<li>Create Partner Function for the Account is enhanced with a paginated account selection screen</li>\n<li>Quote can be created with different accounts, under the same opportunity (account different from opportunity account).</li>\n<li>Quotes can be assigned to an existing opportunity.</li>\n<li>Opportunity selector is paginated.</li>\n<li>While creating a new quote opportunity can be directly assigned.</li>\n</ul>"
+      },
+      "position": 3
+    },
+    {
+      "title": {
+        "en": "Other Product Features"
+      },
+      "body": {
+        "en": "<p><strong>Pricing enhancements</strong></p>\n<p>In 1908 more enhancements were done in SSC pricing engine and following new features have been added:</p>\n<ul>\n<li>Showing the condition type ERP ID on the pricing screen</li>\n<li>Showing if a pricing condition is inactive.</li>\n<li>Ability to triggers ERP pricing from the pricing screen.</li>\n<li>Ability to show and change the condition type unit of measure and value.</li>\n</ul>\n<p>&nbsp;</p>\n<p><strong>Configurator paginated view enhancements</strong></p>\n<p>In 1908 more enhancements were done in configurator:</p>\n<ul>\n<li>Ability to list all subgroups of a group within one page.</li>\n<li>And making the paginated view the default and only view.</li>\n</ul>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/4.png\" width=\"100%\" height=\"\" /></strong></p>\n<p><strong>Role and approval view enhancements</strong></p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/5.png\" width=\"100%\" height=\"\" /></strong></p>\n<p>In 1908 the role has its own new view under administration. In addition, the approval engine concepts of Condition, Approval rule, and Approval gate also get a new separate consolidated view.</p>\n<p>&nbsp;</p>\n<p><strong>Support SSC BOM explosion and line item ordering</strong></p>\n<p>From 1908 MSP also supports SSC based BOM explosion fully. In addition, the line item order will become the same as standard MSP.</p>"
+      },
+      "position": 4
+    },
+    {
+      "title": {
+        "en": "New Design Features"
+      },
+      "body": {
+        "en": "<p><strong>New design opportunity pipeline</strong></p>\n<p>From 1908 MSP opportunity pipeline has a new design. It also comes with easy to use filters.</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/6.png\" width=\"100%\" height=\"\" /></strong>Filter view:</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/7.png\" width=\"100%\" height=\"\" /></strong></p>\n<p>&nbsp;</p>\n<p><strong>New design product catalog</strong></p>\n<p>From 1908 MSP product catalog also has a refined design.</p>\n<p>With related products, bill of material and related group products:</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/8.png\" width=\"100%\" height=\"\" /></strong></p>\n<p>Without related products, bill of material and related group products:</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/9.png\" width=\"100%\" height=\"\" /></strong></p>"
+      },
+      "position": 5
+    },
+    {
+      "title": {
+        "en": "System Task Enhancement"
+      },
+      "body": {
+        "en": "<p><strong>Enhancement Step</strong></p>\n<p>1. System task is moved from **Administration -&gt; Master Data Management** to **System Processes -&gt; System Task -&gt; Master Data**</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/10.png\" width=\"100%\" height=\"\" /></strong></p>\n<p>2. The types of task resource supported are:</p>\n<ul>\n<li>Account Sync Job: To sync account from ERP</li>\n<li>Delete Sync History job: To delete the Sync History (NEW)</li>\n<li>Product Sync Job: To sync product from ERP</li>\n<li>ERP Table Sync Job: To sync table from ERP (NEW)</li>\n<li>Report Sync Job: To sync MX report data to an external system</li>\n</ul>\n<p>3. Introduce settings Active to enable/disable a system task.</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/11.png\" width=\"100%\" height=\"\" /></strong></p>\n<p>4. Introduce System Task Progress table to indicate which tasks are running and which process unit it is running on.</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/12.png\" width=\"100%\" height=\"\" /></strong></p>\n<p>Refer 1908_General_System_Features_Guide.docx for more information.</p>"
+      },
+      "position": 6
+    },
+    {
+      "title": {
+        "en": "Product / KB Sync Enhancement"
+      },
+      "body": {
+        "en": "<p>1. Introduce button to synchronize the latest product knowledge base from ERP (only applicable for SSC environment)</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/13.png\" width=\"100%\" height=\"\" /></strong></p>\n<p>2. Introduce options to synchronize product variants for the configurable product:</p>\n<p>&middot; Sync single product:</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/14.png\" width=\"100%\" height=\"\" /></strong></p>\n<p>&middot; Sync all / selected product:</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/1908/15.png\" width=\"100%\" height=\"\" /></strong></p>\n<p>&nbsp;</p>\n<p>Please refer 1908_ERP_Integration_Guide.docx for more details.</p>"
+      },
+      "position": 7
+    },
+    {
+      "title": {
+        "en": "Other Enhancement"
+      },
+      "body": {
+        "en": "<p>Some other enhancements in sales process were also done, these include:</p>\n<p>1. Fix product class sync when there are more than one class in variant.</p>\n<p>2. Reduce data in cached data set: TimeZone, IMCScript.</p>\n<p>3. Filter of inactive users in case of tagging.</p>\n<p>4. Redesign of opportunity pipeline.</p>\n<p>5. An SI for whom ERP material is created cannot be deleted in the quote it belongs to.</p>\n<p>6. Quote has TimeZone is now defaulted on user time zone, or sales_system_instance timezone in that order. Is useful to reduce time into quote timezone.</p>\n<p>7. Default Quote language based on Account language, next user language.</p>\n<p>8. Enhancement to support gmap on 1908.</p>\n<p>9. Enhancement to manually sync a ERP configurable product kb from ERP (bringing in the latest)</p>\n<p>10. Enhancement to sync product variants of an ERP configurable product together with the ERP configurable product.</p>\n<p>11. Enable copy of an active script (from browser).</p>\n<p>12. Allow users to be searched in their first and last names as well if searched in user object name only.</p>\n<p>13. Replace itextpdf with pdfbox.</p>\n<p>14. Read the symbolic value image path from IMCScript.</p>\n<p>15. Making a line item optional is supported in any quote status.</p>\n<p>16. SSC connected quotes do not need to be saved until changed. Till 1904 system would have always considered them changed as soon as those quotes were opened.</p>\n<p>17. CFC quote import-export enhancements related to import of product with ERP of external id and with product list price if any in CFC.</p>\n<p>18. User can save a quote without the need to see that quote needs pricing pop up, this can be achieved using a setting: SettingDisablePopupOfPricing.</p>\n<p>19. Redesign and granular data load in product-&gt; knowledgebase -&gt; trigger and trigger details pages.</p>"
+      },
+      "position": 8
+    },
+    {
+      "title": {
+        "en": "Tool Support"
+      },
+      "body": {
+        "en": "<p><strong>Groovy extension point update</strong></p>\n<p>All quote related groovy extension points now get full sales item tree in the input parameter and can execute any postscript actions on the quote.</p>\n<p>In addition, more data points are made available in the groovy interface.</p>\n<p>&nbsp;</p>\n<p><strong>Groovy extension on change of quote currency and/or pricing date change</strong></p>\n<p>A new extension point has been provided.</p>\n<p>&nbsp;</p>\n<p><strong>Groovy extension on made to order operations of create material, bill of material and routing.</strong></p>\n<p>The made to order operations of creating material, bill of material and material routing are now groovy enabled. This is done to support customer-specific needs more clearly.</p>\n<p>&nbsp;</p>\n<p><strong>BOM Explosion with Same Range Value in Different DA in Different Rows</strong></p>\n<p>Enhancements are done to support BOM Explosion with Same Range Value in Different DA in Different Rows/ trigger groups&rdquo;</p>\n<p>&nbsp;</p>\n<p><strong>Auto delete sync history</strong></p>\n<p>A scheduled job is provided to auto delete sync history.</p>\n<p>&nbsp;</p>\n<p><strong>HTML Audits for configuration engine</strong></p>\n<p>More HTML audits are made available for both configuration and pricing engine. In addition, the output structure and folder naming has been standardized.</p>\n<p>&nbsp;</p>\n<p><strong>Simplification of KB condition trigger actions</strong></p>\n<p>Creating KB Conditional Triggers is now made very easy. User does not even need to type and can perform the action by simple clicks only (depending on need).</p>\n<p>&nbsp;</p>\n<p><strong>SPARQL drop/alternate for quote</strong></p>\n<p>Starting 1908 there is little to no need of using SPARQL on quote. Users can use IMCScript to compute documentHeaderPrice and itemHeaderTotalPrice. For more information on how to set this up please see section 6 of the guide: 1908_IMCScript_Guide.</p>\n<p>&nbsp;</p>\n<p><strong>Audit log enhancements</strong></p>\n<p>New UI design and easy search capability.</p>\n<p>&nbsp;</p>\n<p><strong>Schedule job: to sync Lookup table from ERP</strong></p>\n<p>This feature enables MSP to sync lookup table that is active and have ERP side ID defined from ERP. The task can be run in parallel for example task 1,2,3,4 for table 1,2,3,4 etc. It also allows the results to be seen in sync history.</p>\n<p>&nbsp;</p>\n<p><strong>Price</strong></p>\n<p>From 1908 users can download a pricing scheme in excel format, make changes and upload back into the system.</p>"
+      },
+      "position": 9
+    },
+    {
+      "title": {
+        "en": "Other features and bug fixes"
+      },
+      "body": {
+        "en": "<p>1. Bug fixes and cleans up.</p>\n<p>2. Quote type is no longer mandatory on quote creation.</p>\n<p>3. IMCSemantic model test cases.</p>\n<p>4. IMSScript test cases.</p>\n<p>5. All sap premium certification based comments are incorporated.</p>"
+      },
+      "position": 10
+    }
+  ]
+}
