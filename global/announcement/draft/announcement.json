@@ -3,111 +3,111 @@
   "content": [
     {
       "title": {
-        "en": "Product Features"
+        "en": "2002 Key Features & Enhancements"
       },
       "body": {
-        "en": "<p><strong>Pricing Scheme/Procedure determination</strong></p>\n<p>MSP now supports multiple pricing schemes or pricing procedure. The scheme/procedure is auto determined based on quote sales area parameters which include, sales document type, sales organization, distribution channel, and division. One can also make account specific determination.</p>\n<p>For more information on this feature please see the guide: 1908_PricingScheme_Determination_Guide. The guide explains in detail how to set up the system and make use of the capabilities.</p>"
+        "en": "<h3 style=\"text-align: justify;\"><strong>Introduction</strong></h3>\n<p style=\"text-align: justify;\">With the 20/02 release of the Manufacturing X Sales Platform, In Mind Cloud focuses on state-of-the-art usability of the system to maximize the value of existing features for our customers. Numerous features, e.g. Home Page, Account Overview and Opportunity Pipeline View have been re-designed to enhance usability and efficiency.</p>\n<p style=\"text-align: justify;\"><br />To serve our manufacturing customers better, we have introduced a new task management capability to quickly create and distribute tasks, linking them to complex sales cycles in opportunities or when managing quotes for manufacturing-as-a-service.</p>\n<p style=\"text-align: justify;\"><br />In Mind Cloud further enhanced its CRM and CPQ processes. Examples are newly-introduced visibility rules around accounts and contacts, editing sales text at item level, updating prices on change of additional pricing relevant fields etc.</p>\n<p style=\"text-align: justify;\"><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Image 1.png\" alt=\"\" width=\"100%\" /></p>"
       },
-      "position": 0
+      "position": 1
     },
     {
       "title": {
-        "en": "Product Features"
+        "en": "2002 Key Features & Enhancements"
       },
       "body": {
-        "en": "<p><strong>Performance Improvements</strong></p>\n<p><strong>Save and reload SSC cache from the database</strong></p>\n<p>MSP can now save the last cached data in SSC engine. The data is saved into MSP database and upon system, start is restored back to SSC. This significantly reduces the time taken to reload the data from ERP.</p>\n<p><strong>{Image}</strong></p>\n<p>&nbsp;</p>\n<p><strong>Save time in the load of attributes meta data from SSC</strong></p>\n<p>Most of the meta-information from SSC was reloaded on every transaction, this has been improved and now only loaded once.</p>\n<p><strong>{Image}</strong></p>\n<p>&nbsp;</p>\n<p><strong>Gridline item view</strong></p>\n<p>To give improved performance on the quote line item table grid view is also supported with all features of the responsive view. This view can be enabled using a setting. This new line items table which uses a simple grid-like table that supports rendering for 1000+ line items quickly.</p>\n<p><strong>{Image}</strong></p>"
+        "en": "<h3 style=\"text-align: justify;\"><strong>1. Activities Management</strong></h3>\n<p style=\"text-align: justify;\">In a sales-driven process, activity management is a central component to track each customer interaction and schedule upcoming activities that help a sales rep move a customer through the funnel. Highly productive and successful sales reps understand the importance of a properly defined activity management process, as it helps them to better understand a customer&rsquo;s interaction history, collaborate with their colleagues more efficiently and stay on top of important deadlines pertaining to a sales cycle. At the same time, Sales Managers gain important insights which can be used to further improve the sales process, coach other or onboard new sales reps. Just imagine your best sales rep leaving on one day over the other, and you need to enable a smooth handover.</p>\n<p style=\"text-align: justify;\"><br />Here at In Mind Cloud, we have made it a priority to bring powerful activity management capabilities to the manufacturing industry.</p>\n<p style=\"text-align: justify;\"><br />We are introducing a new activity type &lsquo;Task&rsquo;. A task can be a certain activity that needs to be carried out in order to further progress the sales cycle and basically comprises of a task description, a status and priority, a date or date range as to when this task is going to get executed, as well as a responsible for completing the task. The following figure represents a task object:</p>\n<p><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Figure 1-Task Object.png\" alt=\"\" width=\"100%\" /></p>\n<p style=\"text-align: center;\"><strong>Figure 1:&nbsp;Task Object</strong></p>\n<p style=\"text-align: center;\">&nbsp;</p>\n<p style=\"text-align: justify;\">If a task is created in direct relation to an opportunity or a quote, the user can reference this task accordingly.</p>\n<p style=\"text-align: justify;\">Similarly, it can be referenced to an account. This immediately helps, for example, a sales team that is jointly working on an opportunity to understand the various activities that have been carried out already, or that are scheduled to get executed in the future.</p>"
       },
-      "position": 0
+      "position": 2
+    },
+    {
+      "title": {
+        "en": "2002 Key Features & Enhancements"
+      },
+      "body": {
+        "en": "<h3 style=\"text-align: justify;\"><strong>2. Insight</strong></h3>\n<p style=\"text-align: justify;\">As part of our strategic investment into a state-of-the-art user experience of Manufacturing X, as well as delivering sales effectiveness capabilities, we have set out to deliver a new concept of a homepage as well as overview pages.</p>\n<p style=\"text-align: justify;\"><br />Both allow end-users to instantly obtain and digest critical information, e.g. about the pipeline, specific deals or sales KPIs and enable them to initiate appropriate action instantly.</p>\n<p style=\"text-align: justify;\"><br /><strong>Homepage</strong></p>\n<p style=\"text-align: justify;\">With this release, we deliver an entirely redesigned homepage. After a sales rep logs on, they will be prompted with the most critical information and KPIs to manage day-to-day operations:</p>\n<p style=\"text-align: justify;\"><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Figure 2-Newly Designed Homepage.png\" alt=\"\" width=\"100%\" /></p>\n<p style=\"text-align: center;\"><strong>Figure 2: Newly Designed Homepage</strong></p>\n<p style=\"text-align: justify;\">&nbsp;</p>\n<p style=\"text-align: justify;\">You will notice the new color theme of the navigation bar and background image.</p>\n<p style=\"text-align: justify;\"><br />Administrators can configure 1) sections and 2) widgets. A section allows an administrator to logically group widgets together. In the above figure, the section &lsquo;Insights&rsquo; combines new tile widgets that can be turned on through configuration. The tiles available with release 20/02 are:</p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Quote Volume by Status (aggregating the volume of quotes of a particular status; in this example, the status is &lsquo;Pending Internal Approval&rsquo;).</p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Current Quarter Pipeline (total volume of active opportunities that are expected to close within the current quarter).</p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Total Pipeline (active opportunities that are neither lost nor won).</p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Won/Lost Opportunities (comparing the % split between opportunities that are won or lost).</p>\n<p style=\"text-align: justify; padding-left: 30px;\">&nbsp;</p>\n<p style=\"text-align: justify;\">The homepage also occupies existing table widgets that have been delivered as part of a previous release.</p>"
+      },
+      "position": 3
+    },
+    {
+      "title": {
+        "en": "2002 Key Features & Enhancements"
+      },
+      "body": {
+        "en": "<p style=\"text-align: justify;\">When clicking on these tiles, the user is taken to context specific navigation targets. While both tiles, &lsquo;Quote Volume by Status&rsquo; and &lsquo;Current Quarter Pipeline&rsquo; take the user to a filtered list of quotes and opportunities respectively, the &lsquo;Total Pipeline&rsquo; tile navigates to the &lsquo;Opportunities Pipeline&rsquo; view which has received a makeover as well:</p>\n<p style=\"text-align: justify;\"><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Figure 3-Newly Designed Opportunity Pipeline View.png\" alt=\"\" width=\"100%\" /></strong></p>\n<p style=\"text-align: center;\"><strong>Figure 3: Newly Designed Opportunity Pipeline View</strong></p>\n<p style=\"text-align: justify;\">&nbsp;</p>\n<p style=\"text-align: justify;\">On this view, we have delivered the following enhancements which are available after upgrading:</p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Entirely redesigned card layout</p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; User avatars to represent the opportunity&rsquo;s owner</p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Added field &lsquo;Chance of Success&rsquo;</p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Color coding based on &lsquo;Chance of Success&rsquo;</p>"
+      },
+      "position": 4
+    },
+    {
+      "title": {
+        "en": "2002 Key Features & Enhancements"
+      },
+      "body": {
+        "en": "<p style=\"text-align: justify;\"><strong>Overview Account</strong></p>\n<p style=\"text-align: justify;\">While a CRM solution captures critical information, sometimes it may be overwhelming for a user to find the right information easily. To instantly obtain a snapshot of where an account stands from a pipeline perspective, who the respective contacts are, what quotes are being worked on, etc. Manufacturing X will deliver a new page called &lsquo;Account Overview&rsquo;:</p>\n<p style=\"text-align: justify;\"><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Figure 4-Account Overview Page.png\" alt=\"\" width=\"100%\" /></strong></p>\n<p style=\"text-align: center;\"><strong>Figure 4: Account Overview Page</strong></p>\n<p style=\"text-align: justify;\">&nbsp;</p>\n<p style=\"text-align: justify;\">When turned on via the administration the tab &lsquo;Overview&rsquo; will become available on the account object. As part of release 20/02, the following 5 widgets are being made available:</p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Open Quotes <em>(sorted by last updated date)</em></p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Sales Team <em>(from Role/Function)</em></p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Contacts <em>(with ability to call mobile and send e-mail using default apps on desktop)</em></p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Pipeline Information <em>(for next 3 months, and total pipeline)</em></p>\n<p style=\"text-align: justify; padding-left: 30px;\"><br />&bull; Upcoming Tasks <em>(sorted by last updated date)</em><br />The account overview page helps users who are not familiar with the account, to obtain an instant summary.</p>"
+      },
+      "position": 5
+    },
+    {
+      "title": {
+        "en": "2002 Key Features & Enhancements"
+      },
+      "body": {
+        "en": "<h3 style=\"text-align: justify;\"><strong>3. Standardized Account Access for Direct and Distribution Sales</strong></h3>\n<p style=\"text-align: justify;\">Account information is quite sensitive. A sales representative should only see customers that they are allowed to.</p>\n<p style=\"text-align: justify;\">This is even more important for distribution and partner sales. With this release, In Mind Cloud further extends the capability of the existing access rights concept and introduces a set of comprehensive pre-defined rules to cater to account &amp; contact visibility rules.</p>\n<p style=\"text-align: justify;\"><br />With this feature, Manufacturing X delivers below<br />additional benefits:</p>\n<p style=\"padding-left: 30px; text-align: justify;\"><br />&radic; Easily control territory access for direct sales</p>\n<p style=\"padding-left: 30px; text-align: justify;\"><br />&radic; Easily manage distributor access to customer information</p>\n<p style=\"padding-left: 30px; text-align: justify;\"><br />&radic; Enable admin to setup various rules to cater for more complex business scenarios</p>\n<p>&nbsp;</p>\n<table style=\"border-collapse: collapse; width: 100%;\" border=\"1\">\n<tbody>\n<tr style=\"height: 42px;\">\n<td style=\"width: 100%; height: 42px; border-style: solid; padding-left: 30px; border-color: #0ABAEC; background-color: #0abaec; color: #ffffff;\"><strong>Users can be granted access to an account if:</strong></td>\n</tr>\n<tr style=\"height: 40px;\">\n<td style=\"padding-left: 30px; border-style: solid; border-color: #0abaec; width: 100%; height: 40px; text-align: justify;\">&radic; User is its creator, owner or assigned to account team</td>\n</tr>\n<tr style=\"height: 50px;\">\n<td style=\"border-style: solid; border-color: #0abaec; padding-left: 30px; width: 100%; height: 50px; text-align: justify;\">&radic; User needs access to accounts managed by others in this Org Unit hierarchy (e.g. managers)</td>\n</tr>\n<tr style=\"height: 40px;\">\n<td style=\"border-style: solid; border-color: #0abaec; width: 100%; height: 40px; text-align: justify;\">\n<p style=\"padding-left: 30px;\">&radic; User can also be granted access to orphaned accounts, an edge case when accounts are brought in via technical integration without creator</p>\n</td>\n</tr>\n<tr style=\"height: 40px;\">\n<td style=\"padding-left: 30px; border-style: solid; border-color: #0abaec; width: 100%; height: 40px; text-align: justify;\">&radic; Contact visibility can be restricted based on account</td>\n</tr>\n</tbody>\n</table>\n<p style=\"padding-left: 30px;\">&nbsp;</p>\n<p style=\"text-align: center;\"><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Figure 5-Standardized Account Access for Direct and Distribution Sales.png\" alt=\"\" width=\"100%\" height=\"\" /></strong></p>\n<p style=\"text-align: center;\"><strong>Figure 5: Standardized Account Access for Direct and Distribution Sales</strong></p>"
+      },
+      "position": 6
+    },
+    {
+      "title": {
+        "en": "2002 Key Features & Enhancements"
+      },
+      "body": {
+        "en": "<h3>4. General Purpose Scripting Interface for Configuration</h3>\n<p style=\"text-align: justify;\">With the release 20/02 Manufacturing X comes with a general-purpose scripting interface for product configuration, enhancing the existing scripting via capabilities of the domain specific language. This general-purpose programming interface allows to connect external APIs to validate the configuration, to use external dimensioning APIs or to control very specific behavior beyond the standard capabilities, such as very custom Bill-of-Material explosion, custom variant matching or the like.</p>\n<p style=\"text-align: center;\"><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Figure 6-General Purpose Scripting Interface for Configuration.png\" alt=\"\" width=\"100%\" height=\"\" />Figure 6: General Purpose Scripting Interface for Configuration</strong></p>"
+      },
+      "position": 7
+    },
+    {
+      "title": {
+        "en": "2002 Key Features & Enhancements"
+      },
+      "body": {
+        "en": "<h3>5. Multiple Formatted Text for Line Items</h3>\n<p style=\"text-align: justify;\">Manufacturing X supports quote level texts in a rich text editor and free text user input for line items. With 20/02 Manufacturing X introduces the feature to maintain multiple texts per line item which can be edited in a rich text editor. This is especially interesting for Engineer-to-Order Processes. These texts can be used for output documents, material creation or order texts.</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Figure 7-Multiple Formatted Text for Line Items.png\" alt=\"\" width=\"100%\" height=\"\" /></strong></p>\n<p style=\"text-align: center;\"><strong>Figure 7: Multiple Formatted Text for Line Items</strong></p>"
+      },
+      "position": 8
+    },
+    {
+      "title": {
+        "en": "2002 Key Features & Enhancements"
+      },
+      "body": {
+        "en": "<h3>6. Enhanced External Pricing Control</h3>\n<p style=\"text-align: justify;\">Manufacturing X supports scenarios to call external systems such as an ERP for pricing. To ensure correct prices the system indicates when a pricing is required. With 20/02 Manufacturing X enhances this capability to allow a customer to define additional attributes to trigger a pricing request. This caters for scenarios, where the pricing is dependent on non-standard attributes such as inco terms, payment terms or custom attributes.</p>\n<p style=\"text-align: justify;\"><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Figure 8-Enhanced External Pricing Control.png\" alt=\"\" width=\"100%\" height=\"\" /></strong></p>\n<p style=\"text-align: center;\"><strong>Figure 8: Enhanced External Pricing Control</strong></p>"
+      },
+      "position": 9
+    },
+    {
+      "title": {
+        "en": "2002 Key Features & Enhancements"
+      },
+      "body": {
+        "en": "<h3>7. Validation Rules for Google Maps Integration</h3>\n<p style=\"text-align: justify;\">Manufacturing X supports bi-directional integration with Google Maps for engineering or constructing use cases. With this release, Manufacturing X introduces a validation engine which will be triggered when users save the Google Maps drawing. The system will show the respective validation messages if certain rules are violated to guide users to create a proper and compliant layout design. This will help to avoid human errors by enforcing validation rules when a user tries to save the layout design and it will eventually improve quote accuracy.</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Figure 9-Validation Rules for Google Maps Integration (2).png\" alt=\"\" width=\"100%\" height=\"\" /></strong></p>\n<p style=\"text-align: center;\"><strong>Figure 9: Validation Rules for Google Maps Integration</strong></p>"
+      },
+      "position": 10
+    },
+    {
+      "title": {
+        "en": "2002 Key Features & Enhancements"
+      },
+      "body": {
+        "en": "<h3>8. Redesign: Copy Line Items from Existing Quote</h3>\n<p style=\"text-align: justify;\">Manufacturing X allows to copy line items from existing quotes within a current quote, which significantly boosts the productivity. With this feature it is also possible to define re-usable sample quotes. In this release, In Mind Cloud further improves the user experience for this feature when working with multi-level products. Line item trees can be easily expanded and collapsed to speed up the selection process.</p>\n<p><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Figure 10-Copy Line Items from Existing Quote.png\" alt=\"\" width=\"100%\" height=\"\" /></strong></p>\n<p style=\"text-align: center;\"><strong>Figure 10: Copy Line Items from Existing Quote</strong></p>"
+      },
+      "position": 11
     },
     {
       "title": {
         "en": ""
       },
       "body": {
-        "en": "<p><strong>MSP Home Page</strong></p>\n<p>From 1908 release MSP brings out a highly customizable home page. Admin of the system can define what widgets need to show up on the home page. The widgets could be a table of quote or opportunities etc.</p>\n<p>&nbsp;</p>\n<p><strong>Admin change User Preference</strong></p>\n<p>From 1908 release MSP also supports the change of user preferences by the administrator. An administrator can mass change user preferences of:</p>\n<p>&middot; Receive email</p>\n<p>&middot; Receive approval email</p>\n<p>&middot; Receive routing email</p>\n<p>&middot; Receive a notification email</p>\n<p>&middot; Enable interactive pricing</p>\n<p>&middot; Configurator pagination mode</p>\n<p>&middot; Use fluid layout</p>\n<p>&middot; Value option threshold and more</p>\n<p>&nbsp;</p>\n<p><strong>{Images}</strong></p>"
+        "en": "<h3>9. Enhancement: Product Configuration Excel Upload</h3>\n<p style=\"text-align: justify;\">Manufacturing X allows to define Product Models (attributes, configuration, bill-of-material, etc.) in MS Excel and upload this to the system. This speeds up the re-using of existing data and to quickly define partial repetitive configuration rules. With the release 20/02 it is further possible to control the behavior of the bill-of-material from within the Excel format. This includes the quantity such as whether the components should change their quantity relative to the parent (e.g., double quantity of parent triggers doubling quantity of children) or not.</p>\n<p style=\"text-align: justify;\"><strong><img src=\"https://raw.githubusercontent.com/in-mind-cloud/content/master/global/assets/images/2002/Figure 11-Product Configuration Excel Upload.png\" alt=\"\" width=\"100%\" height=\"\" /></strong></p>\n<p style=\"text-align: center;\"><strong>Figure 11: Product Configuration Excel Upload</strong></p>\n<p style=\"text-align: justify;\">&nbsp;</p>"
       },
-      "position": 0
-    },
-    {
-      "title": {
-        "en": "Product Features"
-      },
-      "body": {
-        "en": "<p><strong>Quote Duplicate Check</strong></p>\n<p>This feature provides a very customized way of search for similar quotes. Users can search based on quote header parameters, quote partners, line items (products) and dynamic attribute values.</p>\n<p>The results are ranked in terms of direct hits based on each search term. The feature is very helpful in finding like related quotes.</p>\n<p><strong>{Images}</strong></p>\n<p>&nbsp;</p>\n<p><strong>Quote Overview view</strong></p>\n<p>The former quote overview and additional attribute views are merged into a combined Quote overview tab. With a separate section to control Quote pricing scheme/procedure determination.</p>\n<p>&nbsp;</p>\n<p><strong>{Images}</strong></p>"
-      },
-      "position": 0
-    },
-    {
-      "title": {
-        "en": "Product Features"
-      },
-      "body": {
-        "en": "<p><strong>OAuth based authentication to consume In Mind API&rsquo;s</strong></p>\n<p>With this enhancement In Mind now supports all API&rsquo;s for configuration and pricing to be consumed directly from third-party applications.</p>\n<p>Consumers need to register their system with an In Mind system and get a client id using which the authentication will be authorized. For more details please see the guide: 1908_General_System_Features_Guide</p>\n<p>&nbsp;</p>\n<p><strong>Account and Partner Function Enhancement from ERP</strong></p>\n<p>In 1908 following enhancements were done:</p>\n<p>- Accounts page has more columns namely main address country and city.</p>\n<p>- Create Quote view also shows the country and city.</p>\n<p>- Create Partner Function for account is enhanced with a paginated account selection screen</p>\n<p>- Quote can be created with different accounts, under the same opportunity (account different from opportunity account).</p>\n<p>- Quotes can be assigned to an existing opportunity.</p>\n<p>- Opportunity selector is paginated.</p>\n<p>- While creating a new quote opportunity can be directly assigned.</p>"
-      },
-      "position": 0
-    },
-    {
-      "title": {
-        "en": "Other Product Features"
-      },
-      "body": {
-        "en": "<p><strong>Pricing enhancements</strong></p>\n<p>In 1908 more enhancements were done in SSC pricing engine and following new features have been added:</p>\n<p>- Showing the condition type ERP ID on the pricing screen</p>\n<p>- Showing if a pricing condition is inactive.</p>\n<p>- Ability to triggers ERP pricing from the pricing screen.</p>\n<p>- Ability to show and change the condition type unit of measure and value.</p>\n<p>{Images}</p>\n<p>&nbsp;</p>\n<p><strong>Configurator paginated view enhancements</strong></p>\n<p>In 1908 more enhancements were done in configurator:</p>\n<p>- Ability to list all subgroups of a group within one page.</p>\n<p>- And making the paginated view the default and only view.</p>\n<p><strong>{Images}</strong></p>\n<p>&nbsp;</p>\n<p><strong>Role and approval view enhancements:</strong></p>\n<p>In 1908 the role has its own new view under administration. In addition, the approval engine concepts of Condition, Approval rule, and Approval gate also get a new separate consolidated view.</p>\n<p><strong>{Images}</strong></p>\n<p>&nbsp;</p>\n<p><strong>Support SSC BOM explosion and line item ordering:</strong></p>\n<p>From 1908 MSP also supports SSC based BOM explosion fully. In addition, the line item order will become the same as standard MSP.</p>\n<p><strong>{Images}</strong></p>"
-      },
-      "position": 0
-    },
-    {
-      "title": {
-        "en": "New Design Features"
-      },
-      "body": {
-        "en": "<p><strong>New design opportunity pipeline</strong></p>\n<p>From 1908 MSP opportunity pipeline has a new design. It also comes with easy to use filters.</p>\n<p>{Images}</p>\n<p>&nbsp;</p>\n<p>Filter view:</p>\n<p>{Images}</p>\n<p>&nbsp;</p>\n<p><strong>New design product catalog</strong></p>\n<p>From 1908 MSP product catalog also has a refined design.</p>\n<p>With related products, bill of material and related group products:</p>\n<p>&nbsp;</p>\n<p>Without related products, bill of material and related group products:</p>\n<p>{Images}</p>"
-      },
-      "position": 0
-    },
-    {
-      "title": {
-        "en": "System Task Enhancement"
-      },
-      "body": {
-        "en": "<p><strong>Enhancement Step</strong></p>\n<p>1. System task is moved from **Administration -&gt; Master Data Management**</p>\n<p>to **System Processes -&gt; System Task -&gt; Master Data**</p>\n<p><strong>{Images}</strong></p>\n<p>&nbsp;</p>\n<p>2. The types of task resource supported are:</p>\n<p>-Account Sync Job: To sync account from ERP</p>\n<p>-Delete Sync History job: To delete the Sync History (NEW)</p>\n<p>-Product Sync Job: To sync product from ERP</p>\n<p>-ERP Table Sync Job: To sync table from ERP (NEW)</p>\n<p>-Report Sync Job: To sync MX report data to an external system</p>\n<p><strong>{Images}</strong></p>\n<p>&nbsp;</p>\n<p>3. Introduce settings Active to enable/disable a system task.</p>\n<p><strong>{Images}</strong></p>\n<p>&nbsp;</p>\n<p>4. Introduce System Task Progress table to indicate which tasks are running and which process unit it is running on.</p>\n<p><strong>{Image}</strong></p>\n<p>Refer 1908_General_System_Features_Guide.docx for more information.</p>"
-      },
-      "position": 0
-    },
-    {
-      "title": {
-        "en": "Product / KB Sync Enhancement"
-      },
-      "body": {
-        "en": "<p>1. Introduce button to synchronize the latest product knowledge base from ERP (only applicable for SSC environment)</p>\n<p><strong>{Images}</strong></p>\n<p>&nbsp;</p>\n<p>2. Introduce options to synchronize product variants for the configurable product:</p>\n<p>&middot; Sync single product:</p>\n<p><strong>{Images}</strong></p>\n<p>&middot; Sync all / selected product:</p>\n<p><strong>{Images}</strong></p>\n<p>&nbsp;</p>\n<p>Please refer 1908_ERP_Integration_Guide.docx for more details.</p>"
-      },
-      "position": 0
-    },
-    {
-      "title": {
-        "en": "Other Enhancement"
-      },
-      "body": {
-        "en": "<p>Some other enhancements in sales process were also done, these include:</p>\n<p>1. Fix product class sync when there are more than one class in variant.</p>\n<p>2. Reduce data in cached data set: TimeZone, IMCScript.</p>\n<p>3. Filter of inactive users in case of tagging.</p>\n<p>4. Redesign of opportunity pipeline.</p>\n<p>5. An SI for whom ERP material is created cannot be deleted in the quote it belongs to.</p>\n<p>6. Quote has TimeZone is now defaulted on user time zone, or sales_system_instance timezone in that order. Is useful to reduce time into quote timezone.</p>\n<p>7. Default Quote language based on Account language, next user language.</p>\n<p>8. Enhancement to support gmap on 1908.</p>\n<p>9. Enhancement to manually sync a ERP configurable product kb from ERP (bringing in the latest)</p>\n<p>10. Enhancement to sync product variants of an ERP configurable product together with the ERP configurable product.</p>\n<p>11. Enable copy of an active script (from browser).</p>\n<p>12. Allow users to be searched in their first and last names as well if searched in user object name only.</p>\n<p>13. Replace itextpdf with pdfbox.</p>\n<p>14. Read the symbolic value image path from IMCScript.</p>\n<p>15. Making a line item optional is supported in any quote status.</p>\n<p>16. SSC connected quotes do not need to be saved until changed. Till 1904 system would have always considered them changed as soon as those quotes were opened.</p>\n<p>17. CFC quote import-export enhancements related to import of product with ERP of external id and with product list price if any in CFC.</p>\n<p>18. User can save a quote without the need to see that quote needs pricing pop up, this can be achieved using a setting: SettingDisablePopupOfPricing.</p>\n<p>19. Redesign and granular data load in product-&gt; knowledgebase -&gt; trigger and trigger details pages.</p>"
-      },
-      "position": 0
-    },
-    {
-      "title": {
-        "en": "Tool Support"
-      },
-      "body": {
-        "en": "<p><strong>Groovy extension point update</strong></p>\n<p>All quote related groovy extension points now get full sales item tree in the input parameter and can execute any postscript actions on the quote.</p>\n<p>In addition, more data points are made available in the groovy interface.</p>\n<p>&nbsp;</p>\n<p><strong>Groovy extension on change of quote currency and/or pricing date change</strong></p>\n<p>A new extension point has been provided.</p>\n<p>&nbsp;</p>\n<p><strong>Groovy extension on made to order operations of create material, bill of material and routing.</strong></p>\n<p>The made to order operations of creating material, bill of material and material routing are now groovy enabled. This is done to support customer-specific needs more clearly.</p>\n<p>&nbsp;</p>\n<p><strong>BOM Explosion with Same Range Value in Different DA in Different Rows</strong></p>\n<p>Enhancements are done to support BOM Explosion with Same Range Value in Different DA in Different Rows/ trigger groups&rdquo;</p>\n<p>&nbsp;</p>\n<p><strong>Auto delete sync history</strong></p>\n<p>A scheduled job is provided to auto delete sync history.</p>\n<p>&nbsp;</p>\n<p><strong>HTML Audits for configuration engine</strong></p>\n<p>More HTML audits are made available for both configuration and pricing engine. In addition, the output structure and folder naming has been standardized.</p>\n<p>&nbsp;</p>\n<p><strong>Simplification of KB condition trigger actions</strong></p>\n<p>Creating KB Conditional Triggers is now made very easy. User does not even need to type and can perform the action by simple clicks only (depending on need).</p>\n<p>&nbsp;</p>\n<p><strong>SPARQL drop/alternate for quote</strong></p>\n<p>Starting 1908 there is little to no need of using SPARQL on quote. Users can use IMCScript to compute documentHeaderPrice and itemHeaderTotalPrice. For more information on how to set this up please see section 6 of the guide: 1908_IMCScript_Guide.</p>\n<p>&nbsp;</p>\n<p><strong>Audit log enhancements</strong></p>\n<p>New UI design and easy search capability.</p>\n<p>&nbsp;</p>\n<p><strong>Schedule job: to sync Lookup table from ERP</strong></p>\n<p>This feature enables MSP to sync lookup table that is active and have ERP side ID defined from ERP. The task can be run in parallel for example task 1,2,3,4 for table 1,2,3,4 etc. It also allows the results to be seen in sync history.</p>\n<p>&nbsp;</p>\n<p><strong>Price</strong></p>\n<p>From 1908 users can download a pricing scheme in excel format, make changes and upload back into the system.</p>"
-      },
-      "position": 0
-    },
-    {
-      "title": {
-        "en": "Other features and bug fixes"
-      },
-      "body": {
-        "en": "<p>1. Bug fixes and cleans up.</p>\n<p>2. Quote type is no longer mandatory on quote creation.</p>\n<p>3. IMCSemantic model test cases.</p>\n<p>4. IMSScript test cases.</p>\n<p>5. All sap premium certification based comments are incorporated.</p>"
-      },
-      "position": 0
+      "position": 12
     }
   ]
 }
