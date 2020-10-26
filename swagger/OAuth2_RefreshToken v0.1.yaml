@@ -1,0 +1,115 @@
+openapi: 3.0.1
+info:
+  title: OAuth2 Refresh Token API
+  version: 1.0.0
+servers:
+  - url: /api
+tags:
+  - name: OAuth2 Refresh Token Flow
+paths:
+  /oauth/token:
+    post:
+      tags:
+        - OAuth2 Refresh Token Flow
+      summary: Refresh Token endpoint
+      description: >-
+        Obtain new access token by passing refresh token details after access token expired. 
+      requestBody:
+        description: Example of Request Body for refresh token endpoint.
+        content:
+          x-www-form-urlencoded:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/OAuth2_RefreshToken_refreshToken'
+                - $ref: '#/components/schemas/OAuth2_RefreshToken_clientId'
+                - $ref: '#/components/schemas/OAuth2_RefreshToken_clientSecret'
+                - $ref: '#/components/schemas/OAuth2_RefreshToken_grantType'
+              required: 
+                - refresh_token
+                - client_id
+                - client_secret
+                - grant_type
+        required: true
+      
+      responses:
+        '200':
+          description: >-
+            Returns the access token details to be used for querying authenticated endpoints. Refresh token will be provided if refresh token is configured as one of the OAuth2 grant types.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/OAuth2_RefreshToken_accessToken'
+                  - $ref: '#/components/schemas/OAuth2_RefreshToken_tokenType'
+                  - $ref: '#/components/schemas/OAuth2_RefreshToken_refreshToken'
+                  - $ref: '#/components/schemas/OAuth2_RefreshToken_expiresIn'
+                  - $ref: '#/components/schemas/OAuth2_RefreshToken_scope'
+        '400':
+          description: >-
+            If any key in request body is missing or incorrectly provided.
+        
+components:
+  schemas:
+    OAuth2_RefreshToken_clientId:
+      type: object
+      properties:
+        client_id:
+          type: string
+          title: Client Id registered in the system through the Administration tab of the MX.
+          example: imc_client
+    
+    OAuth2_RefreshToken_clientSecret:
+      type: object
+      properties:
+        client_secret:
+          type: string
+          title: Client secret generated for registered client id. 
+          example: Taj9PJBDBeUcT1QwjcN1iz0ItzBos9Vx
+    
+    OAuth2_RefreshToken_grantType:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          title: Type of OAuth2 flow engaged. i.e. Refresh Token flow.
+          example: refresh_token
+    
+    OAuth2_RefreshToken_accessToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+          title: Access token granted to be used as bearer token for request to authenticated API endpoints.
+          example: d1868c98-e265-4995-99e0-bf2cbe2ffe76
+    
+    OAuth2_RefreshToken_tokenType:
+      type: object
+      properties:
+        token_type:
+          type: string
+          title: Type of access token issued. i.e. Bearer
+          example: bearer
+    
+    OAuth2_RefreshToken_expiresIn:
+      type: object
+      properties:
+        expires_in:
+          type: string
+          title: Amount of time (in seconds) the access token will be valid for. Based on the value of the validity field set for registered client.
+          example: 299
+          
+    OAuth2_RefreshToken_scope:
+      type: object
+      properties:
+        scope:
+          type: string
+          title: Access token granted to be used as bearer token for request to authenticated API endpoints.
+          example: d1868c98-e265-4995-99e0-bf2cbe2ffe76
+          
+    OAuth2_RefreshToken_refreshToken:
+      type: object
+      properties:
+        refresh_token:
+          type: string
+          title: If refresh token is set as one of the grant types for client, refresh token is provided to obtain new access token after expiry. 
+          example: b19efc44-b301-4b4e-b3de-d2393b53630e

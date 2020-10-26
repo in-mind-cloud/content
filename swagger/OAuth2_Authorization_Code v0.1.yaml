@@ -1,0 +1,185 @@
+openapi: 3.0.1
+info:
+  title: OAuth2 Authorization Authorization Code Flow API
+  version: 1.0.0
+servers:
+  - url: /api
+tags:
+  - name: OAuth2 Authorization Code Flow
+  
+paths:
+  /oauth/authorize:
+    get:
+      tags:
+        - OAuth2 Authorization Code Flow
+      summary: Authentication endpoint
+      description: >-
+        Obtain Authorization Code by passing client credentials.
+      parameters:
+        - name: client_id
+          in: query
+          description: >-
+            Client Id registered in the system through the Administration tab of the MX.
+          required: true
+          schema:
+            type: string
+            example: imc_client
+        - name: response_type
+          in: query
+          description: >-
+            Type of OAuth2 flow engaged. i.e. Authorization Code flow.
+          required: true
+          schema:
+            type: string
+            example: code
+        - name: scope
+          in: query
+          description: >-
+            Scope of access granted based on authorized registered client.
+          required: true
+          schema:
+            type: string
+            example: trust
+        - name: redirect_uri
+          in: query
+          description: >-
+            Redirect URI registered with the client id. 
+          required: true
+          schema:
+            type: string
+            example: https://imc.com/iss/home
+      responses:
+        '200':
+          description: >-
+            Client will be prompted for login credentials for authentication. Upon successful authentication, client will be redirected to registered URI with authorization code passed in the request parameter.
+          content:
+            text/plain:
+                example: https://imc.com/iss/home?code=Ay8Ons
+        '404':
+          description: >-
+            If any request parameters are missing or incorrectly provided.
+  
+  /oauth/token:
+    post:
+      tags:
+        - OAuth2 Authorization Code Flow
+      summary: Access Token endpoint
+      description: >-
+        Obtain access token by passing authorization code and authentication details.
+      requestBody:
+        description: Example of Request Body for token endpoint.
+        content:
+          x-www-form-urlencoded:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/OAuth2_AuthorizationCode_redirectUri'
+                - $ref: '#/components/schemas/OAuth2_AuthorizationCode_clientId'
+                - $ref: '#/components/schemas/OAuth2_AuthorizationCode_clientSecret'
+                - $ref: '#/components/schemas/OAuth2_AuthorizationCode_grantType'
+                - $ref: '#/components/schemas/OAuth2_AuthorizationCode_authorizationCode'
+              required: 
+                - redirect_uri
+                - client_id
+                - client_secret
+                - authorization_code
+                - grant_type
+        required: true
+      
+      responses:
+        '200':
+          description: >-
+            Returns the access token details to be used for querying authenticated endpoints. Refresh token will be provided if refresh token is configured as one of the OAuth2 grant types.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/OAuth2_AuthorizationCode_accessToken'
+                  - $ref: '#/components/schemas/OAuth2_AuthorizationCode_tokenType'
+                  - $ref: '#/components/schemas/OAuth2_AuthorizationCode_refreshToken'
+                  - $ref: '#/components/schemas/OAuth2_AuthorizationCode_expiresIn'
+                  - $ref: '#/components/schemas/OAuth2_AuthorizationCode_scope'
+        '400':
+          description: >-
+            If any key in request body is missing or incorrectly provided.
+        
+components:
+  schemas:
+    OAuth2_AuthorizationCode_redirectUri:
+      type: object
+      properties:
+        redirect_uri:
+          type: string
+          title: Redirect URI registered with the client id. 
+          example: https://imc.com/iss/home
+          
+    OAuth2_AuthorizationCode_clientId:
+      type: object
+      properties:
+        client_id:
+          type: string
+          title: Client Id registered in the system through the Administration tab of the MX.
+          example: imc_client
+    
+    OAuth2_AuthorizationCode_clientSecret:
+      type: object
+      properties:
+        client_secret:
+          type: string
+          title: Client secret generated for registered client id. 
+          example: Taj9PJBDBeUcT1QwjcN1iz0ItzBos9Vx
+          
+    OAuth2_AuthorizationCode_authorizationCode:
+      type: object
+      properties:
+        authorization_code:
+          type: string
+          title: Authorization code obtained from authentication endpoint. 
+          example: Ay8Ons
+    
+    OAuth2_AuthorizationCode_grantType:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          title: Type of OAuth2 flow engaged. i.e. Authorization Code flow.
+          example: authorization_code
+    
+    OAuth2_AuthorizationCode_accessToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+          title: Access token granted to be used as bearer token for request to authenticated API endpoints.
+          example: d1868c98-e265-4995-99e0-bf2cbe2ffe76
+    
+    OAuth2_AuthorizationCode_tokenType:
+      type: object
+      properties:
+        token_type:
+          type: string
+          title: Type of access token issued. i.e. Bearer
+          example: bearer
+    
+    OAuth2_AuthorizationCode_expiresIn:
+      type: object
+      properties:
+        expires_in:
+          type: string
+          title: Amount of time (in seconds) the access token will be valid for. Based on the value of the validity field set for registered client.
+          example: 299
+          
+    OAuth2_AuthorizationCode_scope:
+      type: object
+      properties:
+        scope:
+          type: string
+          title: Access token granted to be used as bearer token for request to authenticated API endpoints.
+          example: d1868c98-e265-4995-99e0-bf2cbe2ffe76
+          
+    OAuth2_AuthorizationCode_refreshToken:
+      type: object
+      properties:
+        refresh_token:
+          type: string
+          title: If refresh token is set as one of the grant types for client, refresh token is provided to obtain new access token after expiry. 
+          example: b19efc44-b301-4b4e-b3de-d2393b53630e
