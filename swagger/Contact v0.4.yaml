@@ -1,0 +1,1483 @@
+openapi: 3.0.1
+info:
+  title: Contact API
+  version: 1.0.0
+servers:
+  - url: /api
+tags:
+  - name: Contact
+paths:
+  /contacts/search:
+    post:
+      tags:
+        - Contact
+      summary: Search contact API
+      description: >-
+        Searches and retrives a list of Contacts based on the query
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/Contact_INPUT'
+                required: 
+                  - type
+        required: true
+      responses:
+        '200':
+          description: >-
+            Returns the list of contacts as Bundle based on example of Request Payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact_OUTPUT_SEARCH'
+              example:
+                type: Bundle
+                total: 1
+                entry: 
+                  - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0IzM2NjAzMWZiMGE0ZTQ2NDA5YTFjMDliMWQxOWQzODU5=
+                    type: Contact
+                    uri: 'http://localhost:8080/iss/Contact#366031fb0a4e46409a1c09b1d19d3859'
+                    objectName: User 1
+                    objectId: 366031fb0a4e46409a1c09b1d19d3859
+                    includesAddress:
+                      - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzIzZTdmMWQyOWQ4NTQwY2ZhM2I5Y2ZmM2M5YmFkMWYx
+                        type: Address
+                        uri: 'http://localhost:8080/iss/Address#23e7f1d29d8540cfa3b9cff3c9bad1f1'
+                        objectId: 23e7f1d29d8540cfa3b9cff3c9bad1f1
+                    contactContainedBy:
+                      - 'http://localhost:8080/iss/Account#e14f1244e2e74b3a9c3896706bb1e5db'
+                    
+
+  /contacts:
+    get:
+      tags:
+        - Contact
+      summary: Gets contact API
+      description: >-
+        Retrives a list of Contacts in the system.
+      parameters:
+        - name: limit
+          in: query
+          description: >-
+            Defines the maximum number of records that can be returned.
+          schema:
+            type: integer
+            example: 10
+        - name: offset
+          in: query
+          description: >-
+            Defines the number of records that should be skipped.
+          schema:
+            type: integer
+            default: '0'
+        - name: filter
+          in: query
+          description: >-
+            The filter parameter. If keyword contains space, it must be enclosed between two apostrophe('). If keyword is URI, it must be url encoded.
+          examples:
+            contains_operator:
+              value: objectName contains 'User'
+              description: >-
+                Retrives the list of contacts with objectName containing 'User'.
+              summary: contains
+            equal_operator:
+              value: >-
+                objectName eq 'User 1'
+              description: >-
+                Retrives the list of contacts with objectName equals to 'User 1'
+              summary: equal
+            not_equal_operator:
+              value: >-
+                objectName ne 'User 1'
+              description: >-
+                Retrives the list of contacts with objectName not equals to 'User 1'
+              summary: not equal
+            greater_than_operator:
+              value: objectDateOfCreation gt 2020-03-20
+              description: >-
+                Retrives the list of contacts with objectDateOfCreation greater than '2020-03-20'.
+              summary: greater than
+            greater_than_eq_operator:
+              value: objectDateOfCreation ge 2020-03-20
+              description: >-
+                Retrives the list of contacts with objectDateOfCreation greater than or equals to '2020-03-20'.
+              summary: greater than equal
+            less_than_operator:
+              value: objectDateOfCreation lt 2020-03-20
+              description: >-
+                Retrives the list of contacts with objectDateOfCreation less than '2020-03-20'.
+              summary: less than
+            less_than_eq_operator:
+              value: objectDateOfCreation le 2020-03-20
+              description: >-
+                Retrives the list of contacts with objectDateOfCreation less than or equals to '2020-03-20'.
+              summary: less than equal
+            and_operator:
+              value: >-
+                objectName contains 'User' and objectDateOfCreation gt 2020-03-20
+              description: >-
+                Retrives the list of contacts with objectName containing 'User' and objectDateOfCreation greater than '2020-03-20'.
+              summary: and
+            or_operator:
+              value: >-
+                objectName contains 'User' or objectDateOfCreation gt 2020-03-20
+              description: >-
+                Retrives the list of contacts with objectName containing 'User' or objectDateOfCreation greater than '2020-03-20'.
+              summary: or
+          schema:
+            type: string
+          explode: false
+        - name: sort
+          in: query
+          description: >-
+            Defines the sorting of the result. 'ASC' for ascending and 'DESC' for descending order. Default order is objectName ASC.
+          example: objectName ASC
+          schema:
+            type: string
+            default: objectName ASC
+        - name: resolveRelations
+          in: query
+          description: >-
+            To resolve nested data. Suppport multiple values with comma separated format.
+          schema:
+            type: string
+          example: >-
+            includesAddress
+      responses:
+        '200':
+          description: >-
+            Returns the list of Contacts with 'includesAddress' resolved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contact_OUTPUT_GETS'
+              example:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0IzM2NjAzMWZiMGE0ZTQ2NDA5YTFjMDliMWQxOWQzODU5=
+                  type: Contact
+                  uri: 'http://localhost:8080/iss/Contact#366031fb0a4e46409a1c09b1d19d3859'
+                  objectName: User 1
+                  objectId: 366031fb0a4e46409a1c09b1d19d3859
+                  objectDateOfCreation: 1594610485368
+                  objectDateOfUpdate: 1594610485410
+                  personEmail: User1@gmail.com
+                  personFirstName: User
+                  personLastName: 1
+                  personMobile: 12345678
+                  personPhone: 12345678
+                  includesAddress:
+                    - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzIzZTdmMWQyOWQ4NTQwY2ZhM2I5Y2ZmM2M5YmFkMWYx
+                      type: Address
+                      uri: 'http://localhost:8080/iss/Address#23e7f1d29d8540cfa3b9cff3c9bad1f1'
+                      objectId: 23e7f1d29d8540cfa3b9cff3c9bad1f1
+                  contactContainedBy:
+                    - 'http://localhost:8080/iss/Account#e14f1244e2e74b3a9c3896706bb1e5db'
+
+
+    post:
+      tags:
+        - Contact
+      summary: Adds a new contact.
+      description: >-
+        Creates a new contact and returns the basic information of the contact.
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Contact_INPUT_CREATE'
+              required: 
+                - type
+                - personFirstName  
+                - personLastName
+                - contactContainedBy
+                - includesAddress
+        required: true
+      responses:
+        '200':
+          description: Returns about the created Contact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact_OUTPUT_CREATE'
+              example:
+                id: >-
+                  aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0I2UwMTEyNDhjYWJhZTQzMjNiYTNmZmE1ZjA2YWZiZmQx
+                type: Contact
+                uri: >-
+                  http://localhost:8080/iss/Contact#e011248cabae4323ba3ffa5f06afbfd1
+                contactContainedBy: [ "http://40.114.200.164/800/Account#0000001000" ]
+                personPhone: "65 86773355"
+                personLastName: 'Contact'
+                personFirstName: 'New'
+                includesAddress: [{
+                  id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzM2ZWQ4ZDQyYjJjOTRiMDg5OTg4YjM1NDVkODU4NjZk",
+                  type: "Address",
+                  uri: "http://localhost:8080/iss/Address#36ed8d42b2c94b089988b3545d85866d",
+                  addressZip: "069423",
+                  addressStreet: "46B Club Street",
+                  addressUnitNo: "10-41",
+                  addressCity: "Singapore",
+                  hasCountry: [
+                      "http://www.inmindcloud.dev.com/application/application-implementation.owl#SG"
+                  ],
+                  addressIncludedBy: [
+                      "http://localhost:8080/iss/Contact#e011248cabae4323ba3ffa5f06afbfd1"
+                  ],
+                  containsCreator: [
+                      "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person"
+                  ]
+                }]
+                personMobile: "65 86773377"
+                objectName: 'New Contact'
+                objectDateOfCreation: 1601949473346
+                
+                
+  /contacts/count:
+    get:
+      tags:
+        - Contact
+      summary: Count the list of contacts based on filter
+      description: >-
+        Returns the number of contacts in the system
+      parameters:
+        - name: filter
+          in: query
+          description: >-
+            The filter parameter.
+          examples:
+            contains_operator:
+              value: objectName contains 'User'
+              description: >-
+                Retrives the number of contacts with objectName containing 'User'.
+              summary: contains
+            equal_operator:
+              value: >-
+                objectName eq 'User 1'
+              description: >-
+                Retrives the number of contacts with objectName equals to 'User 1'
+              summary: equal
+            not_equal_operator:
+              value: >-
+                objectName ne 'User 1'
+              description: >-
+                Retrives the number of contacts with objectName not equals to 'User 1'
+              summary: not equal
+            greater_than_operator:
+              value: objectDateOfCreation gt 2020-03-20
+              description: >-
+                Retrives the number of contacts with objectDateOfCreation greater than '2020-03-20'.
+              summary: greater than
+            greater_than_eq_operator:
+              value: objectDateOfCreation ge 2020-03-20
+              description: >-
+                Retrives the number of contacts with objectDateOfCreation greater than or equals to '2020-03-20'.
+              summary: greater than equal
+            less_than_operator:
+              value: objectDateOfCreation lt 2020-03-20
+              description: >-
+                Retrives the number of contacts with objectDateOfCreation less than '2020-03-20'.
+              summary: less than
+            less_than_eq_operator:
+              value: objectDateOfCreation le 2020-03-20
+              description: >-
+                Retrives the number of contacts with objectDateOfCreation less than or equals to '2020-03-20'.
+              summary: less than equal
+            and_operator:
+              value: >-
+                objectName contains 'User' and objectDateOfCreation gt 2020-03-20
+              description: >-
+                Retrives the number of contacts with objectName containing 'User' and objectDateOfCreation greater than '2020-03-20'.
+              summary: and
+            or_operator:
+              value: >-
+                objectName contains 'User' or objectDateOfCreation gt 2020-03-20
+              description: >-
+                Retrives the number of contacts with objectName containing 'User' or objectDateOfCreation greater than '2020-03-20'.
+              summary: or
+          schema:
+            type: string
+          explode: false
+      responses:
+        '200':
+          description: >-
+            Returns the number of Contacts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact_COUNT'
+              example:
+                count: 3
+                
+  '/contacts/{id}':
+    get:
+      tags:
+        - Contact
+      summary: Get the details of a contact by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0IzM2NjAzMWZiMGE0ZTQ2NDA5YTFjMDliMWQxOWQzODU5
+        - name: resolveRelations
+          in: query
+          description: >-
+            To resolve nested data. Suppport multiple values with comma separated format.
+          schema:
+            type: string
+          example: >-
+            includesAddress
+      responses:
+        '200':
+          description: >-
+            Returns the details of contact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact_OUTPUT_BASE'
+              example:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0IzM2NjAzMWZiMGE0ZTQ2NDA5YTFjMDliMWQxOWQzODU5=
+                  type: Contact
+                  uri: 'http://localhost:8080/iss/Contact#366031fb0a4e46409a1c09b1d19d3859'
+                  objectName: User 1
+                  objectId: 366031fb0a4e46409a1c09b1d19d3859
+                  objectDateOfCreation: 1594610485368
+                  objectDateOfUpdate: 1594610485410
+                  personEmail: User1@gmail.com
+                  personFirstName: User
+                  personLastName: 1
+                  personMobile: 12345678
+                  personPhone: 12345678
+                  includesAddress:
+                    - 'http://localhost:8080/iss/Address#23e7f1d29d8540cfa3b9cff3c9bad1f1'
+                  contactContainedBy:
+                    - 'http://localhost:8080/iss/Account#e14f1244e2e74b3a9c3896706bb1e5db'
+
+    patch:
+      tags:
+        - Contact
+      summary: Update a contact.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0I2IwNDc2ODA4YmYzMTQzZGZiNzE1YjcwOTNkMzgwYjQ3
+      requestBody:
+        description: Contact object to be updated.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Contact_INPUT_UPDATE'
+            example:
+              type: Contact
+              personEmail: newContact@gmail.com
+              includesAddress: ["http://40.114.200.164/800/Address#0000001000-Addr"]
+        required: true
+      responses:
+        '200':
+          description: >-
+            Returns the details of the updated Contact
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact_OUTPUT_UPDATE'
+              example:
+                id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0I2IwNDc2ODA4YmYzMTQzZGZiNzE1YjcwOTNkMzgwYjQ3
+                type: Contact
+                uri: 'http://localhost:8080/iss/Contact#b0476808bf3143dfb715b7093d380b47'
+                objectName: New Contact
+                objectId: b0476808bf3143dfb715b7093d380b47
+                objectDateOfCreation: 1601950265435
+                objectDateOfUpdate: 1595495872927
+                personEmail: newContact@gmail.com
+                personFirstName: New
+                personLastName: Contact
+                personMobile: 65 86773377
+                includesAddress: [ "http://40.114.200.164/800/Address#0000001000-Addr" ]
+                contactContainedBy: [ "http://40.114.200.164/800/Account#0000001000" ]
+
+    delete:
+      tags:
+        - Contact
+      summary: Delete a contact or contacts by id.
+      description: Supports multiple contact ids in comma separated format.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0IzI3YzFjNGEzN2QwODRkYzA4ZmU2ZWIzYzU3ZGFhYTYw
+      responses:
+        '204':
+          description: >-
+            Contact deleted successfully.
+
+  '/contacts/{id}/address':
+    post:
+      tags:
+        - Address
+      summary: Adds a new address to a contact.
+      description: >-
+        Creates a new address and returns the information of the address.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0I2IwNDc2ODA4YmYzMTQzZGZiNzE1YjcwOTNkMzgwYjQ3
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Address_INPUT'
+              required: 
+                - type
+                - addressStreet  
+                - hasCountry
+                - addressCity
+        required: true
+      responses:
+        '200':
+          description: Returns about the created Address.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact_ADDRESS_PARAMS'
+              example:
+                id: >-
+                  aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzlkODVhYzZmNjU5MjRkN2RhOWE1OGU3ZDQ3ZDI0MGQ3
+                type: Address
+                uri: >-
+                  http://localhost:8080/iss/Address#9d85ac6f65924d7da9a58e7d47d240d7
+                addressZip: "069423"
+                addressStreet: "46B Club Street"
+                addressUnitNo: "10-41"
+                addressCity: "Singapore"
+                hasCountry: [
+                    "http://www.inmindcloud.dev.com/application/application-implementation.owl#SG"
+                ]
+                addressIncludedBy: [
+                    "http://localhost:8080/iss/Contact#b0476808bf3143dfb715b7093d380b47"
+                ]
+                containsCreator: [
+                    "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person"
+                ]
+ 
+    patch:
+      tags:
+        - Address
+      summary: Updates a contact's address.
+      description: >-
+        Updates the address and returns the information of the address.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0IzVhMDBiZjg3ZmRkYjRjYmJiMzQ3ZDgyMDFlNDk1MGNm
+        - name: addressId
+          in: query
+          required: true
+          description: >-
+            Address id to be updated.
+          schema:
+            type: string
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzJiNjVlZmI1MTAxZTRkYTRhZjM4MDNiZTQ2YmMxODhj
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Address_INPUT_UPDATE'
+      responses:
+        '200':
+          description: Returns about the created Address.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address_OUTPUT_UPDATE'
+              example:
+                id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzJiNjVlZmI1MTAxZTRkYTRhZjM4MDNiZTQ2YmMxODhj"
+                type: "Address"
+                uri: "http://localhost:8080/iss/Address#2b65efb5101e4da4af3803be46bc188c"
+                objectId: "2b65efb5101e4da4af3803be46bc188c"
+                addressCity: "Singapore"
+                objectDateOfCreation: 1602238048952
+                objectDateOfUpdate: 1602471163651 
+                addressStreet: "48 Mandalay Road"
+                addressZip: "069123"
+                addressUnitNo: "01-01"
+                hasCountry: [
+                  {
+                    id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTRw==",
+                    type: "Country",
+                    uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#SG",
+                    label: "Singapore",
+                    objectName: "Singapore",
+                    objectId: "SG",
+                    objectExternalId: "SG",
+                    hasBaseCurrency: [
+                        {
+                            id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTR0Q=",
+                            uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#SGD"
+                        }
+                    ],
+                    hasRegion: [
+                        "http://www.inmindcloud.dev.com/application/application-implementation.owl#APJ"
+                    ]
+                }]
+                addressIncludedBy: [
+                  "http://localhost:8080/iss/Contact#5a00bf87fddb4cbbb347d8201e4950cf"
+                ]
+                containsCreator: [
+                  "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person"
+                ]     
+ 
+    delete:
+      tags:
+        - Address
+      summary: Delete an address or addresses by id.
+      description: Supports multiple address ids in comma separated format.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: >-
+            Contact id.
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0IzVhMDBiZjg3ZmRkYjRjYmJiMzQ3ZDgyMDFlNDk1MGNm
+        - name: addressIds
+          in: query
+          required: true
+          description: >-
+            Address ids in comma separated format.
+          schema:
+            type: string
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzNjMTViOTUxYTBhMzRkYmI4MjgwYmFiYzJiMjgwMWQ2, aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzJiNjVlZmI1MTAxZTRkYTRhZjM4MDNiZTQ2YmMxODhj
+      responses:
+        '204':
+          description: >-
+            Address deleted successfully. 
+                
+  '/contacts/{id}/salesInfo':
+    post:
+      tags:
+        - SalesInfo
+      summary: Adds a new salesinfo or salesinfos to a contact.
+      description: >-
+        Creates new salesinfo and returns the information of the salesinfo.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0I2IwNDc2ODA4YmYzMTQzZGZiNzE1YjcwOTNkMzgwYjQ3
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Salesinfo_INPUT'
+              required: 
+                - linksSalesInfo
+              example: [
+                {
+                  linksSalesInfo: "http://40.114.200.164/800/SalesInfo#0000001000_1000_10_00"
+                },
+                {
+                  linksSalesInfo: "http://40.114.200.164/800/SalesInfo#0000001000_3000_10_00"
+                }
+              ]
+                
+        required: true
+      responses:
+        '200':
+          description: Returns about the created salesinfos.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Salesinfo_OUTPUT'
+              example:
+                type: Bundle
+                total: 2
+                entry: [
+                  {
+                    id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0U2FsZXNJbmZvI2Y2NzZhOTdhNzNkODRkMDI5ZDVmZTYxMGU2MGY3Njg0",
+                    type: "ContactSalesInfo",
+                    uri: "http://localhost:8080/iss/ContactSalesInfo#f676a97a73d84d029d5fe610e60f7684",
+                    linksSalesInfo: [
+                        "http://40.114.200.164/800/SalesInfo#0000001000_1000_10_00"
+                    ]
+                  },
+                  {
+                    id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0U2FsZXNJbmZvIzA5MWZiZWU5ODc2NjQ1YmFhM2Q3M2Y5YTQ3ZTk5NWMy",
+                    type: "ContactSalesInfo",
+                    uri: "http://localhost:8080/iss/ContactSalesInfo#091fbee9876645baa3d73f9a47e995c2",
+                    linksSalesInfo: [
+                        "http://40.114.200.164/800/SalesInfo#0000001000_3000_10_00"
+                    ]
+                  }
+                ]
+    patch:
+      tags:
+        - SalesInfo
+      summary: Update the salesinfo of a contact.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0I2IwNDc2ODA4YmYzMTQzZGZiNzE1YjcwOTNkMzgwYjQ3
+      requestBody:
+        description: Salesinfo object to be updated.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Salesinfo_INPUT_UPDATE'
+            example:
+              [
+                {
+                  contactSalesInfoDefault: true,
+                  instance: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0U2FsZXNJbmZvIzA5MWZiZWU5ODc2NjQ1YmFhM2Q3M2Y5YTQ3ZTk5NWMy"
+                }
+              ]
+        required: true
+      responses:
+        '200':
+          description: >-
+            Returns the details of the updated Salesinfos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Salesinfo_OUTPUT_UPDATE'
+              example:
+                type: Bundle
+                total: 1
+                entry: [
+                  {
+                    id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0U2FsZXNJbmZvIzA5MWZiZWU5ODc2NjQ1YmFhM2Q3M2Y5YTQ3ZTk5NWMy",
+                    type: "ContactSalesInfo",
+                    uri: "http://localhost:8080/iss/ContactSalesInfo#091fbee9876645baa3d73f9a47e995c2",
+                    contactSalesInfoDefault: true,
+                    linksSalesInfo: [{
+                        id: "aHR0cDovLzQwLjExNC4yMDAuMTY0LzgwMC9TYWxlc0luZm8jMDAwMDAwMTAwMF8zMDAwXzEwXzAw",
+                        type: "SalesInfo",
+                        uri: "http://40.114.200.164/800/SalesInfo#0000001000_3000_10_00",
+                        hasCurrency: 
+                        [{
+                          id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNVU0Q=",
+                          type: "Currency",
+                          uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#USD",
+                          objectERPId: "USD",
+                          objectExternalId: "USD",
+                          objectName: "US Dollar"
+                        }],
+                        hasDistributionChannel: 
+                        [{
+                          id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNEQy0xMA==",
+                          type: "DistributionChannel",
+                          uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#DC-10",
+                          objectERPId: "10",
+                          objectExternalId: "10",
+                          objectName: "DC-10"
+                        }],
+                        hasDivision: 
+                        [{
+                          id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNEaXYtMDA=",
+                          type: "Division",
+                          uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#Div-00",
+                          objectERPId: "00",
+                          objectExternalId: "00",
+                          objectName: "Div-00"
+                        }],
+                        hasSalesOrg: 
+                        [{
+                          id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcmdVbml0IzkyOGQ2NzNhZWU5ODQ3OWViYTI4ZDk5NGZkZmY5YTU1",
+                          type: "OrgUnit",
+                          uri: "http://localhost:8080/iss/OrgUnit#928d673aee98479eba28d994fdff9a55",
+                          objectERPId: "3000",
+                          objectExternalId: [],
+                          objectName: "SalesOrg-3000"
+                        }]
+                    }]
+                  }
+                ]
+
+    delete:
+      tags:
+        - SalesInfo
+      summary: Delete a salesinfo or salesinfos by id.
+      description: Supports multiple salesinfo ids in comma separated format.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: >-
+            Contact id.
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0I2IwNDc2ODA4YmYzMTQzZGZiNzE1YjcwOTNkMzgwYjQ3
+        - name: salesInfoIds
+          in: query
+          required: true
+          description: >-
+            Salesinfo ids in comma separated format.
+          schema:
+            type: string
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0U2FsZXNJbmZvI2Y2NzZhOTdhNzNkODRkMDI5ZDVmZTYxMGU2MGY3Njg0, aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0U2FsZXNJbmZvIzA5MWZiZWU5ODc2NjQ1YmFhM2Q3M2Y5YTQ3ZTk5NWMy
+          explode: false
+      responses:
+        '204':
+          description: >-
+            Salesinfos deleted successfully.               
+                
+components:
+  schemas:
+    Contact_COUNT:
+      type: object
+      properties:
+        count:
+          type: integer
+          title: the number of contacts.
+          example: 3
+    Contact_TYPE:
+      type: object
+      properties:
+        type:
+          type: string
+          title: Contact's type
+          example: Contact
+    Contact_ID:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0IzM2NjAzMWZiMGE0ZTQ2NDA5YTFjMDliMWQxOWQzODU5
+        uri:
+          type: string
+          example: >-
+            http://localhost:8080/iss/Contact#366031fb0a4e46409a1c09b1d19d3859
+            
+    Contact_OBJECTNAME:
+      type: object
+      properties:
+        objectName:
+          type: string
+          example: User 1
+          
+    Contact_OBJECTID:
+      type: object
+      properties:
+        objectId:
+          type: string
+          example: 366031fb0a4e46409a1c09b1d19d3859  
+            
+    Contact_DATE_OF_UPDATE:
+      type: object
+      properties:
+        objectDateOfUpdate:
+          type: integer
+          format: timestamp
+          example: 1575539453000
+          
+    Contact_DATE_OF_CREATE:
+      type: object
+      properties:
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1575539453000
+          
+    Contact_SALESINFO_DEFAULT:
+      type: object
+      properties:
+        contactSalesInfoDefault:
+          type: boolean
+          example: true
+          
+    Address_HAS_COUNTRY_PARAMS:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTRw
+        type:
+          type: string
+          example: Country
+        uri:
+          type: string
+          example: >-
+            http://www.inmindcloud.dev.com/application/application-implementation.owl#SG
+        label:
+          type: string
+          example: 'Singapore'
+        objectName:
+          type: string
+          example: 'Singapore'
+        objectId: 
+          type: string
+          example: 'SG'
+        objectExternalId:
+          type: string
+          example: 'SG'
+        hasBaseCurrency:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: base64-encoded URI
+                example: >-
+                  aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTR0Q
+              uri:
+                type: string
+                example: >-
+                  http://www.inmindcloud.dev.com/application/application-implementation.owl#SGD
+        hasRegion:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#APJ' 
+          
+    Contact_INCLUDES_ADDRESS_BASE:
+      type: object
+      properties:
+        includesAddress:
+          type: array
+          items: 
+            type: string
+            format: uri
+            example: http://40.114.200.164/800/Address#0000001000-Addr
+          
+    Contact_INCLUDES_ADDRESS:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzIzZTdmMWQyOWQ4NTQwY2ZhM2I5Y2ZmM2M5YmFkMWYx==
+        type:
+          type: string
+          example: Address
+        uri:
+          type: string
+          example: >-
+            http://localhost:8080/iss/Address#23e7f1d29d8540cfa3b9cff3c9bad1f1
+        objectId:
+          type: string
+          example: 23e7f1d29d8540cfa3b9cff3c9bad1f1
+  
+    Contact_INCLUDES_ADDRESS_EXPANDED:
+      type: object
+      properties:
+        includesAddress:
+          $ref: '#/components/schemas/Contact_INCLUDES_ADDRESS'  
+          
+    Contact_ADDRESS_PARAMS:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzM2ZWQ4ZDQyYjJjOTRiMDg5OTg4YjM1NDVkODU4NjZk
+        type:
+          type: string
+          example: Address
+        uri:
+          type: string
+          example: >-
+            http://localhost:8080/iss/Address#b12e96e3a8154551b01ac5c81bb856ab
+        addressZip:
+          type: string
+          example: '069423'
+        addressStreet:
+          type: string
+          example: '46B Club Street'
+        addressUnitNo: 
+          type: string
+          example: '10-41'
+        addressCity:
+          type: string
+          example: 'Singapore'
+        hasCountry:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#SG'
+        addressIncludedBy:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://localhost:8080/iss/Contact#b0476808bf3143dfb715b7093d380b47'   
+        containsCreator:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.com/security/security-implementation.owl#admin-Person'
+            
+    Contact_ADDRESS_PARAMS_ALL:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzJiNjVlZmI1MTAxZTRkYTRhZjM4MDNiZTQ2YmMxODhj
+        type:
+          type: string
+          example: Address
+        uri:
+          type: string
+          example: >-
+            http://localhost:8080/iss/Address#2b65efb5101e4da4af3803be46bc188c
+        addressZip:
+          type: string
+          example: '069123'
+        addressStreet:
+          type: string
+          example: '48 Mandalay Road'
+        addressUnitNo: 
+          type: string
+          example: '01-01'
+        addressCity:
+          type: string
+          example: 'Singapore'
+        hasCountry:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Address_HAS_COUNTRY_PARAMS'
+        addressIncludedBy:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://localhost:8080/iss/Contact#5a00bf87fddb4cbbb347d8201e4950cf'   
+        containsCreator:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.com/security/security-implementation.owl#admin-Person'
+            
+          
+    Contact_INCLUDES_ADDRESS_ALL:
+      type: object
+      properties:
+        includesAddress:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Contact_ADDRESS_PARAMS' 
+            
+    Address_INPUT:
+      type: object
+      properties:
+        addressStreet:
+          type: array
+          items:
+            type: string
+            example: '46B Club Street'
+        addressCity:
+          type: array
+          items:
+            type: string
+            example: 'Singapore'
+        addressUnitNo: 
+          type: array
+          items:
+            type: string
+            example: '10-41'
+        addressZip:
+          type: array
+          items:
+            type: string
+            example: '069423'
+        hasCountry:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#SG'
+        type: 
+          type: string
+          example: 'Address'
+          
+    Address_INPUT_UPDATE:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: 'Address'    
+        addressStreet:
+          type: array
+          items:
+            type: string
+            example: '48 Mandalay Road'
+        addressUnitNo:
+          type: array
+          items:
+            type: string
+            example: '01-01'
+        addressZip: 
+          type: array
+          items:
+            type: string
+            example: '069123'
+
+              
+    Contact_INPUT:
+      type: object
+      properties:
+        type:
+          type: string
+          description: >-
+            Retrieve the contacts in the system. 
+          example: Search
+        limit: 
+          type: integer
+          description: >-
+            Defines the maximum number of records that can be
+            returned.
+          example: 1
+        offset:
+          type: integer
+          description: >-
+            Defines the number of records that should be
+            skipped. If not specified, no record will be skipped.
+          example: 0
+        filter: 
+          type: string
+          description: >-
+            The filter parameter. If keyword contains space, it must be enclosed between two apostrophe('). If keyword is URI, it must be url encoded.
+          example: objectName eq User 1
+        sort: 
+          type: array
+          description: >-
+            Defines the sorting of the result. 'ASC' for ascending and 'DESC' for descending order. Default order is objectName ASC.
+          items:
+            type: string
+            example: objectName DESC
+        elements:
+          type: object
+          description: >-
+            Sets the BDAs and BRAs that will be returned. id, type, uri , label and comment are included by default. If 'elements' is not specified, all the BDAs and BRAs will be returned.
+          properties:
+            bda:
+              type: string
+              description: >-
+                Defines the requested BDAs that will be returned. If set as empty string, only id, type, uri , label and comment will be returned.
+              example: 
+                - objectName
+                - objectId
+            bra:
+              type: string
+              description: >-
+                Defines the requested BRAs that will be returned. If set as empty string, no BRAs will be returned. Ensure the BRA array contains all the dependent resources that are defined in 'include'.
+              example: 
+                - includesAddress
+        revInclude:
+          type: array
+          items:
+            type: string
+            example: ""
+        include: 
+          type: array
+          description: >- 
+            Sets the related nested data that will be resolved.
+          items:
+            type: string
+            example: includesAddress
+            
+    Contact_OUTPUT:
+      type: object
+      properties:
+        objectName:
+          type: string
+          example: User 1
+        objectId:
+          type: string
+          example: 366031fb0a4e46409a1c09b1d19d3859
+        personEmail: 
+          type: string
+          example: user1@gmail.com
+        personFirstName:
+          type: string
+          example: User
+        personLastName:
+          type: string
+          example: 1
+        personMobile:
+          type: string
+          example: 12345678
+        includesAddress:
+          type: array
+          items:
+            type: string
+            format: uri
+            description: The URI of contact's address
+        contactContainedBy:
+          type: array
+          items:
+            type: string
+            format: uri
+            description: The URI of contact's account
+            
+            
+    Contact_INPUT_CREATE:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: 'Contact'
+        personFirstName:
+          type: string
+          example: 'New'
+        personLastName:
+          type: string
+          example: 'Contact'
+        personMobile:
+          type: string
+          example: '65 86773377'  
+        personPhone:
+          type: string
+          example: '65 86773355'
+        includesAddress:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Address_INPUT'
+        contactContainedBy:
+          type: array
+          items: 
+            type: string
+            format: uri
+            example: 'http://40.114.200.164/800/Account#0000001000'
+            
+    Contact_OUTPUT_CREATE_BASE:
+      type: object
+      properties:
+        contactContainedBy:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://40.114.200.164/800/Account#0000001000'
+        personPhone:
+          type: string
+          example: '65 86773355'
+        personLastName:
+          type: string
+          example: Employee
+        personFirstName:
+          type: string
+          example: New
+        personMobile:
+          type: string
+          example: '65 86773377'          
+          
+    Contact_INPUT_UPDATE:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: 'Contact'  
+        personEmail:
+          type: string
+          example: 'newContact@gmail.com'
+        includesAddress:
+          type: array
+          items: 
+            type: string
+            example: 'http://40.114.200.164/800/Address#0000001000-Addr'
+            
+    Salesinfo_INPUT:
+      type: object
+      properties:
+        linksSalesInfo:
+          type: string
+          format: uri
+          example: http://40.114.200.164/800/SalesInfo#0000001000_1000_10_00
+          description: The URI of the salesinfo
+          
+    LinkedSalesinfo_EXPANDED:
+      type: object
+      properties:
+        linksSalesInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: base64-encoded URI
+                example: >-
+                  aHR0cDovLzQwLjExNC4yMDAuMTY0LzgwMC9TYWxlc0luZm8jMDAwMDAwMTAwMF8xMDAwXzEwXzAw
+              type:
+                type: string
+                example: 'SalesInfo'
+              uri:
+                type: string
+                format: uri
+                example: >-
+                  http://40.114.200.164/800/SalesInfo#0000001000_1000_10_00
+              hasCurrency:
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    id:
+                      type: string
+                      format: base64-encoded URI
+                      example: >-
+                        aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNFVVI
+                    type:
+                      type: string
+                      example: 'Currency'
+                    uri:
+                      type: string
+                      format: uri
+                      example: >-
+                        http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR
+                    objectERPId:
+                      type: string
+                      example: EUR
+                    objectExternalId:
+                      type: string
+                      example: EUR
+                    objectName:
+                      type: string
+                      example: Euro
+              hasDistributionChannel:
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    id:
+                      type: string
+                      format: base64-encoded URI
+                      example: >-
+                        aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNEQy0xMA
+                    type:
+                      type: string
+                      example: 'DistributionChannel'
+                    uri:
+                      type: string
+                      format: uri
+                      example: >-
+                        http://www.inmindcloud.dev.com/application/application-implementation.owl#DC-10
+                    objectERPId:
+                      type: string
+                      example: 10
+                    objectExternalId:
+                      type: string
+                      example: 10
+                    objectName:
+                      type: string
+                      example: DC-10
+              hasDivision:
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    id:
+                      type: string
+                      format: base64-encoded URI
+                      example: >-
+                        aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNEaXYtMDA
+                    type:
+                      type: string
+                      example: 'Division'
+                    uri:
+                      type: string
+                      format: uri
+                      example: >-
+                        http://www.inmindcloud.dev.com/application/application-implementation.owl#Div-00
+                    objectERPId:
+                      type: string
+                      example: 00
+                    objectExternalId:
+                      type: string
+                      example: 00
+                    objectName:
+                      type: string
+                      example: Div-00
+              hasSalesOrg:
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    id:
+                      type: string
+                      format: base64-encoded URI
+                      example: >-
+                        aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTYWxlc09yZy0xMDAw
+                    type:
+                      type: string
+                      example: 'SalesOrg'
+                    uri:
+                      type: string
+                      format: uri
+                      example: >-
+                        http://www.inmindcloud.dev.com/application/application-implementation.owl#SalesOrg-1000
+                    objectERPId:
+                      type: string
+                      example: 1000
+                    objectExternalId:
+                      type: string
+                      example: 1000
+                    objectName:
+                      type: string
+                      example: SalesOrg-1000
+              
+            
+    Salesinfo_OUTPUT:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0U2FsZXNJbmZvI2Y2NzZhOTdhNzNkODRkMDI5ZDVmZTYxMGU2MGY3Njg0
+        type:
+          type: string
+          example: 'ContactSalesInfo'
+        uri:
+          type: string
+          format: uri
+          example: >-
+            http://localhost:8080/iss/ContactSalesInfo#f676a97a73d84d029d5fe610e60f7684
+        linksSalesInfo:
+          type: string
+          format: uri
+          example: http://40.114.200.164/800/SalesInfo#0000001000_1000_10_00
+          description: The URI of the salesinfo
+          
+    Salesinfo_INPUT_UPDATE:
+      type: object
+      properties:
+        contactSalesInfoDefault:
+          type: boolean
+          example: true
+          description: Defines the main salesinfo of a contact.
+        instance:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0U2FsZXNJbmZvI2Y2NzZhOTdhNzNkODRkMDI5ZDVmZTYxMGU2MGY3Njg0
+          description: The base64-encoded URI of the salesinfo
+          
+    Salesinfo_OUTPUT_UPDATE:
+      allOf:
+        - $ref: '#/components/schemas/Salesinfo_OUTPUT'
+        - $ref: '#/components/schemas/Contact_SALESINFO_DEFAULT'
+        - $ref: '#/components/schemas/LinkedSalesinfo_EXPANDED'    
+          
+    Contact_OUTPUT_CREATE:
+      allOf:
+        - $ref: '#/components/schemas/Contact_ID'
+        - $ref: '#/components/schemas/Contact_TYPE'
+        - $ref: '#/components/schemas/Contact_OUTPUT_CREATE_BASE'
+        - $ref: '#/components/schemas/Contact_INCLUDES_ADDRESS_ALL'
+        - $ref: '#/components/schemas/Contact_OBJECTNAME'
+        - $ref: '#/components/schemas/Contact_DATE_OF_CREATE'
+        
+    Contact_OUTPUT_UPDATE:
+      allOf:
+        - $ref: '#/components/schemas/Contact_ID'
+        - $ref: '#/components/schemas/Contact_TYPE'
+        - $ref: '#/components/schemas/Contact_DATE_OF_CREATE'
+        - $ref: '#/components/schemas/Contact_DATE_OF_UPDATE'
+        - $ref: '#/components/schemas/Contact_OUTPUT'
+        - $ref: '#/components/schemas/Contact_INCLUDES_ADDRESS_BASE'
+
+
+    Contact_OUTPUT_BASE:
+      allOf:
+        - $ref: '#/components/schemas/Contact_ID'
+        - $ref: '#/components/schemas/Contact_TYPE'
+        - $ref: '#/components/schemas/Contact_OUTPUT'
+        - $ref: '#/components/schemas/Contact_DATE_OF_CREATE'
+        - $ref: '#/components/schemas/Contact_DATE_OF_UPDATE'
+
+        
+    Contact_OUTPUT_SEARCH:
+      allOf:
+        - $ref: '#/components/schemas/Contact_ID'
+        - $ref: '#/components/schemas/Contact_TYPE'
+        - $ref: '#/components/schemas/Contact_OBJECTNAME'
+        - $ref: '#/components/schemas/Contact_OBJECTID'
+        - $ref: '#/components/schemas/Contact_INCLUDES_ADDRESS_EXPANDED'
+
+        
+    Contact_OUTPUT_GETS:
+      allOf:
+        - $ref: '#/components/schemas/Contact_ID'
+        - $ref: '#/components/schemas/Contact_TYPE'
+        - $ref: '#/components/schemas/Contact_OUTPUT'
+        - $ref: '#/components/schemas/Contact_DATE_OF_CREATE'
+        - $ref: '#/components/schemas/Contact_DATE_OF_UPDATE'   
+        - $ref: '#/components/schemas/Contact_INCLUDES_ADDRESS_EXPANDED'
+        
+    Address_OUTPUT_UPDATE:
+      allOf:
+        - $ref: '#/components/schemas/Contact_ADDRESS_PARAMS_ALL'
+        - $ref: '#/components/schemas/Contact_OBJECTID'
+        - $ref: '#/components/schemas/Contact_DATE_OF_CREATE'
+        - $ref: '#/components/schemas/Contact_DATE_OF_UPDATE'   
+
+        
+        
+        
+    

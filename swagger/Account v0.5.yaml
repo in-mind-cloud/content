@@ -1,0 +1,1435 @@
+openapi: 3.0.1
+info:
+  title: Account API
+  version: 1.0.0
+servers:
+  - url: /api
+tags:
+  - name: Account
+paths:
+  /accounts/search:
+    post:
+      tags:
+        - Account
+      summary: Search account API
+      description: >-
+        Searches and retrives a list of Accounts based on the query.
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Account_INPUT'
+              required: 
+                - type
+        required: true
+      responses:
+        '200':
+          description: >-
+            Returns the list of accounts as Bundle based on example of Request Payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account_OUTPUT_SEARCH'
+              example:
+                type: Bundle
+                total: 1
+                entry: 
+                  - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50I2UxNGYxMjQ0ZTJlNzRiM2E5YzM4OTY3MDZiYjFlNWRi=
+                    type: Account
+                    uri: 'http://localhost:8080/iss/Account#e14f1244e2e74b3a9c3896706bb1e5db'
+                    objectName: Account1
+                    objectId: e14f1244e2e74b3a9c3896706bb1e5db
+                    includesAddress:
+                      - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzU0MzQ5N2FiZDliNTQ2NzJiYTI4YzAxZmIyZmQyYTQ5
+                        type: Address
+                        uri: 'http://localhost:8080/iss/Address#543497abd9b54672ba28c01fb2fd2a49'
+                        objectId: 543497abd9b54672ba28c01fb2fd2a49
+
+
+  /accounts:
+    get:
+      tags:
+        - Account
+      summary: Gets account API
+      description: >-
+        Retrives a list of Accounts in the system.
+      parameters:
+        - name: limit
+          in: query
+          description: >-
+            Defines the maximum number of records that can be returned.
+          schema:
+            type: integer
+            example: 10
+        - name: offset
+          in: query
+          description: >-
+            Defines the number of records that should be skipped.
+          schema:
+            type: integer
+            default: '0'
+        - name: filter
+          in: query
+          description: >-
+            The filter parameter. If keyword contains space, it must be enclosed between two apostrophe('). If keyword is URI, it must be url encoded.
+          examples:
+            contains_operator:
+              value: objectName contains 'Account'
+              description: >-
+                Retrives the list of accounts with objectName containing 'Account'.
+              summary: contains
+            equal_operator:
+              value: >-
+                accountProspect eq 'true'
+              description: >-
+                Retrives the list of accounts with accountProspect equals to 'true'.
+              summary: equal
+            not_equal_operator:
+              value: >-
+                accountProspect ne 'true'
+              description: >-
+                Retrives the list of accounts with accountProspect not equals to 'true'.
+              summary: not equal
+            greater_than_operator:
+              value: objectDateOfCreation gt 2020-03-20
+              description: >-
+                Retrives the list of accounts with objectDateOfCreation greater than '2020-03-20'.
+              summary: greater than
+            greater_than_eq_operator:
+              value: objectDateOfCreation ge 2020-03-20
+              description: >-
+                Retrives the list of accounts with objectDateOfCreation greater than or equals to '2020-03-20'.
+              summary: greater than equal
+            less_than_operator:
+              value: objectDateOfCreation lt 2020-03-20
+              description: >-
+                Retrives the list of accounts with objectDateOfCreation less than '2020-03-20'.
+              summary: less than
+            less_than_eq_operator:
+              value: objectDateOfCreation le 2020-03-20
+              description: >-
+                Retrives the list of accounts with objectDateOfCreation less than or equals to '2020-03-20'.
+              summary: less than equal
+            and_operator:
+              value: >-
+                objectName contains 'Account' and accountProspect eq 'true'
+              description: >-
+                Retrives the list of accounts with objectName containing 'Account' and accountProspect equals to 'true'
+              summary: and
+            or_operator:
+              value: >-
+                objectName contains 'Account' or accountProspect eq 'true'
+              description: >-
+                Retrives the list of accounts with objectName containing 'Account' or accountProspect equals to 'true'
+              summary: or
+          schema:
+            type: string
+          explode: false
+        - name: sort
+          in: query
+          description: >-
+            Defines the sorting of the result. 'ASC' for ascending and 'DESC' for descending order. Default order is objectName ASC.
+          example: objectName ASC
+          schema:
+            type: string
+            default: objectName ASC
+        - name: resolveRelations
+          in: query
+          description: >-
+            To resolve nested data. Suppport multiple values with comma separated format.
+          schema:
+            type: string
+          example: >-
+            includesAddress, usesMainAddress, containsContact
+      responses:
+        '200':
+          description: >-
+            Returns the list of Accounts with 'includesAddress' resolved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account_OUTPUT_GETS'
+              example:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50I2UxNGYxMjQ0ZTJlNzRiM2E5YzM4OTY3MDZiYjFlNWRi=
+                  type: Account
+                  uri: 'http://localhost:8080/iss/Account#e14f1244e2e74b3a9c3896706bb1e5db'
+                  objectName: Account1
+                  objectId: e14f1244e2e74b3a9c3896706bb1e5db
+                  objectDateOfCreation: 1594608096026
+                  objectDateOfUpdate: 1594613347878
+                  accountOpportunityVolume: 0
+                  accountProspect: true
+                  accountQuoteCount: 0
+                  accountQuoteVolume: 0
+                  hasIndustry:
+                    - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNJSG90ZWw
+                      uri: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#IHotel'
+                  includesAddress:
+                    - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzU0MzQ5N2FiZDliNTQ2NzJiYTI4YzAxZmIyZmQyYTQ5
+                      type: Address
+                      uri: 'http://localhost:8080/iss/Address#543497abd9b54672ba28c01fb2fd2a49'
+                      objectId: 543497abd9b54672ba28c01fb2fd2a49
+                  usesMainAddress:
+                    - 'http://localhost:8080/iss/Address#543497abd9b54672ba28c01fb2fd2a49'
+                  containsContact:
+                    - 'http://localhost:8080/iss/Contact#df47473418c2442ab0d7e59d0125c2a5'
+                    - 'http://localhost:8080/iss/Contact#366031fb0a4e46409a1c09b1d19d3859'
+                  containsOwner:
+                    - 'http://www.inmindcloud.com/security/security-implementation.owl#admin-Person'
+                      
+    post:
+      tags:
+        - Account
+      summary: Adds a new account.
+      description: >-
+        Creates a new account and returns the basic information of the account.
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Account_INPUT_CREATE'
+              required: 
+                - type
+                - objectName
+                - hasIndustry
+                - accountProspect
+                - includesAddress
+        required: true
+      responses:
+        '200':
+          description: Returns about the created Account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account_OUTPUT_CREATE'
+              example:
+                id: >-
+                  aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzQ3MjU5ZmYzNDUzYTQyYTc5Mjk2ZWIzYTlmMjQwODJj
+                type: Account
+                uri: >-
+                  http://localhost:8080/iss/Account#47259ff3453a42a79296eb3a9f24082c
+                hasIndustry: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#IAeroDefense" ]
+                includesAddress: [{
+                  id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzM3YjViZWI0YTMzMDQ1ZjY5NjRkMTFhNzA0MDRkYmJj",
+                  type: "Address",
+                  uri: "http://localhost:8080/iss/Address#37b5beb4a33045f6964d11a70404dbbc",
+                  addressZip: "069423",
+                  addressStreet: "46B Club Street",
+                  addressUnitNo: "10-41",
+                  addressCity: "Singapore",
+                  hasCountry: [
+                      "http://www.inmindcloud.dev.com/application/application-implementation.owl#SG"
+                  ],
+                  addressIncludedBy: [
+                      "http://localhost:8080/iss/Account#47259ff3453a42a79296eb3a9f24082c"
+                  ],
+                  addressMain: true,
+                  containsCreator: [
+                      "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person"
+                  ]
+                }]
+                objectName: 'New Account'
+                accountProspect: true
+                containsCreator: [ "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person" ]
+                hasAccountStatus: [ "http://www.inmindcloud.com/application/schema.owl#ACTIVE" ]
+                hasAccountType: [ "http://www.inmindcloud.com/application/schema.owl#AccountTypeDirect" ]
+                containsOwner: [ "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person" ]
+                containsVirtualTeam: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#admin" ]
+
+  /accounts/count:
+    get:
+      tags:
+        - Account
+      summary: Count the list of accounts based on filter
+      description: >-
+        Returns the number of accounts in the system
+      parameters:
+        - name: filter
+          in: query
+          description: >-
+            The filter parameter.
+          examples:
+            contains_operator:
+              value: objectName contains 'Account'
+              description: >-
+                Returns the number of accounts with objectName containing 'Account'.
+              summary: contains
+            equal_operator:
+              value: >-
+                accountProspect eq 'true'
+              description: >-
+                Returns the number of accounts with accountProspect equals to 'true'.
+              summary: equal
+            not_equal_operator:
+              value: >-
+                accountProspect ne 'true'
+              description: >-
+                Returns the number of accounts with accountProspect not equals to 'true'.
+              summary: not equal
+            greater_than_operator:
+              value: objectDateOfCreation gt 2020-03-20
+              description: >-
+                Returns the number of accounts with objectDateOfCreation greater than '2020-03-20'.
+              summary: greater than
+            greater_than_eq_operator:
+              value: objectDateOfCreation ge 2020-03-20
+              description: >-
+                Returns the number of accounts with objectDateOfCreation greater than or equals to '2020-03-20'.
+              summary: greater than equal
+            less_than_operator:
+              value: objectDateOfCreation lt 2020-03-20
+              description: >-
+                Returns the number of accounts with objectDateOfCreation less than '2020-03-20'.
+              summary: less than
+            less_than_eq_operator:
+              value: objectDateOfCreation le 2020-03-20
+              description: >-
+                Returns the number of accounts with objectDateOfCreation less than or equals to '2020-03-20'.
+              summary: less than equal
+            and_operator:
+              value: >-
+                objectName contains 'Account' and accountProspect eq
+                'true'
+              description: >-
+                Returns the number of accounts with objectName containing 'Account' and accountProspect equals to 'true'
+              summary: and
+            or_operator:
+              value: >-
+                objectName contains 'Account' or accountProspect eq
+                'true'
+              description: >-
+                Returns the number of accounts with objectName containing 'Account' or accountProspect equals to 'true'
+              summary: or
+          schema:
+            type: string
+          explode: false
+      responses:
+        '200':
+          description: >-
+            Returns the number of Accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account_COUNT'
+              example:
+                count: 3
+                
+  '/accounts/{id}':
+    get:
+      tags:
+        - Account
+      summary: Get the details of an account by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50I2UxNGYxMjQ0ZTJlNzRiM2E5YzM4OTY3MDZiYjFlNWRi=
+        - name: resolveRelations
+          in: query
+          description: >-
+            To resolve nested data. Suppport multiple values with comma separated format.
+          schema:
+            type: string
+          example: >-
+            includesAddress, usesMainAddress, containsContact
+      responses:
+        '200':
+          description: >-
+            Returns the details of account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account_OUTPUT_BASE'
+              example:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50I2UxNGYxMjQ0ZTJlNzRiM2E5YzM4OTY3MDZiYjFlNWRi=
+                  type: Account
+                  uri: 'http://localhost:8080/iss/Account#e14f1244e2e74b3a9c3896706bb1e5db'
+                  objectName: Account1
+                  objectId: e14f1244e2e74b3a9c3896706bb1e5db
+                  objectDateOfCreation: 1594608096026
+                  objectDateOfUpdate: 1594613347878
+                  accountOpportunityVolume: 0
+                  accountProspect: true
+                  accountQuoteCount: 0
+                  accountQuoteVolume: 0
+                  hasIndustry:
+                    - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNJSG90ZWw
+                      uri: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#IHotel'
+                  includesAddress:
+                    - 'http://localhost:8080/iss/Address#543497abd9b54672ba28c01fb2fd2a49'
+                  usesMainAddress:
+                    - 'http://localhost:8080/iss/Address#543497abd9b54672ba28c01fb2fd2a49'
+                  containsContact:
+                    - 'http://localhost:8080/iss/Contact#df47473418c2442ab0d7e59d0125c2a5'
+                    - 'http://localhost:8080/iss/Contact#366031fb0a4e46409a1c09b1d19d3859'
+                  containsOwner:
+                    - 'http://www.inmindcloud.com/security/security-implementation.owl#admin-Person'
+
+    patch:
+      tags:
+        - Account
+      summary: Update an account.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzQ3MjU5ZmYzNDUzYTQyYTc5Mjk2ZWIzYTlmMjQwODJj
+      requestBody:
+        description: Account object to be updated.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Account_INPUT_UPDATE'
+            example:
+              type: Account
+              objectName: Test Account
+              hasIndustry: ["http://www.inmindcloud.dev.com/application/application-implementation.owl#IHotel"]
+              hasCurrency: ["http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR"]              
+      responses:
+        '200':
+          description: >-
+            Returns the details of the updated Account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account_OUTPUT_UPDATE'
+              example:
+                id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzQ3MjU5ZmYzNDUzYTQyYTc5Mjk2ZWIzYTlmMjQwODJj
+                type: Account
+                uri: 'http://localhost:8080/iss/Account#47259ff3453a42a79296eb3a9f24082c'
+                objectName: Test Account
+                objectId: 47259ff3453a42a79296eb3a9f24082c
+                objectDateOfCreation: 1602144003672
+                objectDateOfUpdate: 1602144011499
+                accountProspect: true
+                hasIndustry: [{
+                  id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNJSG90ZWw",
+                  uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#IHotel"
+                  }]
+                includesAddress: [{
+                  id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzM3YjViZWI0YTMzMDQ1ZjY5NjRkMTFhNzA0MDRkYmJj",
+                  type: "Address",
+                  uri: "http://localhost:8080/iss/Address#37b5beb4a33045f6964d11a70404dbbc",
+                  objectId: "37b5beb4a33045f6964d11a70404dbbc",  
+                  addressCity: "Singapore",
+                  addressStreet: "46B Club Street",
+                  addressZip: "069423",
+                  addressMain: true,
+                  addressUnitNo: "10-41",
+                  hasCountry: [
+                    {
+                      id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTRw==",
+                      type: "Country",
+                      uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#SG",
+                      label: "Singapore",
+                      objectName: "Singapore",
+                      objectId: "SG",
+                      objectExternalId: "SG",
+                      hasBaseCurrency: [
+                          {
+                              id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTR0Q=",
+                              uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#SGD"
+                          }
+                      ],
+                      hasRegion: [
+                          "http://www.inmindcloud.dev.com/application/application-implementation.owl#APJ"
+                      ]
+                  }],
+                  addressIncludedBy: [
+                    "http://localhost:8080/iss/Account#47259ff3453a42a79296eb3a9f24082c"
+                  ],
+                  containsCreator: [
+                    "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person"
+                  ]
+                }]
+                usesMainAddress: [
+                  "http://localhost:8080/iss/Address#37b5beb4a33045f6964d11a70404dbbc"
+                ]
+                hasCurrency: [
+                  "http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR"
+                ]
+                hasAccountType: [
+                  "http://www.inmindcloud.com/application/schema.owl#AccountTypeDirect"
+                ]
+                hasAccountStatus: [
+                  "http://www.inmindcloud.com/application/schema.owl#ACTIVE"
+                ]
+                containsVirtualTeam: [
+                  "http://www.inmindcloud.dev.com/application/application-implementation.owl#admin"
+                ]
+                containsCreator: [
+                {
+                  id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==",
+                  type: "Employee",
+                  uri: "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person",
+                  label: "admin-Person",
+                  objectName: "admin-Person", 
+                  personEmail: "admin@fakemail.com",
+                  personFirstName: "In Mind",
+                  personLastName: "Admin",
+                }]
+                containsOwner: [
+                {
+                  id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==",
+                  type: "Employee",
+                  uri: "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person",
+                  label: "admin-Person",
+                  objectName: "admin-Person",
+                  personEmail: "admin@fakemail.com",
+                  personFirstName: "In Mind",
+                  personLastName: "Admin",
+                }]
+                definesPartnerFunctionRecord: [
+                  "http://localhost:8080/iss/PartnerFunctionRecord#f8980eb2388f4904a38ae61465c79d43"
+                ]
+                      
+    delete:
+      tags:
+        - Account
+      summary: Delete an account or accounts by id.
+      description: Supports multiple account ids in comma separated format.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzQ3MjU5ZmYzNDUzYTQyYTc5Mjk2ZWIzYTlmMjQwODJj
+      responses:
+        '204':
+          description: >-
+            Account deleted successfully.
+
+  '/accounts/{id}/save':
+    post:
+      tags:
+        - Account
+      summary: Saves the updated account.
+      description: >-
+        Persists all changes in the memory model to the database and returns the id and uri of the account.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzgyZjFkNzc1MTUzNDRjNWU4NDY2Y2QxYThhNWYxYTVi
+      responses:
+        '200':
+          description: Returns about the saved Account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account_OUTPUT_URI'
+              example:
+                id: >-
+                  aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzgyZjFkNzc1MTUzNDRjNWU4NDY2Y2QxYThhNWYxYTVi
+                type: ""
+                uri: >-
+                  http://localhost:8080/iss/Account#82f1d77515344c5e8466cd1a8a5f1a5b
+                  
+                  
+  '/accounts/{id}/cancel':
+    post:
+      tags:
+        - Account
+      summary: Cancel the updates made to an account.
+      description: >-
+        Cancels the current account transaction by doing a rollback to remove all changes in the memory model since the last commit and returns the id and uri of the account.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzgyZjFkNzc1MTUzNDRjNWU4NDY2Y2QxYThhNWYxYTVi
+      responses:
+        '200':
+          description: Returns about the Account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account_OUTPUT_URI'
+              example:
+                id: >-
+                  aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzgyZjFkNzc1MTUzNDRjNWU4NDY2Y2QxYThhNWYxYTVi
+                type: ""
+                uri: >-
+                  http://localhost:8080/iss/Account#82f1d77515344c5e8466cd1a8a5f1a5b
+ 
+  '/accounts/{id}/address':
+    post:
+      tags:
+        - Address
+      summary: Adds a new address to an account.
+      description: >-
+        Creates a new address and returns the information of the address.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0I2IwNDc2ODA4YmYzMTQzZGZiNzE1YjcwOTNkMzgwYjQ3
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Address_INPUT'
+              required: 
+                - type
+                - addressStreet  
+                - hasCountry
+                - addressCity
+        required: true
+      responses:
+        '200':
+          description: Returns about the created Address.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account_INCLUDE_ADDRESS_PARAMS'
+              example:
+                id: >-
+                  aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzNhMzc5MWZjYzc4ZTQzYjJiODdkYmNmZmI4OGVmMjc4
+                type: Address
+                uri: >-
+                  http://localhost:8080/iss/Address#3a3791fcc78e43b2b87dbcffb88ef278
+                addressZip: "069423"
+                addressStreet: "46B Club Street"
+                addressUnitNo: "10-41"
+                addressCity: "Singapore"
+                hasCountry: [
+                    "http://www.inmindcloud.dev.com/application/application-implementation.owl#SG"
+                ]
+                addressIncludedBy: [
+                    "http://localhost:8080/iss/Account#82f1d77515344c5e8466cd1a8a5f1a5b"
+                ]
+                containsCreator: [
+                    "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person"
+                ]
+
+    patch:
+      tags:
+        - Address
+      summary: Updates an account's address.
+      description: >-
+        Updates the address and returns the information of the address.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0I2IwNDc2ODA4YmYzMTQzZGZiNzE1YjcwOTNkMzgwYjQ3
+        - name: addressId
+          in: query
+          required: true
+          description: >-
+            Address id to be updated.
+          schema:
+            type: string
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzI2I1ZWY2MTg1YjhmMzRiZDRhZWExMzM1ODA3YWYzNWZk
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Address_INPUT_UPDATE'
+      responses:
+        '200':
+          description: Returns about the created Address.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Addresst_OUTPUT_UPDATE'
+              example:
+                id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzI2I1ZWY2MTg1YjhmMzRiZDRhZWExMzM1ODA3YWYzNWZk"
+                type: "Address"
+                uri: "http://localhost:8080/iss/Address#b5ef6185b8f34bd4aea1335807af35fd"
+                objectId: "b5ef6185b8f34bd4aea1335807af35fd"
+                addressCity: "Singapore"
+                objectDateOfCreation: 1602214784720
+                addressPhone: "98001234"
+                addressStreet: "48 Mandalay Road"
+                addressZip: "069423"
+                addressMain: true
+                addressUnitNo: "10-41"
+                hasCountry: [
+                  {
+                    id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTRw==",
+                    type: "Country",
+                    uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#SG",
+                    label: "Singapore",
+                    objectName: "Singapore",
+                    objectId: "SG",
+                    objectExternalId: "SG",
+                    hasBaseCurrency: [
+                        {
+                            id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTR0Q=",
+                            uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#SGD"
+                        }
+                    ],
+                    hasRegion: [
+                        "http://www.inmindcloud.dev.com/application/application-implementation.owl#APJ"
+                    ]
+                }]
+                addressIncludedBy: [
+                  "http://localhost:8080/iss/Account#82f1d77515344c5e8466cd1a8a5f1a5b"
+                ]
+                containsCreator: [
+                  "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person"
+                ]     
+ 
+    delete:
+      tags:
+        - Address
+      summary: Delete an address or addresses by id.
+      description: Supports multiple address ids in comma separated format.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: >-
+            Account id.
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzgyZjFkNzc1MTUzNDRjNWU4NDY2Y2QxYThhNWYxYTVi
+        - name: addressIds
+          in: query
+          required: true
+          description: >-
+            Address ids in comma separated format.
+          schema:
+            type: string
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzI2I1ZWY2MTg1YjhmMzRiZDRhZWExMzM1ODA3YWYzNWZk, aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzI2Y1MWQ4Y2E5YjRlYjQ3NjZiMGFkODE3NzljYjBhODk3
+      responses:
+        '204':
+          description: >-
+            Address deleted successfully.
+
+  '/accounts/syncFromERP':
+    post:
+      tags:
+        - Synchronize
+      summary: Synchronize accounts from ERP.
+      description: >-
+        Synchronize all accounts from ERP.
+      parameters:
+        - name: runAsBackground
+          in: query
+          required: false
+          description: Sets whether the sync runs in foreground or background.
+          schema:
+            type: boolean
+            example: true
+      responses:
+        '204':
+          description: Accounts synced successfully
+          
+  '/accounts/syncFromERPSelection':
+    get:
+      tags:
+        - Synchronize
+      summary: Synchronize selected accounts from ERP.
+      description: >-
+        Synchronize selected accounts from ERP.
+      parameters:
+        - name: erpIds
+          in: query
+          required: true
+          description: Account ERP ids in comma separated format.
+          schema:
+            type: string
+            example: '0000001000'
+      responses:
+        '204':
+          description: Accounts synced successfully
+          
+  '/accounts/synchronizeAll':
+    get:
+      tags:
+        - Synchronize
+      summary: Synchronize all external accounts.
+      description: >-
+        Synchronizes all external accounts.
+      responses:
+        '204':
+          description: Accounts synced successfully          
+          
+                
+components:
+  schemas:
+    Account_COUNT:
+      type: object
+      properties:
+        count:
+          type: integer
+          title: the number of accounts
+          example: 3
+          
+    Account_TYPE:
+      type: object
+      properties:
+        type:
+          type: string
+          title: Account's type
+          example: Account
+          
+    Account_ID:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50I2UxNGYxMjQ0ZTJlNzRiM2E5YzM4OTY3MDZiYjFlNWRi
+        uri:
+          type: string
+          example: >-
+            http://localhost:8080/iss/Account#e14f1244e2e74b3a9c3896706bb1e5db
+            
+    Account_OBJECTNAME:
+      type: object
+      properties:
+        objectName:
+          type: string
+          example: Account1
+          
+    Account_OBJECTID:
+      type: object
+      properties:
+        objectId:
+          type: string
+          example: e14f1244e2e74b3a9c3896706bb1e5db  
+            
+    Account_DATE_OF_UPDATE:
+      type: object
+      properties:
+        objectDateOfUpdate:
+          type: integer
+          format: timestamp
+          example: 1594613347878
+          
+    Account_DATE_OF_CREATE:
+      type: object
+      properties:
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1594608096026
+          
+    Address_PHONE:
+      type: object
+      properties:
+        addressPhone:
+          type: string
+          example: 98001234
+          
+    Account_INCLUDES_ADDRESS_EXPANDED:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY2NvdW50VHlwZURpcmVjdA==
+        type:
+          type: string
+          example: Address
+        uri:
+          type: string
+          example: >-
+            http://localhost:8080/iss/Address#543497abd9b54672ba28c01fb2fd2a49
+        objectId:
+          type: string
+          example: 543497abd9b54672ba28c01fb2fd2a49
+          
+    Account_INPUT:
+      type: object
+      properties:
+        type:
+          type: string
+          description: >-
+            Retrieve the accounts in the system.
+          example: Search
+        limit: 
+          type: integer
+          description: >-
+            Defines the maximum number of records that can be
+            returned.
+          example: 1
+        offset:
+          type: integer
+          description: >-
+            Defines the number of records that should be
+            skipped. Default value is 0.
+          example: 0
+        filter: 
+          type: string
+          description: >-
+            The filter parameter. If keyword contains space, it must be enclosed between two apostrophe('). If keyword is URI, it must be url encoded.
+          example: objectName eq Account1
+        sort: 
+          type: array
+          description: >-
+            Defines the sorting of the result. 'ASC' for ascending and 'DESC' for descending order. Default order is objectName ASC.
+          items:
+            type: string
+            example: objectName DESC
+        elements:
+          type: object
+          description: >-
+            Sets the BDAs and BRAs that will be returned. id, type, uri , label and comment are included by default. If 'elements' is not specified, all the BDAs and BRAs will be returned.
+          properties:
+            bda:
+              type: string
+              description: >-
+                Defines the requested BDAs that will be returned. If set as empty string, only id, type, uri , label and comment will be returned.
+              example: 
+                - objectName
+                - objectId
+            bra:
+              type: string
+              description: >-
+                Defines the requested BRAs that will be returned. If set as empty string, no BRAs will be returned. Ensure the BRA array contains all the dependent resources that are defined in 'include'.
+              example: 
+                - includesAddress
+        revInclude:
+          type: array
+          items:
+            type: string
+            example: ""
+        include: 
+          type: array
+          description: >- 
+            Sets the related nested data that will be resolved.
+          items:
+            type: string
+            example: includesAddress
+            
+    Account_OUTPUT:
+      type: object
+      properties:
+        objectId:
+          type: string
+          example: e14f1244e2e74b3a9c3896706bb1e5db      
+        objectName:
+          type: string
+          example: Account1
+        accountOpportunityVolume:
+          type: integer
+          example: 0
+        accountProspect:
+          type: boolean
+          example: true
+        accountQuoteCount:
+          type: integer
+          example: 0
+        accountQuoteVolume:
+          type: integer
+          example: 0
+        hasIndustry:
+          type: object
+          properties:
+            id:
+              type: string
+              format: base64-encoded URI
+              example: >-
+                aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNJSG90ZWw
+            uri:
+              type: string
+              example: >-
+                http://www.inmindcloud.dev.com/application/application-implementation.owl#IHotel
+        includesAddress:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of account's address
+        usesMainAddress:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of account's address
+        containsContact:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of account's contacts
+        containsOwner:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of account's owner
+            
+            
+    Account_INPUT_CREATE:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: 'Account'
+        objectName:
+          type: string
+          example: 'New Account'
+        hasIndustry:
+          type: string
+          format: uri
+          example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#IAeroDefense'  
+        accountProspect:
+          type: boolean
+          example: true
+        includesAddress:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Address_INPUT'
+            
+    Account_OUTPUT_CREATE_BASE:
+      type: object
+      properties:
+        hasIndustry:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#IAeroDefense'
+        accountProspect:
+          type: boolean
+          example: true
+        containsCreator:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.com/security/security-implementation.owl#admin-Person'
+        hasAccountStatus:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.com/application/schema.owl#ACTIVE' 
+        hasAccountType:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.com/application/schema.owl#AccountTypeDirect'
+        containsOwner:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.com/security/security-implementation.owl#admin-Person' 
+        containsVirtualTeam:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#admin' 
+            
+    Account_INPUT_UPDATE:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: 'Account'
+        objectName:
+          type: string
+          example: 'Test Account'
+        hasIndustry:
+          type: string
+          format: uri
+          example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#IHotel'  
+        hasCurrency:
+          type: string
+          format: uri
+          example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR'  
+            
+    Account_OUTPUT_UPDATE_BASE:
+      type: object
+      properties:
+        hasIndustry:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address_HASINDUSTRY_PARAMS'
+        includesAddress:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Account_INCLUDE_ADDRESS_PARAMS_ALL'
+        usesMainAddress:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://localhost:8080/iss/Address#37b5beb4a33045f6964d11a70404dbbc
+        hasCurrency:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR
+        definesPartnerFunctionRecord:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://localhost:8080/iss/PartnerFunctionRecord#f8980eb2388f4904a38ae61465c79d43     
+        
+        
+                
+    Address_HASINDUSTRY_PARAMS:
+      type: object
+      properties:
+        id:
+          type: string
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNJSG90ZWw
+        uri:
+          type: string
+          example: http://www.inmindcloud.dev.com/application/application-implementation.owl#IHotel
+    
+    Address_INPUT:
+      type: object
+      properties:
+        addressStreet:
+          type: array
+          items:
+            type: string
+            example: '46B Club Street'
+        addressCity:
+          type: array
+          items:
+            type: string
+            example: 'Singapore'
+        addressUnitNo: 
+          type: array
+          items:
+            type: string
+            example: '10-41'
+        addressZip:
+          type: array
+          items:
+            type: string
+            example: '069423'
+        hasCountry:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#SG'
+        type: 
+          type: string
+          example: 'Address'
+          
+    Account_INCLUDE_ADDRESS_PARAMS:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzM3YjViZWI0YTMzMDQ1ZjY5NjRkMTFhNzA0MDRkYmJj
+        type:
+          type: string
+          example: Address
+        uri:
+          type: string
+          example: >-
+            http://localhost:8080/iss/Address#37b5beb4a33045f6964d11a70404dbbc
+        addressZip:
+          type: string
+          example: '069423'
+        addressStreet:
+          type: string
+          example: '46B Club Street'
+        addressUnitNo: 
+          type: string
+          example: '10-41'
+        addressCity:
+          type: string
+          example: 'Singapore'
+        hasCountry:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#SG'
+        addressIncludedBy:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://localhost:8080/iss/Account#47259ff3453a42a79296eb3a9f24082c'  
+        addressMain:
+          type: boolean
+          example: true
+        containsCreator:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.com/security/security-implementation.owl#admin-Person'
+            
+    Address_HAS_COUNTRY_PARAMS:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTRw
+        type:
+          type: string
+          example: Country
+        uri:
+          type: string
+          example: >-
+            http://www.inmindcloud.dev.com/application/application-implementation.owl#SG
+        label:
+          type: string
+          example: 'Singapore'
+        objectName:
+          type: string
+          example: 'Singapore'
+        objectId: 
+          type: string
+          example: 'SG'
+        objectExternalId:
+          type: string
+          example: 'SG'
+        hasBaseCurrency:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: base64-encoded URI
+                example: >-
+                  aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTR0Q
+              uri:
+                type: string
+                example: >-
+                  http://www.inmindcloud.dev.com/application/application-implementation.owl#SGD
+        hasRegion:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#APJ' 
+   
+
+    Account_INCLUDE_ADDRESS_PARAMS_EXPANDED:
+      type: object
+      properties:
+        includesAddress:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Account_INCLUDE_ADDRESS_PARAMS'   
+            
+    Account_INCLUDE_ADDRESS_PARAMS_ALL:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzM3YjViZWI0YTMzMDQ1ZjY5NjRkMTFhNzA0MDRkYmJj
+        type:
+          type: string
+          example: Address
+        uri:
+          type: string
+          example: >-
+            http://localhost:8080/iss/Address#37b5beb4a33045f6964d11a70404dbbc
+        addressZip:
+          type: string
+          example: '069423'
+        addressStreet:
+          type: string
+          example: '46B Club Street'
+        addressUnitNo: 
+          type: string
+          example: '10-41'
+        addressCity:
+          type: string
+          example: 'Singapore'
+        hasCountry:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Address_HAS_COUNTRY_PARAMS'
+        addressIncludedBy:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://localhost:8080/iss/Account#47259ff3453a42a79296eb3a9f24082c'  
+        addressMain:
+          type: boolean
+          example: true
+        containsCreator:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: 'http://www.inmindcloud.com/security/security-implementation.owl#admin-Person'
+            
+    Address_INPUT_UPDATE:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: 'Address'    
+        addressStreet:
+          type: array
+          items:
+            type: string
+            example: '48 Mandalay Road'
+        addressPhone:
+          type: array
+          items:
+            type: string
+            example: '98001234'
+
+    
+    Account_CREATOR_PARAMS:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==
+        type:
+          type: string
+          example: Employee
+        uri:
+          type: string
+          example: >-
+            http://www.inmindcloud.com/security/security-implementation.owl#admin-Person
+        label:
+          type: string
+          example: 'admin-Person'
+        objectName:
+          type: string
+          example: 'admin-Person'
+        personEmail: 
+          type: string
+          example: 'admin@fakemail.com'
+        personFirstName: 
+          type: string
+          example: 'In Mind'
+        personLastName: 
+          type: string
+          example: 'Admin'
+    
+    
+    Account_CONTAINS_CREATOR_EXPANDED:
+      type: object
+      properties:
+        containsCreator:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Account_CREATOR_PARAMS'   
+            
+    Account_CONTAINS_OWNER_EXPANDED:
+      type: object
+      properties:
+        containsOwner:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Account_CREATOR_PARAMS' 
+
+    Account_OUTPUT_BASE:
+      allOf:
+        - $ref: '#/components/schemas/Account_ID'
+        - $ref: '#/components/schemas/Account_TYPE'
+        - $ref: '#/components/schemas/Account_OUTPUT'
+        - $ref: '#/components/schemas/Account_DATE_OF_CREATE'
+        - $ref: '#/components/schemas/Account_DATE_OF_UPDATE'
+        
+    Account_OUTPUT_SEARCH:
+      allOf:
+        - $ref: '#/components/schemas/Account_ID'
+        - $ref: '#/components/schemas/Account_TYPE'
+        - $ref: '#/components/schemas/Account_OBJECTNAME'
+        - $ref: '#/components/schemas/Account_OBJECTID'
+        - $ref: '#/components/schemas/Account_INCLUDES_ADDRESS_EXPANDED'
+        
+        
+    Account_OUTPUT_GETS:
+      allOf:
+        - $ref: '#/components/schemas/Account_ID'
+        - $ref: '#/components/schemas/Account_TYPE'
+        - $ref: '#/components/schemas/Account_OUTPUT'
+        - $ref: '#/components/schemas/Account_DATE_OF_CREATE'
+        - $ref: '#/components/schemas/Account_DATE_OF_UPDATE'
+        - $ref: '#/components/schemas/Account_INCLUDES_ADDRESS_EXPANDED'
+        
+    Account_OUTPUT_CREATE:
+      allOf:
+        - $ref: '#/components/schemas/Account_ID'
+        - $ref: '#/components/schemas/Account_TYPE'
+        - $ref: '#/components/schemas/Account_INCLUDE_ADDRESS_PARAMS_EXPANDED'
+        - $ref: '#/components/schemas/Account_OBJECTNAME'
+        - $ref: '#/components/schemas/Account_OUTPUT_CREATE_BASE'
+       
+    Account_OUTPUT_UPDATE:
+      allOf:
+        - $ref: '#/components/schemas/Account_ID'
+        - $ref: '#/components/schemas/Account_TYPE'
+        - $ref: '#/components/schemas/Account_OBJECTNAME'
+        - $ref: '#/components/schemas/Account_OBJECTID'
+        - $ref: '#/components/schemas/Account_OUTPUT_CREATE_BASE'
+        - $ref: '#/components/schemas/Account_OUTPUT_UPDATE_BASE'
+        - $ref: '#/components/schemas/Account_DATE_OF_CREATE'
+        - $ref: '#/components/schemas/Account_DATE_OF_UPDATE' 
+        - $ref: '#/components/schemas/Account_CONTAINS_CREATOR_EXPANDED'
+        - $ref: '#/components/schemas/Account_CONTAINS_OWNER_EXPANDED'
+        
+    Account_OUTPUT_URI:
+      allOf:
+        - $ref: '#/components/schemas/Account_ID'
+        - $ref: '#/components/schemas/Account_TYPE'
+        
+    Addresst_OUTPUT_UPDATE:
+      allOf:
+        - $ref: '#/components/schemas/Account_INCLUDE_ADDRESS_PARAMS_ALL'
+        - $ref: '#/components/schemas/Account_DATE_OF_CREATE'
+        - $ref: '#/components/schemas/Address_PHONE'
+        
