@@ -1,0 +1,1652 @@
+openapi: 3.0.1
+info:
+  title: Activity API
+  version: 1.0.0
+servers:
+  - url: /api
+tags:
+  - name: Activity
+  
+paths:
+  /activity/{type}/search:
+    post:
+      tags:
+        - Activity
+      summary: Search activity API.
+      parameters:
+        - name: type
+          in: path
+          required: true
+          description: Sub type of activity.
+          schema:
+            type: string
+          examples:
+            ActivityTask:
+              value: ActivityTask
+            ActivityEmail:
+              value: ActivityEmail
+            ActivityAppointment:
+              value: ActivityAppointment
+            ActivityPhoneCall:
+              value: ActivityPhoneCall
+      description: >-
+        Searches and retrives a list of Activities based on the query and business type.
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Activity_SEARCH_INPUT'
+              required: 
+                - type
+        required: true
+      responses:
+        '200':
+          description: >-
+            Returns the list of activities as Bundle based on example of Request Payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity_SEARCH_OUTPUT'
+              example:
+                type: Bundle
+                total: 1
+                entry: 
+                  - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjNTRmYzdmNWQ0NThkNGUyZTk2MDAzMjRlN2I0Nzk4MmU=
+                    type: ActivityTask
+                    uri: 'http://localhost:8080/iss/ActivityTask#54fc7f5d458d4e2e9600324e7b47982e'
+                    objectName: New Task
+                    objectId: 54fc7f5d458d4e2e9600324e7b47982e
+                    objectDateOfCreation: 1603696885504
+                    objectDateOfUpdate: 1603696887859
+                    containsCreator:
+                      - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==
+                        type: Employee
+                        uri: 'http://www.inmindcloud.com/security/security-implementation.owl#admin-Person'
+                        personEmail: 'admin@fakemail.com'
+                        personFirstName: "In Mind"
+                        personLastName: "Admin"
+                    containsOwner: 'http://www.inmindcloud.com/security/security-implementation.owl#admin-Person'
+                    hasActivityStatus: 'http://www.inmindcloud.com/application/schema.owl#ActivityStatusNew'
+                    
+  /activity/{type}:
+    get:
+      tags:
+        - Activity
+      summary: Get the list of activities
+      description: >-
+        Retrieve top 200 activities of given activity type in the system by default (no parameter is provided)
+      parameters:
+        - name: type
+          in: path
+          required: true
+          description: Sub type of activity.
+          schema:
+            type: string
+          examples:
+            ActivityTask:
+              value: ActivityTask
+            ActivityEmail:
+              value: ActivityEmail
+            ActivityAppointment:
+              value: ActivityAppointment
+            ActivityPhoneCall:
+              value: ActivityPhoneCall
+        - name: limit
+          in: query
+          description: >-
+            Defines the maximum number of records that can be returned.
+          schema:
+            type: integer
+            default: '200'
+            example: 200
+        - name: offset
+          in: query
+          description: For pagination, defines the number of records that should be
+            skipped. If not specified, no record will be skipped.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+        - name: filter
+          in: query
+          description: The filter parameter. If keyword contains space, it must be enclosed
+            betwen two apostrophe('). If keyword is URI, it must be url encoded.
+          required: false
+          style: form
+          explode: false
+          schema:
+            type: string
+          examples:
+            contains_operator:
+              summary: contains
+              value: objectName contains 'Task One'
+            equal_operator:
+              summary: equal
+              value: hasActivityPriority eq http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+            not_equal_operator:
+              summary: not equal
+              value: hasActivityPriority ne http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+            greater_than_operator:
+              summary: greater than
+              value: validFrom gt 2020-03-20
+            greater_than_eq_operator:
+              summary: greater than equal
+              value: activityProgress ge 40
+            less_than_operator:
+              summary: less than
+              value: validFrom lt 2020-03-20
+            less_than_eq_operator:
+              summary: less than equal
+              value: validFrom le 2020-03-20
+            and_operator:
+              summary: and
+              value: objectName contains 'Task One' and hasActivityPriority eq http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+            or_operator:
+              summary: or
+              value: objectName contains 'Task One' or hasActivityPriority eq http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+        - name: sort
+          in: query
+          description: >-
+            Defines the sorting of the result. 'ASC' for ascending and 'DESC' for descending order. Default order is objectName ASC.
+          example: objectName ASC
+          schema:
+            type: string
+            default: objectName ASC
+        - name: resolveRelations
+          in: query
+          description: To resolve nested data. Suppport multiple values with comma separated
+            format.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: activityContainedBy,containsAccount,containsOwner,hasActivityPriority,hasActivityStatus
+      responses:
+          default:
+            description: By default, returns the list of Activities without resolving
+              any references and without any labels
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Activity_OUTPUT_BASE'
+                example:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjYmY5MzliMjUzYmI2NGY5ZWI1MDlkNDc3NmU1ZTdlNTY=
+                  type: ActivityTask
+                  uri: http://localhost:8080/iss/ActivityTask#bf939b253bb64f9eb509d4776e5e7e56
+                  activityDescription: Some description
+                  activityProgress: 0
+                  objectDateOfCreation: 1583129767105
+                  objectDateOfUpdate: 1583132780146
+                  objectName: task from O
+                  validFrom: 1583078400000
+                  validTo: 1585151999999
+                  activityContainedBy:
+                  - http://localhost:8080/iss/Opportunity#2caa7a94376f45b58277a193348c31a1
+                  containsAccount:
+                  - http://localhost:8080/iss/Account#934c1671b39e49cfb562b47b0ca09350
+                  containsCreator:
+                  - http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                  containsOwner:
+                  - http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                  definesPartnerFunctionRecord:
+                  - http://localhost:8080/iss/PartnerFunctionRecord#47cddb66578140439cf4a9dde13c8b43
+                  hasActivityPriority:
+                  - http://www.inmindcloud.com/application/schema.owl#ActivityPriorityMedium
+                  hasActivityStatus:
+                  - http://www.inmindcloud.com/application/schema.owl#ActivityStatusNew
+          x-resolveRelations:
+            description: When parameter `resolveRelations` is provided, the related
+              nested data will be resolved.
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Activity_OUTPUT_ALL'
+                example:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjYmY5MzliMjUzYmI2NGY5ZWI1MDlkNDc3NmU1ZTdlNTY=
+                  type: ActivityTask
+                  uri: http://localhost:8080/iss/ActivityTask#bf939b253bb64f9eb509d4776e5e7e56
+                  activityDescription: Some description
+                  activityProgress: 0
+                  objectDateOfCreation: 1583129767105
+                  objectDateOfUpdate: 1583132780146
+                  objectName: task from O
+                  validFrom: 1583078400000
+                  validTo: 1585151999999
+                  activityContainedBy:
+                  - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSMyY2FhN2E5NDM3NmY0NWI1ODI3N2ExOTMzNDhjMzFhMQ==
+                    type: Opportunity
+                    uri: http://localhost:8080/iss/Opportunity#2caa7a94376f45b58277a193348c31a1
+                    objectName: O2
+                  containsAccount:
+                  - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzkzNGMxNjcxYjM5ZTQ5Y2ZiNTYyYjQ3YjBjYTA5MzUw
+                    type: Account
+                    uri: http://localhost:8080/iss/Account#934c1671b39e49cfb562b47b0ca09350
+                    objectName: Account 1
+                  containsCreator:
+                  - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNhZG1pbg==
+                    type: User
+                    uri: http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                    objectName: admin
+                    hasUserStatus:
+                    - http://www.inmindcloud.com/application/schema.owl#USERACTIVE
+                  containsOwner:
+                  - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNhZG1pbg==
+                    type: User
+                    uri: http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                    objectName: admin
+                    hasUserStatus:
+                    - http://www.inmindcloud.com/application/schema.owl#USERACTIVE
+                  definesPartnerFunctionRecord:
+                  - http://localhost:8080/iss/PartnerFunctionRecord#47cddb66578140439cf4a9dde13c8b43
+                  hasActivityPriority:
+                  - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY3Rpdml0eVByaW9yaXR5TWVkaXVt
+                    type: ActivityPriority
+                    uri: http://www.inmindcloud.com/application/schema.owl#ActivityPriorityMedium
+                    objectName: 20 - Medium
+                  hasActivityStatus:
+                  - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY3Rpdml0eVN0YXR1c05ldw==
+                    type: ActivityStatus
+                    uri: http://www.inmindcloud.com/application/schema.owl#ActivityStatusNew
+                    objectName: 10 - New
+  
+  /activity/{type}/count:
+    get:
+      tags:
+        - Activity
+      summary: Count the list of activities
+      description: >-
+        If no parameters are provided, it will retrieve all activities of given type in the system
+      parameters:
+        - name: type
+          in: path
+          required: true
+          description: Sub type of activity.
+          schema:
+            type: string
+          examples:
+            ActivityTask:
+              value: ActivityTask
+            ActivityEmail:
+              value: ActivityEmail
+            ActivityAppointment:
+              value: ActivityAppointment
+            ActivityPhoneCall:
+              value: ActivityPhoneCall
+        - name: filter
+          in: query
+          description: >-
+            The filter parameter. If keyword contains space, it must be enclosed betwen two apostrophe('). If keyword is URI, it must be url encoded.
+          examples:
+            contains_operator:
+              value: objectName contains 'Task'
+              description: >-
+                Retrives the number of activities with objectName containing 'Task'.
+              summary: contains
+            equal_operator:
+              value: >-
+                objectName eq 'New Task'
+              description: >-
+                Retrives the number of activities with objectName equals to 'New Task'.
+              summary: equal
+            not_equal_operator:
+              value: >-
+                objectName ne 'New Task'
+              description: >-
+                Retrives the number of activities with objectName not equals to 'New Task'.
+              summary: not equal
+            greater_than_operator:
+              value: objectDateOfCreation gt 2020-03-20
+              description: >-
+                Retrives the number of activities with objectDateOfCreation greater than '2020-03-20'.
+              summary: greater than
+            greater_than_eq_operator:
+              value: objectDateOfCreation ge 2020-03-20
+              description: >-
+                Retrives the number of activities with objectDateOfCreation greater than or equals to '2020-03-20'.
+              summary: greater than equal
+            less_than_operator:
+              value: objectDateOfCreation lt 2020-03-20
+              description: >-
+                Retrives the number of activities with objectDateOfCreation less than '2020-03-20'.
+              summary: less than
+            less_than_eq_operator:
+              value: objectDateOfCreation le 2020-03-20
+              description: >-
+                Retrives the number of activities with objectDateOfCreation less than or equals to '2020-03-20'.
+              summary: less than equal
+            and_operator:
+              value: >-
+                objectName contains 'Task' and objectDateOfCreation gt 2020-03-20
+              description: >-
+                Retrives the number of activities with objectName containing 'Task' and objectDateOfCreation greater than '2020-03-20'.
+              summary: and
+            or_operator:
+              value: >-
+                objectName contains 'Task' or objectDateOfCreation gt 2020-03-20
+              description: >-
+                Retrives the number of activities with objectName containing 'Task' or objectDateOfCreation greater than '2020-03-20'.
+              summary: or
+          schema:
+            type: string
+          explode: false
+      responses:
+        '200':
+          description: >-
+            Returns the number of Activities.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity_COUNT'
+              example:
+                count: 3  
+                
+  '/activity/{type}/{id}':
+    get:
+      tags:
+        - Activity
+      summary: Get the details of an activity
+      parameters:
+        - name: type
+          in: path
+          required: true
+          description: Sub type of activity.
+          schema:
+            type: string
+          examples:
+            ActivityTask:
+              value: ActivityTask
+            ActivityEmail:
+              value: ActivityEmail
+            ActivityAppointment:
+              value: ActivityAppointment
+            ActivityPhoneCall:
+              value: ActivityPhoneCall
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjYmY5MzliMjUzYmI2NGY5ZWI1MDlkNDc3NmU1ZTdlNTY=
+        - name: resolveRelations
+          in: query
+          description: >-
+            To resolve nested data. Suppport multiple values with comma separated format.
+          schema:
+            type: string
+          example: >-
+            containsCreator, containsOwner, hasActivityStatus        
+      responses:
+        "200":
+          description: Returns the details of activity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity_OUTPUT_ALL'
+              example:
+              - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjYmY5MzliMjUzYmI2NGY5ZWI1MDlkNDc3NmU1ZTdlNTY=
+                type: ActivityTask
+                uri: http://localhost:8080/iss/ActivityTask#bf939b253bb64f9eb509d4776e5e7e56
+                activityDescription: Some description
+                activityProgress: 0
+                objectDateOfCreation: 1583129767105
+                objectDateOfUpdate: 1583132780146
+                objectName: task from O
+                validFrom: 1583078400000
+                validTo: 1585151999999
+                activityContainedBy:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSMyY2FhN2E5NDM3NmY0NWI1ODI3N2ExOTMzNDhjMzFhMQ==
+                  type: Opportunity
+                  uri: http://localhost:8080/iss/Opportunity#2caa7a94376f45b58277a193348c31a1
+                  objectName: O2
+                containsAccount:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzkzNGMxNjcxYjM5ZTQ5Y2ZiNTYyYjQ3YjBjYTA5MzUw
+                  type: Account
+                  uri: http://localhost:8080/iss/Account#934c1671b39e49cfb562b47b0ca09350
+                  objectName: Account 1
+                containsCreator:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNhZG1pbg==
+                  type: User
+                  uri: http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                  objectName: admin
+                  hasUserStatus:
+                  - http://www.inmindcloud.com/application/schema.owl#USERACTIVE
+                containsOwner:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNhZG1pbg==
+                  type: User
+                  uri: http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                  objectName: admin
+                  hasUserStatus:
+                  - http://www.inmindcloud.com/application/schema.owl#USERACTIVE
+                definesPartnerFunctionRecord:
+                - http://localhost:8080/iss/PartnerFunctionRecord#47cddb66578140439cf4a9dde13c8b43
+                hasActivityPriority:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY3Rpdml0eVByaW9yaXR5TWVkaXVt
+                  type: ActivityPriority
+                  uri: http://www.inmindcloud.com/application/schema.owl#ActivityPriorityMedium
+                  objectName: 20 - Medium
+                hasActivityStatus:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY3Rpdml0eVN0YXR1c05ldw==
+                  type: ActivityStatus
+                  uri: http://www.inmindcloud.com/application/schema.owl#ActivityStatusNew
+                  objectName: 10 - New
+
+  /activities:
+    get:
+      tags:
+      - Activity
+      summary: Get the list of activities
+      description: 'Retrieve top 200 activities of given *activity type* in the system
+        by default (no parameter is provided) '
+      parameters:
+      - name: type
+        in: query
+        description: Sub type of activity.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+        examples:
+          ActivityTask:
+            value: ActivityTask
+          ActivityEmail:
+            value: ActivityEmail
+          ActivityAppointment:
+            value: ActivityAppointment
+          ActivityPhoneCall:
+            value: ActivityPhoneCall
+      - name: limit
+        in: query
+        description: For pagination, defines the maximum number of records that can
+          be returned. If not specified, it will use default value of 200.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 200
+      - name: offset
+        in: query
+        description: For pagination, defines the number of records that should be
+          skipped. If not specified, no record will be skipped.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: filter
+        in: query
+        description: The filter parameter. If keyword contains space, it must be enclosed
+          betwen two apostrophe('). If keyword is URI, it must be url encoded.
+        required: false
+        style: form
+        explode: false
+        schema:
+          type: string
+        examples:
+          contains_operator:
+            summary: contains
+            value: objectName contains 'Task One'
+          equal_operator:
+            summary: equal
+            value: hasActivityPriority eq http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+          not_equal_operator:
+            summary: not equal
+            value: hasActivityPriority ne http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+          greater_than_operator:
+            summary: greater than
+            value: validFrom gt 2020-03-20
+          greater_than_eq_operator:
+            summary: greater than equal
+            value: activityProgress ge 40
+          less_than_operator:
+            summary: less than
+            value: validFrom lt 2020-03-20
+          less_than_eq_operator:
+            summary: less than equal
+            value: validFrom le 2020-03-20
+          and_operator:
+            summary: and
+            value: objectName contains 'Task One' and hasActivityPriority eq http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+          or_operator:
+            summary: or
+            value: objectName contains 'Task One' or hasActivityPriority eq http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+      - name: sort
+        in: query
+        description: For sorting. 'ASC' for ascending and 'DESC' for descending order.
+          Default order is 'ASC'. Default order is ascending.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          default: objectName ASC
+        example: objectName ASC
+      - name: resolveRelations
+        in: query
+        description: To resolve nested data. Suppport multiple values with comma separated
+          format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: activityContainedBy,containsAccount,containsOwner,hasActivityPriority,hasActivityStatus
+      responses:
+        default:
+          description: By default, returns the list of Activities without resolving
+            any references and without any labels
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity_OUTPUT_BASE'
+              example:
+              - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjYmY5MzliMjUzYmI2NGY5ZWI1MDlkNDc3NmU1ZTdlNTY=
+                type: ActivityTask
+                uri: http://localhost:8080/iss/ActivityTask#bf939b253bb64f9eb509d4776e5e7e56
+                activityDescription: Some description
+                activityProgress: 0
+                objectDateOfCreation: 1583129767105
+                objectDateOfUpdate: 1583132780146
+                objectName: task from O
+                validFrom: 1583078400000
+                validTo: 1585151999999
+                activityContainedBy:
+                - http://localhost:8080/iss/Opportunity#2caa7a94376f45b58277a193348c31a1
+                containsAccount:
+                - http://localhost:8080/iss/Account#934c1671b39e49cfb562b47b0ca09350
+                containsCreator:
+                - http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                containsOwner:
+                - http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                definesPartnerFunctionRecord:
+                - http://localhost:8080/iss/PartnerFunctionRecord#47cddb66578140439cf4a9dde13c8b43
+                hasActivityPriority:
+                - http://www.inmindcloud.com/application/schema.owl#ActivityPriorityMedium
+                hasActivityStatus:
+                - http://www.inmindcloud.com/application/schema.owl#ActivityStatusNew
+        x-resolveRelations:
+          description: When parameter `resolveRelations` is provided, the related
+            nested data will be resolved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity_OUTPUT_ALL'
+              example:
+              - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjYmY5MzliMjUzYmI2NGY5ZWI1MDlkNDc3NmU1ZTdlNTY=
+                type: ActivityTask
+                uri: http://localhost:8080/iss/ActivityTask#bf939b253bb64f9eb509d4776e5e7e56
+                activityDescription: Some description
+                activityProgress: 0
+                objectDateOfCreation: 1583129767105
+                objectDateOfUpdate: 1583132780146
+                objectName: task from O
+                validFrom: 1583078400000
+                validTo: 1585151999999
+                activityContainedBy:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSMyY2FhN2E5NDM3NmY0NWI1ODI3N2ExOTMzNDhjMzFhMQ==
+                  type: Opportunity
+                  uri: http://localhost:8080/iss/Opportunity#2caa7a94376f45b58277a193348c31a1
+                  objectName: O2
+                containsAccount:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzkzNGMxNjcxYjM5ZTQ5Y2ZiNTYyYjQ3YjBjYTA5MzUw
+                  type: Account
+                  uri: http://localhost:8080/iss/Account#934c1671b39e49cfb562b47b0ca09350
+                  objectName: Account 1
+                containsCreator:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNhZG1pbg==
+                  type: User
+                  uri: http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                  objectName: admin
+                  hasUserStatus:
+                  - http://www.inmindcloud.com/application/schema.owl#USERACTIVE
+                containsOwner:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNhZG1pbg==
+                  type: User
+                  uri: http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                  objectName: admin
+                  hasUserStatus:
+                  - http://www.inmindcloud.com/application/schema.owl#USERACTIVE
+                definesPartnerFunctionRecord:
+                - http://localhost:8080/iss/PartnerFunctionRecord#47cddb66578140439cf4a9dde13c8b43
+                hasActivityPriority:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY3Rpdml0eVByaW9yaXR5TWVkaXVt
+                  type: ActivityPriority
+                  uri: http://www.inmindcloud.com/application/schema.owl#ActivityPriorityMedium
+                  objectName: 20 - Medium
+                hasActivityStatus:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY3Rpdml0eVN0YXR1c05ldw==
+                  type: ActivityStatus
+                  uri: http://www.inmindcloud.com/application/schema.owl#ActivityStatusNew
+                  objectName: 10 - New
+    post:
+      tags:
+      - Activity
+      summary: Create a new activity of a particular type.
+      description: Provides functionality ranging from simple activity creation to
+        creation with associated partner function and creation together with attachments.
+        For activity email, MX provides an auto contact creation functionality if
+        setting is ON.
+      requestBody:
+        description: Activity object to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body'
+          multipart/related:
+            schema:
+              $ref: '#/components/schemas/body_1'
+        required: true
+      responses:
+        "201":
+          description: Returns about the created Activity (simple representation only)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity_OUTPUT_POST'
+              example:
+                id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjMWFjNWNiMGU3NmE5NGZjN2E2MTI0MjU0OWYyZjUzNTk=
+                type: ActivityTask
+                uri: http://localhost:8080/iss/ActivityTask#1ac5cb0e76a94fc7a61242549f2f5359
+                objectDateOfCreation: 1583135941752
+                objectName: Task 1
+  /activities/count:
+    get:
+      tags:
+      - Activity
+      summary: Count the list of activities
+      description: If no parameters are provided, it will retrieve all activities
+        of given type in the system
+      parameters:
+      - name: type
+        in: query
+        required: true
+        description: Sub type of activity.
+        schema:
+          type: string
+        examples:
+          ActivityTask:
+            value: ActivityTask
+          ActivityEmail:
+            value: ActivityEmail
+          ActivityAppointment:
+            value: ActivityAppointment
+          ActivityPhoneCall:
+            value: ActivityPhoneCall
+      - name: filter
+        in: query
+        description: The filter parameter. If keyword contains space, it must be enclosed
+          betwen two apostrophe('). If keyword is URI, it must be url encoded.
+        required: false
+        style: form
+        explode: false
+        schema:
+          type: string
+        examples:
+          contains_operator:
+            summary: contains
+            value: objectName contains 'Task One'
+          equal_operator:
+            summary: equal
+            value: hasActivityPriority eq http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+          not_equal_operator:
+            summary: not equal
+            value: hasActivityPriority ne http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+          greater_than_operator:
+            summary: greater than
+            value: validFrom gt 2020-03-20
+          greater_than_eq_operator:
+            summary: greater than equal
+            value: activityProgress ge 40
+          less_than_operator:
+            summary: less than
+            value: validFrom lt 2020-03-20
+          less_than_eq_operator:
+            summary: less than equal
+            value: validFrom le 2020-03-20
+          and_operator:
+            summary: and
+            value: objectName contains 'Task One' and hasActivityPriority eq http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+          or_operator:
+            summary: or
+            value: objectName contains 'Task One' or hasActivityPriority eq http%3A%2F%2Fwww.inmindcloud.com%2Fapplication%2Fschema.owl%23ActivityPriorityLow
+      responses:
+        default:
+          description: Returns the number of Activities of specific type.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity_COUNT'
+              example:
+                count: 3
+  /activities/{id}:
+    get:
+      tags:
+      - Activity
+      summary: Get the details of an activity
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjYmY5MzliMjUzYmI2NGY5ZWI1MDlkNDc3NmU1ZTdlNTY=
+      responses:
+        "200":
+          description: Returns the details of activity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity_OUTPUT_ALL'
+              example:
+              - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjYmY5MzliMjUzYmI2NGY5ZWI1MDlkNDc3NmU1ZTdlNTY=
+                type: ActivityTask
+                uri: http://localhost:8080/iss/ActivityTask#bf939b253bb64f9eb509d4776e5e7e56
+                activityDescription: Some description
+                activityProgress: 0
+                objectDateOfCreation: 1583129767105
+                objectDateOfUpdate: 1583132780146
+                objectName: task from O
+                validFrom: 1583078400000
+                validTo: 1585151999999
+                activityContainedBy:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSMyY2FhN2E5NDM3NmY0NWI1ODI3N2ExOTMzNDhjMzFhMQ==
+                  type: Opportunity
+                  uri: http://localhost:8080/iss/Opportunity#2caa7a94376f45b58277a193348c31a1
+                  objectName: O2
+                containsAccount:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzkzNGMxNjcxYjM5ZTQ5Y2ZiNTYyYjQ3YjBjYTA5MzUw
+                  type: Account
+                  uri: http://localhost:8080/iss/Account#934c1671b39e49cfb562b47b0ca09350
+                  objectName: Account 1
+                containsCreator:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNhZG1pbg==
+                  type: User
+                  uri: http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                  objectName: admin
+                  hasUserStatus:
+                  - http://www.inmindcloud.com/application/schema.owl#USERACTIVE
+                containsOwner:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNhZG1pbg==
+                  type: User
+                  uri: http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+                  objectName: admin
+                  hasUserStatus:
+                  - http://www.inmindcloud.com/application/schema.owl#USERACTIVE
+                definesPartnerFunctionRecord:
+                - http://localhost:8080/iss/PartnerFunctionRecord#47cddb66578140439cf4a9dde13c8b43
+                hasActivityPriority:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY3Rpdml0eVByaW9yaXR5TWVkaXVt
+                  type: ActivityPriority
+                  uri: http://www.inmindcloud.com/application/schema.owl#ActivityPriorityMedium
+                  objectName: 20 - Medium
+                hasActivityStatus:
+                - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY3Rpdml0eVN0YXR1c05ldw==
+                  type: ActivityStatus
+                  uri: http://www.inmindcloud.com/application/schema.owl#ActivityStatusNew
+                  objectName: 10 - New
+    delete:
+      tags:
+      - Activity
+      summary: Delete an activity or activities
+      description: Support multiple activity id in comma separate format.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzM2ODM4NTEzOTI0ZDRjNjdhMjg0NjZjZThkNjg1Y2Mx=
+      responses:
+        "204":
+          description: Successfully deleted
+    patch:
+      tags:
+      - Activity
+      summary: Update an activity
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzM2ODM4NTEzOTI0ZDRjNjdhMjg0NjZjZThkNjg1Y2Mx=
+      requestBody:
+        description: Activity object to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_2'
+            example:
+              type: ActivityTask
+              objectName: Workshop 1
+              activityDescription: Done
+              activityProgress: 90
+        required: true
+      responses:
+        "200":
+          description: Returns the details of the updated Activity (simple representation
+            only)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity_OUTPUT_PATCH'
+              example:
+                id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjNjVkMDg0MDVkNDIwNDZkN2FlZWRhOTMyMjljMGE3ZGQ=
+                type: ActivityTask
+                uri: http://localhost:8080/iss/ActivityTask#65d08405d42046d7aeeda93229c0a7dd
+                objectDateOfUpdate: 1583141144070
+                objectName: Workshop 1
+
+  /activities/{id}/partnerfuncs:
+    get:
+      tags:
+      - PartnerFunction
+      summary: Get all partner functions of the activity
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzM2ODM4NTEzOTI0ZDRjNjdhMjg0NjZjZThkNjg1Y2Mx=
+      responses:
+        default:
+          description: 'By default, returns all the partner functions of an activity '
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartnerFunc_OUTPUT'
+              example:
+              - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9QYXJ0bmVyRnVuY3Rpb25SZWNvcmQjOTkzNzVkN2ExNDNmNDY0NWE2OGY1ZDczMWRlZTdjNDk=
+                type: PartnerFunctionRecord
+                uri: http://localhost:8080/iss/PartnerFunctionRecord#99375d7a143f4645a68f5d731dee7c49
+                objectDateOfCreation: 1583141132230
+                objectDateOfUpdate: 1583141132426
+                hasPartnerFunction:
+                - http://www.inmindcloud.com/application/schema.owl#ACTIVITY_ACCOUNT_PARTY
+                linksAddress: []
+                linksPartner:
+                - http://localhost:8080/iss/Account#2ff80cbe9c824be3bb7c086501f92d2e
+              - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9QYXJ0bmVyRnVuY3Rpb25SZWNvcmQjNGQ2Yzk3OGFlMTY5NDY4YmI5Y2JjNTc4NjY3MDI4NTg=
+                type: PartnerFunctionRecord
+                uri: http://localhost:8080/iss/PartnerFunctionRecord#4d6c978ae169468bb9cbc57866702858
+                objectDateOfCreation: 1583140871703
+                objectDateOfUpdate: 1583140871834
+                hasPartnerFunction:
+                - http://www.inmindcloud.com/application/schema.owl#ASSIGNEE_PARTY
+                linksAddress: []
+                linksPartner:
+                - http://www.inmindcloud.dev.com/application/application-implementation.owl#EMEASalesvp
+    post:
+      tags:
+      - PartnerFunction
+      summary: Create partner function for activity
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzM2ODM4NTEzOTI0ZDRjNjdhMjg0NjZjZThkNjg1Y2Mx=
+      requestBody:
+        description: To create Partner Function for an activity
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                required:
+                - hasPartnerFunction
+                - linksPartner
+                anyOf:
+                - $ref: '#/components/schemas/PartnerFunc_INTPUT'
+                - $ref: '#/components/schemas/PartnerFunc_AutoContactCreation'
+        required: true
+      responses:
+        "201":
+          description: Returns created partner function record.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartnerFunc_OUTPUT'
+  /activities/{id}/partnerfuncs/{pid}:
+    get:
+      tags:
+      - PartnerFunction
+      summary: Get a partner function of the activity
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzM2ODM4NTEzOTI0ZDRjNjdhMjg0NjZjZThkNjg1Y2Mx=
+      - name: pid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9QYXJ0bmVyRnVuY3Rpb25SZWNvcmQjY2VlOTU5YTlkMTYyNGExNjllMDI4YWUxOGMyM2M3ZTk=
+      responses:
+        "200":
+          description: Returns the partner function of the activity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartnerFunc_OUTPUT'
+              example:
+              - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9QYXJ0bmVyRnVuY3Rpb25SZWNvcmQjOTkzNzVkN2ExNDNmNDY0NWE2OGY1ZDczMWRlZTdjNDk=
+                type: PartnerFunctionRecord
+                uri: http://localhost:8080/iss/PartnerFunctionRecord#99375d7a143f4645a68f5d731dee7c49
+                objectDateOfCreation: 1583141132230
+                objectDateOfUpdate: 1583141132426
+                hasPartnerFunction:
+                - http://www.inmindcloud.com/application/schema.owl#ACTIVITY_ACCOUNT_PARTY
+                linksAddress: []
+                linksPartner:
+                - http://localhost:8080/iss/Account#2ff80cbe9c824be3bb7c086501f92d2e
+    delete:
+      tags:
+      - PartnerFunction
+      summary: Delete a partner function of the activity
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzM2ODM4NTEzOTI0ZDRjNjdhMjg0NjZjZThkNjg1Y2Mx=
+      - name: pid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9QYXJ0bmVyRnVuY3Rpb25SZWNvcmQjY2VlOTU5YTlkMTYyNGExNjllMDI4YWUxOGMyM2M3ZTk=
+      responses:
+        "204":
+          description: Successfully deleted.
+    patch:
+      tags:
+      - PartnerFunction
+      summary: Update a partner function for activity
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzM2ODM4NTEzOTI0ZDRjNjdhMjg0NjZjZThkNjg1Y2Mx=
+      - name: pid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzM2ODM4NTEzOTI0ZDRjNjdhMjg0NjZjZThkNjg1Y2Mx=
+      requestBody:
+        description: Partner function record to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_3'
+        required: true
+      responses:
+        "200":
+          description: Returns updated partner function record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartnerFunc_OUTPUT'
+
+    
+components:
+  schemas:
+    Activity_COUNT:
+      type: object
+      properties:
+        count:
+          type: integer
+          title: the number of activities
+          example: 3
+    Activity_TYPE:
+      type: object
+      properties:
+        type:
+          type: string
+          title: Activity's type
+          example: ActivityTask
+    Activity_OBJECTNAME:
+      type: object
+      properties:
+        objectName:
+          type: string
+          example: New Task
+    Activity_ID:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY3Rpdml0eVRhc2sjOTk0YThmZDIwZWU1NDk1M2E1NGNjM2Y2Yjk5OTNhNzg
+        uri:
+          type: string
+          example: >-
+            http://localhost:8080/iss/ActivityTask#994a8fd20ee54953a54cc3f6b9993a78
+    Activity_OBJECTID:
+      type: object
+      properties:
+        objectId:
+          type: string
+          example: "994a8fd20ee54953a54cc3f6b9993a78"
+    Activity_DATE_OF_UPDATE:
+      type: object
+      properties:
+        objectDateOfUpdate:
+          type: integer
+          format: timestamp
+          example: 1594630465009
+    Activity_DATE_OF_CREATE:
+      type: object
+      properties:
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1594630459225
+    Activity_CONTAINS_CREATOR:
+      type: object
+      properties:
+        containsCreator:
+          type: string
+          example: "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person"
+    Activity_CONTAINS_OWNER:
+      type: object
+      properties:
+        containsOwner:
+          type: string
+          example: "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person"
+    Activity_HAS_ACTIVITY_STATUS:
+      type: object
+      properties:
+        hasActivityStatus:
+          type: string
+          example: "http://www.inmindcloud.com/application/schema.owl#ActivityStatusNew"  
+    
+    Activity_CONTAINS_CREATOR_EXPANDED_LINK:
+      type: object
+      properties:
+        containsCreator:
+          $ref: '#/components/schemas/Activity_CONTAINS_CREATOR_EXPANDED'
+    Activity_CONTAINS_OWNER_EXPANDED_LINK:
+      type: object
+      properties:
+        containsOwner:
+          $ref: '#/components/schemas/Activity_CONTAINS_OWNER_EXPANDED'
+    Activity_HAS_ACTIVITY_STATUS_EXPANDED_LINK:
+      type: object
+      properties:
+        hasActivityStatus:
+          $ref: '#/components/schemas/Activity_HAS_ACTIVITY_STATUS_EXPANDED'
+          
+    Activity_CONTAINS_CREATOR_EXPANDED:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==
+        type:
+          type: string
+          example: Employee
+        uri:
+          type: string
+          example: >-
+            http://www.inmindcloud.com/security/security-implementation.owl#admin-Person
+        personEmail:
+          type: string
+          example: admin@fakemail.com
+        personFirstName:
+          type: string
+          example: In Mind
+        personLastName:
+          type: string
+          example: Admin
+    Activity_CONTAINS_OWNER_EXPANDED:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==
+        type:
+          type: string
+          example: Employee
+        uri:
+          type: string
+          example: >-
+            http://www.inmindcloud.com/security/security-implementation.owl#admin-Person
+        personEmail:
+          type: string
+          example: admin@fakemail.com
+        personFirstName:
+          type: string
+          example: In Mind
+        personLastName:
+          type: string
+          example: Admin
+    Activity_HAS_ACTIVITY_STATUS_EXPANDED:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY3Rpdml0eVN0YXR1c05ldw==
+        type:
+          type: string
+          example: ActivityTaskStatus
+        uri:
+          type: string
+          example: >-
+            http://www.inmindcloud.com/application/schema.owl#ActivityStatusNew
+        objectName:
+          type: string
+          example: "10 - New"
+          
+    Activity_SEARCH_INPUT:
+      type: object
+      properties:
+        type:
+          type: string
+          description: >-
+            Retrieve the activities in the system.
+          example: Search
+        limit: 
+          type: integer
+          description: >-
+            Defines the maximum number of records that can be
+            returned.
+          example: 5
+        offset:
+          type: integer
+          description: >-
+            Defines the number of records that should be
+            skipped. If not specified, no record will be skipped.
+          example: 0
+        filter: 
+          type: string
+          description: >-
+            The filter parameter. If keyword contains space, it must be enclosed between two apostrophe('). If keyword is URI, it must be url encoded.
+          example: objectName eq 'New Task'
+        sort: 
+          type: array
+          description: >-
+            Defines the sorting of the result. 'ASC' for ascending and 'DESC' for descending order. Default order is objectName ASC.
+          items:
+            type: string
+            example: objectName ASC
+        elements:
+          type: object
+          description: >-
+            Sets the BDAs and BRAs that will be returned. id, type, uri , label and comment are included by default. If 'elements' is not specified, all the BDAs and BRAs will be returned.
+          properties:
+            bda:
+              type: string
+              description: >-
+                Defines the requested BDAs that will be returned. If set as empty string, only id, type, uri , label and comment will be returned.
+              example: 
+                - id
+                - type
+                - uri
+                - objectName
+                - objectId
+                - objectDateOfCreation
+                - objectDateOfUpdate
+            bra:
+              type: string
+              description: >-
+                Defines the requested BRAs that will be returned. If set as empty string, no BRAs will be returned. Ensure the BRA array contains all the dependent resources that are defined in 'include'.
+              example: 
+                - containsCreator
+                - containsOwner
+                - hasActivityStatus
+        revInclude:
+          type: array
+          items:
+            type: string
+            example: ""
+        include: 
+          type: array
+          description: >- 
+            Sets the related nested data that will be resolved.
+          items:
+            type: string
+            example: containsCreator
+          
+    Activity_SEARCH_OUTPUT:
+      allOf:
+      - $ref: '#/components/schemas/Activity_ID'
+      - $ref: '#/components/schemas/Activity_TYPE'
+      - $ref: '#/components/schemas/Activity_OBJECTNAME'
+      - $ref: '#/components/schemas/Activity_OBJECTID'
+      - $ref: '#/components/schemas/Activity_DATE_OF_CREATE'
+      - $ref: '#/components/schemas/Activity_DATE_OF_UPDATE'
+      - $ref: '#/components/schemas/Activity_CONTAINS_CREATOR_EXPANDED_LINK'
+      - $ref: '#/components/schemas/Activity_CONTAINS_OWNER'
+      - $ref: '#/components/schemas/Activity_HAS_ACTIVITY_STATUS'
+      
+    Activity_GETS_OUTPUT:
+      allOf:
+      - $ref: '#/components/schemas/Activity_ID'
+      - $ref: '#/components/schemas/Activity_TYPE'
+      - $ref: '#/components/schemas/Activity_OBJECTNAME'
+      - $ref: '#/components/schemas/Activity_OBJECTID'
+      - $ref: '#/components/schemas/Activity_DATE_OF_CREATE'
+      - $ref: '#/components/schemas/Activity_DATE_OF_UPDATE'
+      - $ref: '#/components/schemas/Activity_CONTAINS_CREATOR'
+      - $ref: '#/components/schemas/Activity_CONTAINS_OWNER'
+      - $ref: '#/components/schemas/Activity_HAS_ACTIVITY_STATUS'
+    
+    Activity_OUTPUT:
+      type: object
+      properties:
+        objectName:
+          type: string
+          example: Task 1
+        activityDescription:
+          type: string
+          example: Description of Activity
+        activityProgress:
+          maximum: 100
+          minimum: 0
+          type: integer
+          description: Progress of activity measured in percentage
+        hasActivityStatus:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of activity status
+        hasActivityPriority:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of activity priority
+        containsCreator:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of activity creator
+        containsOwner:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of activity owner
+        containsAccount:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of activity account
+        activityContainedBy:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of opportunity or quote
+        validFrom:
+          type: integer
+          format: timestamp
+          example: 1579629600000
+        validTo:
+          type: integer
+          format: timestamp
+          example: 1579635000000
+        
+    Activity_OUTPUT_BASE:
+      allOf:
+      - $ref: '#/components/schemas/Activity_ID'
+      - $ref: '#/components/schemas/Activity_TYPE'
+      - $ref: '#/components/schemas/Activity_OUTPUT'
+      - $ref: '#/components/schemas/Activity_DATE_OF_CREATE'
+      - $ref: '#/components/schemas/Activity_DATE_OF_UPDATE'
+    
+    Activity_OUTPUT_POST:
+      allOf:
+      - $ref: '#/components/schemas/Activity_ID'
+      - $ref: '#/components/schemas/Activity_DATE_OF_CREATE'
+      - $ref: '#/components/schemas/Activity_TYPE'
+      - $ref: '#/components/schemas/Activity_OBJECTNAME'
+      
+    Activity_OUTPUT_ALL:
+      allOf:
+      - $ref: '#/components/schemas/Activity_ID'
+      - $ref: '#/components/schemas/Activity_TYPE'
+      - $ref: '#/components/schemas/Activity_OUTPUT'
+      - $ref: '#/components/schemas/Activity_DATE_OF_CREATE'
+      - $ref: '#/components/schemas/Activity_DATE_OF_UPDATE'
+      - $ref: '#/components/schemas/Activity_Priority_Expanded'
+      - $ref: '#/components/schemas/Activity_CONTAINS_OWNER_EXPANDED_LINK'
+      - $ref: '#/components/schemas/Activity_CONTAINS_CREATOR_EXPANDED_LINK'
+      - $ref: '#/components/schemas/Activity_HAS_ACTIVITY_STATUS_EXPANDED_LINK'
+      - $ref: '#/components/schemas/Activity_Account_Expanded'
+      - $ref: '#/components/schemas/Activity_ContainedBy_Expanded'
+      - $ref: '#/components/schemas/Activity_PARTNER'
+      
+    Activity_OUTPUT_PATCH:
+      allOf:
+      - $ref: '#/components/schemas/Activity_ID'
+      - $ref: '#/components/schemas/Activity_OBJECTNAME'
+      - $ref: '#/components/schemas/Activity_DATE_OF_UPDATE'
+      - $ref: '#/components/schemas/Activity_TYPE'
+    
+    Activity_Priority_Expanded:
+      type: object
+      properties:
+        hasActivityPriority:
+          $ref: '#/components/schemas/Activity_Priority'
+    Activity_Account_Expanded:
+      type: object
+      properties:
+        containsAccount:
+          $ref: '#/components/schemas/Activity_Account'
+    Activity_ContainedBy_Expanded:
+      type: object
+      properties:
+        activityContainedBy:
+          $ref: '#/components/schemas/Activity_ContainedBy'
+    Activity_Priority:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY2NvdW50VHlwZURpcmVjdA==
+        type:
+          type: string
+          example: ActivityPriority
+        uri:
+          type: string
+          example: http://www.inmindcloud.com/application/schema.owl#ActivityPriorityMedium
+        objectName:
+          type: string
+          example: Medium
+    Activity_Account:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY2NvdW50VHlwZURpcmVjdA==
+        type:
+          type: string
+          example: Account
+        uri:
+          type: string
+          example: http://www.inmindcloud.com/application/schema.owl#1000
+        objectName:
+          type: string
+          example: ABC Trading
+    Activity_ContainedBy:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY2NvdW50VHlwZURpcmVjdA==
+        type:
+          type: string
+          example: Quote
+        uri:
+          type: string
+          example: http://localhost:8080/iss/Quote#05404467050246b7bd9a73aefbe6857d
+        objectName:
+          type: string
+          example: Q1
+    Activity_PARTNER:
+      type: object
+      properties:
+        definesPartnerFunctionRecord:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://localhost:8080/iss/PartnerFunctionRecord#47cddb66578140439cf4a9dde13c8b43
+    body:
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/Activity_INPUT'
+    body_1:
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/Activity_INPUT_FORM'
+    body_2:
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/Activity_INPUT'
+    body_3:
+      required:
+      - hasPartnerFunction
+      - linksPartner
+      allOf:
+      - $ref: '#/components/schemas/PartnerFunc_INTPUT'
+    Activity_INPUT:
+      type: object
+      properties:
+        type:
+          type: string
+          example: ActivityTask
+          enum:
+          - ActivityTask
+          - ActivityEmail
+          - ActivityAppointment
+          - ActivityPhoneCall
+        objectName:
+          type: string
+          example: Task 1
+        activityDescription:
+          title: desc
+          type: string
+          example: Description of Activity
+        hasActivityStatus:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/application/schema.owl#ActivityStatusNew
+        containsOwner:
+          type: string
+          description: The URI of activity owner
+          format: uri
+          example: http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+        hasActivityPriority:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/application/schema.owl#ActivityPriorityMedium
+        activityContainedBy:
+          type: string
+          description: The URI of opportunity or quote
+          format: uri
+          example: http://localhost:8080/iss/Quote#a50bf497da914dbdb2b486e5794a7a51
+        activityProgress:
+          maximum: 100
+          minimum: 0
+          type: integer
+          description: Progress of activity measured in percentage.
+          example: 20
+          default: 0
+        validFrom:
+          type: integer
+          format: timestamp
+          example: 1579629600000
+        validTo:
+          type: integer
+          format: timestamp
+          example: 1579635000000
+        definePartnerFunction:
+          type: array
+          description: To define the partner function when creating the activity.
+            It is optional.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/PartnerFunc_AutoContactCreation'
+            - $ref: '#/components/schemas/PartnerFunc_INTPUT'
+    Activity_INPUT_FORM:
+      type: object
+      properties:
+        attachment:
+          type: array
+          description: the attachments to be uploaded
+          items:
+            type: string
+            format: binary
+        payload:
+          type: object
+          description: the json string of activity payload
+          allOf:
+          - $ref: '#/components/schemas/Activity_INPUT'
+    PartnerFunc_AutoContactCreation:
+      type: object
+      properties:
+        linksPartner:
+          $ref: '#/components/schemas/PartnerFunc_AutoContactCreation_linksPartner'
+        hasPartnerFunction:
+          type: string
+          description: The URI of the Partner Function to create for this partner
+            function record
+          format: uri
+          example: http://www.inmindcloud.com/application/schema.owl#EMAIL_TO_PARTY
+    PartnerFunc_INTPUT:
+      type: object
+      properties:
+        hasPartnerFunction:
+          type: string
+          description: The URI of the Partner Function to create for this partner
+            function record
+          example: http://www.inmindcloud.com/application/schema.owl#ASSIGNEE_PARTY
+        linksAddress:
+          type: string
+          description: The URI of the address from the Account / User
+          format: uri
+          example: The URI of address
+        linksPartner:
+          type: string
+          description: The URI of a User / Account
+          format: uri
+          example: http://www.inmindcloud.dev.com/application/application-implementation.owl#EMEASalesvp
+    PartnerFunc_AutoContactCreation_linksPartner:
+      type: object
+      properties:
+        personEmail:
+          type: string
+          example: john@inmindcloud.com
+        personFirstName:
+          type: string
+          description: The First name of the person for a contact.
+          example: John
+        personLastName:
+          type: string
+          description: The last name of the person for a contact.
+          example: Smith
+        personIncludedBy:
+          type: string
+          description: The URI of the account for the contact / email, which can be
+            blank.
+          format: uri
+          example: http://localhost:8080/iss/Account#554c1ad85e994be3b56f83dfc25a258a
+      description: Use this payload if the URI of the linksPartner is unknown. The
+        system will try to search for any existing contact / create the contact by
+        using the properties provided.
+    PartnerFunc_OUTPUT:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzM2ODM4NTEzOTI0ZDRjNjdhMjg0NjZjZThkNjg1Y2Mx
+        type:
+          type: string
+          example: PartnerFunctionRecord
+        uri:
+          type: string
+          example: http://localhost:8080/iss/PartnerFunctionRecord#99375d7a143f4645a68f5d731dee7c49
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1575539453000
+        objectDateOfUpdate:
+          type: integer
+          format: timestamp
+          example: 1575539453000
+        hasPartnerFunction:
+          type: string
+          example: http://www.inmindcloud.com/application/schema.owl#ASSIGNEE_PARTY
+        linksAddress:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of address
+        linksPartner:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://www.inmindcloud.dev.com/application/application-implementation.owl#EMEASalesvp
