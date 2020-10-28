@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Opportunity API
-  version: 1.0.0
+  version: "2011"
 servers:
   - url: /api
 tags:
