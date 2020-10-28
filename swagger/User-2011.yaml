@@ -1,0 +1,989 @@
+---
+openapi: 3.0.0
+info:
+  title: User API
+  version: 2011
+servers:
+- url: https://mxdev03xtvs7s4vl2.hana.ondemand.com/iss/api
+  description: MX Dev 03
+security:
+- oAuthPassword:
+  - read
+  - write
+paths:
+  /users/count:
+    get:
+      tags:
+      - User
+      summary: Get the total number of user created in the sytem based on filter.
+      description: Return the number of user in the system.
+      parameters:
+      - name: filter
+        in: query
+        description: The filter parameter.
+        required: false
+        style: form
+        explode: false
+        schema:
+          type: string
+        examples:
+          contains_operator:
+            summary: contains
+            description: Retrives the number of user with objectName containing 'john'.
+            value: objectName contains 'john'
+          equal_operator:
+            summary: equal
+            description: Retrives the number of user with objectName equals to 'John'
+            value: objectName eq 'John'
+          not_equal_operator:
+            summary: not equal
+            description: Retrives the number of user with objectName not equals to 'John'
+            value: objectName ne 'John'
+          greater_than_operator:
+            summary: greater than
+            description: Retrives the number of user with objectDateOfCreation greater than '2020-03-20'.
+            value: objectDateOfCreation gt 2020-03-20
+          greater_than_eq_operator:
+            summary: greater than equal
+            description: Retrives the number of user with objectDateOfCreation greater than or equals to '2020-03-20'.
+            value: objectDateOfCreation ge 2020-03-20
+          less_than_operator:
+            summary: less than
+            description: Retrives the number of user with objectDateOfCreation less than '2020-03-20'.
+            value: objectDateOfCreation lt 2020-03-20
+          less_than_eq_operator:
+            summary: less than equal
+            description: Retrives the number of user with objectDateOfCreation less than or equals to '2020-03-20'.
+            value: objectDateOfCreation le 2020-03-20
+          and_operator:
+            summary: and
+            description: Retrives the number of user with objectName containing 'John' and objectDateOfCreation greater than '2020-03-20'.
+            value: objectName contains 'John' and objectDateOfCreation gt 2020-03-20
+          or_operator:
+            summary: or
+            description: Retrives the number of user with objectName containing 'John' or objectDateOfCreation greater than '2020-03-20'.
+            value: objectName contains 'John' or objectDateOfCreation gt 2020-03-20
+      responses:
+        "200":
+          description: Number of user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_COUNT'
+              example:
+                count: 3
+  /users/search:
+    post:
+      tags:
+      - User
+      summary: Search user API
+      description: Searches and retrives a list of user based on the query
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                required:
+                - type
+                allOf:
+                - $ref: '#/components/schemas/User_Search_Request'
+        required: true
+      responses:
+        "200":
+          description: Returns the list of user as Bundle based on example of Request Payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_Bundle_Output'
+  /users:
+    get:
+      tags:
+      - User
+      summary: Get the user in the sytem.
+      description: Gets users in the system.
+      parameters:
+      - name: limit
+        in: query
+        description: Defines the maximum number of records that can be returned.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          example: 10
+      - name: offset
+        in: query
+        description: Defines the number of records that should be skipped.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: filter
+        in: query
+        description: The filter parameter. If keyword contains space, it must be enclosed between two apostrophe('). If keyword is URI, it must be url encoded.
+        required: false
+        style: form
+        explode: false
+        schema:
+          type: string
+        examples:
+          contains_operator:
+            summary: contains
+            description: Retrives the list of users with objectName containing 'Employee'.
+            value: objectName contains 'smith'
+          equal_operator:
+            summary: equal
+            description: Retrives the list of users with objectName equals to 'johnsmith'.
+            value: objectName eq 'johnsmith'
+          not_equal_operator:
+            summary: not equal
+            description: Retrives the list of user with objectName not equals to 'john'.
+            value: objectName ne 'john'
+          greater_than_operator:
+            summary: greater than
+            description: Retrives the list of user with objectDateOfCreation greater than '2020-03-20'.
+            value: objectDateOfCreation gt 2020-03-20
+          greater_than_eq_operator:
+            summary: greater than equal
+            description: Retrives the list of user with objectDateOfCreation greater than or equals to '2020-03-20'.
+            value: objectDateOfCreation ge 2020-03-20
+          less_than_operator:
+            summary: less than
+            description: Retrives the list of user with objectDateOfCreation less than '2020-03-20'.
+            value: objectDateOfCreation lt 2020-03-20
+          less_than_eq_operator:
+            summary: less than equal
+            description: Retrives the list of user with objectDateOfCreation less than or equals to '2020-03-20'.
+            value: objectDateOfCreation le 2020-03-20
+          and_operator:
+            summary: and
+            description: Retrives the list of user with objectName containing 'smith' and objectDateOfCreation greater than '2020-03-20'.
+            value: objectName contains 'smith' and objectDateOfCreation gt 2020-03-20
+          or_operator:
+            summary: or
+            description: Retrives the list of users with objectName containing 'smith' or objectDateOfCreation greater than '2020-03-20'.
+            value: objectName contains 'smith' or objectDateOfCreation gt 2020-03-20
+      - name: sort
+        in: query
+        description: Defines the sorting of the result. 'ASC' for ascending and 'DESC' for descending order. Default order is objectName ASC.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          default: label ASC
+        example: label ASC
+      - name: resolveRelations
+        in: query
+        description: To resolve nested data. Suppport multiple values with comma separated format.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: containsPerson
+      responses:
+        "200":
+          description: User list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_Bundle_Output'
+    post:
+      tags:
+      - User
+      summary: Adds a new commerce user based on a person.
+      description: Creates a new commerce user and returns the basic information of the user.
+      parameters:
+      - name: personId
+        in: query
+        description: The base64-encoded Id of the person to contained by the user
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: CCC0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0IzM2NjAzMWZiMGE0ZTQ2NDA5YTFjMDliMWQxOWQzODABE=
+      - name: roleId
+        in: query
+        description: The base64-encoded role Id.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0IzM2NjAzMWZiMGE0ZTQ2NDA5YTFjMDliMWQxOWQzODU5DD=
+      - name: userName
+        in: query
+        description: The username for the user.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: johnsmith1
+      responses:
+        "201":
+          description: Returns the information of the created user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_OUTPUT'
+              example:
+                id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9FbXBsb3llZSMzZjkzZmE4OWVhODg0ZDkyYmM1MDcwMTE1YjllZTc3Zg=
+                type: User
+                uri: http://www.inmindcloud.com/iss/User#3f93fa89ea884d92bc5070115b9ee77f
+                objectDateOfCreation: 1595557403553
+                objectName: johnsmith1
+                containsPerson:
+                - http://www.inmindcloud.com/Employee#ede6fb3fd29f4e568d82b5b515748a03
+                hasUserStatus:
+                - http://www.inmindcloud.com/application/schema.owl#USERACTIVE
+  /users/{id}:
+    delete:
+      tags:
+      - User
+      summary: Delete a user or a list of users by id.
+      description: Supports multiple users ids in comma separate format.
+      parameters:
+      - name: id
+        in: path
+        description: The user id in path url.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: 'adEADovL2xvY2FsaG9zdDo4MDgwL2lzcy9FbXBsb3llZSMzZjkzZmE4OWVhODg0ZDkyYmM1MDcwMTE1YjllZTc3Zg= '
+      responses:
+        "204":
+          description: User is deleted successfully.
+  /users/{id}/password:
+    post:
+      tags:
+      - User
+      summary: Create user's password.
+      description: Create a password for a user.
+      parameters:
+      - name: id
+        in: path
+        description: The user id in path url.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: 'adEADovL2xvY2FsaG9zdDo4MDgwL2lzcy9FbXBsb3llZSMzZjkzZmE4OWVhODg0ZDkyYmM1MDcwMTE1YjllZTc3Zg= '
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              required:
+              - hasUserPasswordStatus
+              allOf:
+              - $ref: '#/components/schemas/UserPassword_Input_CREATE'
+        required: true
+      responses:
+        "201":
+          description: Returns UserPassword object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPassword_OUTPUT'
+  /users/{id}/follow:
+    get:
+      tags:
+      - User
+      summary: Follow object.
+      description: To follow a object for a user.
+      parameters:
+      - name: id
+        in: path
+        description: The user id in path url.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: 'adEADovL2xvY2FsaG9zdDo4MDgwL2lzcy9FbXBsb3llZSMzZjkzZmE4OWVhODg0ZDkyYmM1MDcwMTE1YjllZTc3Zg= '
+      - name: dependentId
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          description: The id of the dependent object (Eg:Quote/Account id)
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9RdW90ZSM0YzU1OTdkYmJhMmI0MWNhYWZhZGFlNTg1YzcxOGE4Ng==
+      responses:
+        "200":
+          description: Returns User info.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_OUTPUT'
+  /users/{id}/unfollow:
+    get:
+      tags:
+      - User
+      summary: Unfollow object.
+      description: To unfollow object for a user.
+      parameters:
+      - name: id
+        in: path
+        description: The user id in path url.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: 'adEADovL2xvY2FsaG9zdDo4MDgwL2lzcy9FbXBsb3llZSMzZjkzZmE4OWVhODg0ZDkyYmM1MDcwMTE1YjllZTc3Zg= '
+      - name: dependentId
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          description: The id of the dependent object (Eg:Quote/Account id)
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9RdW90ZSM0YzU1OTdkYmJhMmI0MWNhYWZhZGFlNTg1YzcxOGE4Ng==
+      responses:
+        "200":
+          description: Returns User info.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_OUTPUT'
+  /users/download:
+    get:
+      tags:
+      - User
+      summary: Download Excel.
+      description: To download users into excel.
+      responses:
+        "200":
+          description: An excel file
+          content:
+            application/excel:
+              schema:
+                type: string
+                format: binary
+  /users/follow:
+    get:
+      tags:
+      - User
+      summary: Get objects followed by the login user.
+      description: Return the list of objects (Account, Equipment, Quote, ActivityEmail, Opportunity, Product) followed by the login user and group by type.
+      responses:
+        "200":
+          description: A list of objects followed by the login user and group by type.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_Object_Follow_OUTPUT'
+  /users/systemUserPreferences:
+    get:
+      tags:
+      - User
+      summary: Get default system user preferences settings.
+      description: Return default system user preferences settings.
+      responses:
+        "200":
+          description: A list of system user preferences.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_Pereference_Settings_OUTPUT'
+    post:
+      tags:
+      - User
+      summary: Update default system user preferences settings by administrator.
+      description: Update default system user preferences settings. Only user with administrator role can access this API.
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  example: SystemUserPreference
+                userUseConfigPageMode:
+                  type: boolean
+                  example: true
+                userUseFluidView:
+                  type: boolean
+                  example: true
+        required: true
+      responses:
+        "200":
+          description: A list of system user preferences.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_Pereference_Settings_OUTPUT'
+  /users/{id}/validEmail:
+    get:
+      tags:
+      - User
+      summary: Validate the email address for a user.
+      description: To validate the email address for a user.
+      parameters:
+      - name: id
+        in: path
+        description: The user id in path url.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: 'adEADovL2xvY2FsaG9zdDo4MDgwL2lzcy9FbXBsb3llZSMzZjkzZmE4OWVhODg0ZDkyYmM1MDcwMTE1YjllZTc3Zg= '
+      - name: email
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          description: The email address for a user.
+          example: johnsmith@mail
+      responses:
+        "200":
+          description: Return the validation result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hasError:
+                    type: boolean
+                    example: true
+                  errorMessageLabel:
+                    type: string
+                    description: The property of message.properties returned.
+                    example: application.error.user.invaliduseremail.invalid
+                  errorMessageLabels:
+                    type: array
+                    items:
+                      type: string
+                      description: The list of property of message.properties.
+                      example: application.error.user.invaliduseremail.invalid
+  /users/{id}/valid:
+    get:
+      tags:
+      - User
+      summary: Validate email address and/or username for a user.
+      description: To validate the email address and/or username for a user.
+      parameters:
+      - name: id
+        in: path
+        description: The user id in path url.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: 'adEADovL2xvY2FsaG9zdDo4MDgwL2lzcy9FbXBsb3llZSMzZjkzZmE4OWVhODg0ZDkyYmM1MDcwMTE1YjllZTc3Zg= '
+      - name: email
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          description: The email address for a user.
+          example: johnsmith@mail.com
+      - name: userName
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          description: The username for a user.
+          example: johnsmith 1
+      responses:
+        "200":
+          description: Return the validation result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hasError:
+                    type: boolean
+                    example: true
+                  errorMessageLabels:
+                    type: array
+                    items:
+                      type: string
+                      description: 'The list of error property of message.properties.                '
+                      example: application.error.user.invalidusername.space
+  /users/{id}/resetUserPassword:
+    patch:
+      tags:
+      - User
+      summary: Reset password.
+      description: To reset user's password.
+      parameters:
+      - name: id
+        in: path
+        description: The user id in path url.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: 'adEADovL2xvY2FsaG9zdDo4MDgwL2lzcy9FbXBsb3llZSMzZjkzZmE4OWVhODg0ZDkyYmM1MDcwMTE1YjllZTc3Zg= '
+      - name: oldPassword
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: ZTJhZDM2YjE%3D
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  example: UserPassword
+                objectName:
+                  type: string
+                  description: The new password with encoded.
+                  example: aW1jMTIz
+        required: true
+      responses:
+        "200":
+          description: Return the UserPassword result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: UserPassword
+                  objectName:
+                    type: string
+                    example: '{bcrypt}$2a$10$gDos3ug5ad8zRAKCw5lZruRDLlTgPOcR7k2OVov8oSBq4t.P3r5Ra'
+                  userPasswordIncludedBy:
+                    type: array
+                    items:
+                      type: string
+                      example: http://www.inmindcloud.com/iss/User#4aa32a952d95420291fda2cc953ed54a
+                  hasUserPasswordStatus:
+                    type: array
+                    items:
+                      type: string
+                      example: http://www.inmindcloud.com/application/schema.owl#PasswordActive
+  /users/{id}/admin:
+    patch:
+      tags:
+      - User
+      summary: Update user info with administration access right.
+      description: To update user info with administration access right. Some user's attributes are protected and can be only updated by administrator.
+      parameters:
+      - name: id
+        in: path
+        description: The user id in path url.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: 'adEADovL2xvY2FsaG9zdDo4MDgwL2lzcy9FbXBsb3llZSMzZjkzZmE4OWVhODg0ZDkyYmM1MDcwMTE1YjllZTc3Zg= '
+      requestBody:
+        description: Example of Request Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  example: User
+                hasUserStatus:
+                  type: array
+                  items:
+                    type: string
+                    description: The new password with encoded.
+                    example: http://www.inmindcloud.com/application/schema.owl#USERACTIVE
+                userReceiveTeamCollaborationEmail:
+                  type: boolean
+                  example: true
+        required: true
+      responses:
+        "200":
+          description: Returns information of the user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_OUTPUT'
+  /users/{id}/personal:
+    patch:
+      tags:
+      - User
+      summary: Update user info.
+      description: To update user info shown in the user preference screen.
+      parameters:
+      - name: id
+        in: path
+        description: The user id in path url.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: base64-encoded URI
+          example: 'adEADovL2xvY2FsaG9zdDo4MDgwL2lzcy9FbXBsb3llZSMzZjkzZmE4OWVhODg0ZDkyYmM1MDcwMTE1YjllZTc3Zg= '
+      requestBody:
+        description: Example of Request Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  example: User
+                hasDefaultCurrency:
+                  type: array
+                  items:
+                    type: string
+                    example: http://www.inmindcloud.com/application/schema.owl#USD
+                userReceiveTeamCollaborationEmail:
+                  type: boolean
+                  example: true
+        required: true
+      responses:
+        "200":
+          description: Returns information of the user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_OUTPUT'
+components:
+  schemas:
+    User_COUNT:
+      type: object
+      properties:
+        count:
+          title: The number of user.
+          type: integer
+          example: 3
+    User_ID:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Db250YWN0IzM2NjAzMWZiMGE0ZTQ2NDA5YTFjMDliMWQxOWQzODU5
+        uri:
+          type: string
+          example: http://www.inmindcloud.com/iss/User#366031fb0a4e46409a1c09b1d19d3859
+    UserPassword_Input_CREATE:
+      type: object
+      properties:
+        type:
+          type: string
+          example: UserPassword
+        hasUserPasswordStatus:
+          type: string
+          example: http://www.inmindcloud.com/application/schema.owl#PasswordInitial
+    UserPassword_Output:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9Vc2VyUGFzc3dvcmQjZDdjZDZkYmExY2ZjNGFmZjkwNDFmMGRiZTRjYzA1YjE=
+        uri:
+          type: string
+          example: http://www.inmindcloud.com/iss/UserPassword#ee457be0021249ec8b0d8919b07f18ef
+        type:
+          type: string
+          example: UserPassword
+        userPasswordIncludedBy:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://localhost:8080/iss/User#82d46fec665844d1986bdfa4229e2d54
+        objectName:
+          type: string
+          example: '{bcrypt}$2a$10$Sv0KffwtQFhSeX3v6/rTYeSp5yZCu0IhlKmpizbnhydKEPI9y2J62'
+        userPasswordDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1603679393909
+        userPasswordDateOfExpiry:
+          type: integer
+          format: timestamp
+          example: 1603679393909
+    User_TYPE:
+      type: object
+      properties:
+        type:
+          title: Business Type
+          type: string
+          example: User
+    User_OBJECTNAME:
+      type: object
+      properties:
+        objectName:
+          type: string
+          example: JohnSmith
+    User_OBJECTID:
+      type: object
+      properties:
+        objectId:
+          type: string
+          example: 366031fb0a4e46409a1c09b1d19d3859
+    User_DATE_OF_CREATE:
+      type: object
+      properties:
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1595473959910
+    User_HASUSERSTATUS:
+      type: object
+      properties:
+        hasUerStatus:
+          type: string
+          example: http://www.inmindcloud.com/application/schema.owl#USERACTIVE
+    User_CONTAINSPERSON:
+      type: object
+      properties:
+        containsPerson:
+          type: string
+          example: http://www.inmindcloud.com/Employee#ede6fb3fd29f4e568d82b5b515748a03
+    User_Search_Request:
+      type: object
+      properties:
+        type:
+          type: string
+          example: Search
+        limit:
+          type: integer
+          description: Defines the maximum number of records that can be returned.
+          example: 1
+        offset:
+          type: integer
+          description: Defines the number of records that should be skipped. If not specified, no record will be skipped.
+          example: 0
+        filter:
+          type: string
+          description: The filter parameter. If keyword contains space, it must be enclosed between two apostrophe('). If keyword is URI, it must be url encoded.
+          example: objectName eq 'John Smith'
+        sort:
+          type: array
+          description: Defines the sorting of the result. 'ASC' for ascending and 'DESC' for descending order. Default order is objectName ASC.
+          items:
+            type: string
+            example: objectName DESC
+        elements:
+          type: object
+          properties:
+            bda:
+              type: string
+              description: Defines the requested BDAs that will be returned. If set as empty string, only id, type, uri , label and comment will be returned.
+              example: '["objectName","objectId"]'
+            bra:
+              type: string
+              description: Defines the requested BRAs that will be returned. If set as empty string, no BRAs will be returned. Ensure the BRA array contains all the dependent resources that are defined in 'include'.
+              example: '["hasPermission"]'
+          description: Sets the BDAs and BRAs that will be returned. id, type, uri , label and comment are included by default. If 'elements' is not specified, all the BDAs and BRAs will be returned.
+        revInclude:
+          type: array
+          items:
+            type: string
+        include:
+          type: array
+          description: Sets the related nested data that will be resolved.
+          items:
+            type: string
+            example: hasPermission
+    User_Bundle_Output:
+      type: object
+      properties:
+        type:
+          type: string
+          example: Bundle
+        total:
+          type: integer
+          example: 1
+        entry:
+          type: array
+          items:
+            $ref: '#/components/schemas/User_OUTPUT'
+        include:
+          type: array
+          items: {}
+    User_OUTPUT:
+      description: Example of partial user info. Actual user info please refer to metadata.
+      allOf:
+      - $ref: '#/components/schemas/User_ID'
+      - $ref: '#/components/schemas/User_TYPE'
+      - $ref: '#/components/schemas/User_DATE_OF_CREATE'
+      - $ref: '#/components/schemas/User_OBJECTNAME'
+      - $ref: '#/components/schemas/User_OBJECTID'
+      - $ref: '#/components/schemas/User_CONTAINSPERSON'
+      - $ref: '#/components/schemas/User_HASUSERSTATUS'
+    UserPassword_OUTPUT:
+      allOf:
+      - $ref: '#/components/schemas/UserPassword_Output'
+    Quote_containedBy:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50I2U2ZjdkZWMyMzQyMjQ4YTE5ZDFkOWIxYTBkMWRhZjc5
+        type:
+          type: string
+          example: Account
+        uri:
+          type: string
+          example: http://www.inmindcloud.com/iss/Account#e6f7dec2342248a19d1d9b1a0d1daf79
+        objectName:
+          type: string
+          example: Account 1
+    Quote_hasCurrency:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: asjkdhakvL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50I2U2ZjdkZWMyMzQyMjQ4YTE5ZDFkOWIxYTBkMWRhZjc5
+        type:
+          type: string
+          example: Currency
+        uri:
+          type: string
+          example: http://www.inmindcloud.com/iss/application/application-implementation.owl#USD"
+        label:
+          type: string
+          example: US Dollar
+        objectName:
+          type: string
+          example: US Dollar
+        objectExternalId:
+          type: string
+          example: USD
+        objectERPId:
+          type: string
+          example: USD
+    Quote_OUTPUT:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9RdW90ZSM2ZWNhMmQ2NTg1NmY0MzlmODI5MTE3Y2MzZGVhZGVlOQ==
+        type:
+          type: string
+          example: Quote
+        objectName:
+          type: string
+          example: Quote 1
+        quoteId:
+          type: string
+          example: 11
+        quoteContainedBy:
+          $ref: '#/components/schemas/Quote_containedBy'
+        quoteHasCurrency:
+          $ref: '#/components/schemas/Quote_hasCurrency'
+    Empty_Array_OUTPUT:
+      type: array
+      items: {}
+    User_Object_Follow_OUTPUT:
+      type: object
+      properties:
+        Quote:
+          type: array
+          items:
+            $ref: '#/components/schemas/Quote_OUTPUT'
+        Account:
+          type: array
+          items:
+            $ref: '#/components/schemas/Empty_Array_OUTPUT'
+        Equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Empty_Array_OUTPUT'
+        ActivityEmail:
+          type: array
+          items:
+            $ref: '#/components/schemas/Empty_Array_OUTPUT'
+        Opportunity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Empty_Array_OUTPUT'
+        Product:
+          type: array
+          items:
+            $ref: '#/components/schemas/Empty_Array_OUTPUT'
+    User_Pereference_Settings_OUTPUT:
+      type: object
+      properties:
+        id:
+          type: string
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNTeXN0ZW1Vc2VyUHJlZmVyZW5jZUluc3RhbmNl
+        type:
+          type: string
+          example: SystemUserPreference
+        uri:
+          type: string
+          example: http://www.inmindcloud.com/application/schema.owl#SystemUserPreferenceInstance
+        label:
+          type: string
+          example: Object to hold all system wide user preferences
+        userUseConfigPageMode:
+          type: boolean
+          example: true
+        userUseFluidView:
+          type: boolean
+          example: true
+  parameters:
+    userId:
+      name: id
+      in: path
+      description: The user id in path url.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: base64-encoded URI
+        example: 'adEADovL2xvY2FsaG9zdDo4MDgwL2lzcy9FbXBsb3llZSMzZjkzZmE4OWVhODg0ZDkyYmM1MDcwMTE1YjllZTc3Zg= '
+  securitySchemes:
+    oAuthPassword:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: https://mxdev03xtvs7s4vl2.hana.ondemand.com/iss/api/oauth/token
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources
