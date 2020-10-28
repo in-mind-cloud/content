@@ -1,0 +1,2006 @@
+openapi: 3.0.1
+info:
+  title: Opportunity API
+  version: 1.0.0
+servers:
+  - url: /api
+tags:
+  - name: Opportunity
+paths:
+  /opportunities/search:
+    post:
+      tags:
+        - Opportunity
+      summary: Search Opportunity API
+      description: Searches and retrives a list of opportunities based on the query
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Opportunity_SEARCH_INPUT'
+              required: 
+                - type
+        required: true
+      responses:
+        '200':
+          description: Returns list of Opportunities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_SEARCH_OUTPUT'
+              example:
+                type: Bundle
+                total: 1
+                entry: 
+                  - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSM5YzQ1OGFjNmQ5NjA0NjM0OTJlMDkzM2Q4MWUxNTBiNQ==
+                    type: Opportunity
+                    uri: http://localhost:8080/iss/Opportunity#9c458ac6d960463492e0933d81e150b5
+                    objectName: Opp 1
+                    objectDateOfCreation: 1593146530520
+                    objectDateOfUpdate: 1594691428596
+                    opportunityChanceofSuccess: 50
+                    opportunityRevenueStartDate: 1594656000000
+                    opportunityRevenueEndDate: 1595174400000
+                    opportunityVolume: 5000
+                    opportunityWeightedVolume: 500
+                    opportunityVolumeSystemCurrency: 3280.865
+                    hasSalesOrg: 
+                      - 'http://www.inmindcloud.dev.com/application/application-implementation.owl#Div-00'
+                    hasDistributionChannel:
+                      - 'http://www.inmindcloud.dev.com/application/application-implementation.owl#DC-01'
+                    hasDivision:
+                      - 'http://www.inmindcloud.dev.com/application/application-implementation.owl#Div-00'
+                  
+  /opportunities/:
+    get:
+      tags:
+        - Opportunity
+      summary: Returns the list of Opportunities based on filter
+      description: >-
+        Returns the list of Opportunities in the system
+      parameters:
+        - name: limit
+          in: query
+          description: >-
+            For pagination, defines the maximum number of records that can be
+            returned. If not specified, it will use default value of 200.
+          schema:
+            type: integer
+            default: 200
+        - name: offset
+          in: query
+          description: >-
+            For pagination, defines the number of records that should be
+            skipped. If not specified, no record will be skipped.
+          schema:
+            type: integer
+            default: '0'
+        - name: sort
+          in: query
+          description: Defines the sorting of the result. 'ASC' for ascending and 'DESC' for descending order. Default order is objectName ASC
+          example: objectName ASC
+          schema:
+            type: string
+            default: objectName ASC
+        - name: filter
+          in: query
+          description: >-
+            The filter parameter.
+          examples:
+            contains_operator:
+              value: objectName contains 'Opportunity'
+              summary: contains
+            equal_operator:
+              value: >-
+                objecname eq 'Opportunity'
+              summary: equal
+            not_equal_operator:
+              value: >-
+                objecname ne 'Opportunity'
+              summary: not equal
+            greater_than_operator:
+              value: objectDateOfCreation gt 2020-03-20
+              summary: greater than
+            greater_than_eq_operator:
+              value: objectDateOfCreation ge 2020-03-20
+              summary: greater than equal
+            less_than_operator:
+              value: objectDateOfCreation lt 2020-03-20
+              summary: less than
+            less_than_eq_operator:
+              value: objectDateOfCreation le 2020-03-20
+              summary: less than equal
+            and_operator:
+              value: >-
+                objectName contains 'Opportunity' and salesDocumentVersion eq
+                '1'
+              summary: and
+            or_operator:
+              value: >-
+                objectName contains 'Opportunity' or salesDocumentVersion eq
+                '1'
+              summary: or
+          schema:
+            type: string
+          explode: false
+        - name: resolveRelations
+          in: query
+          description: >-
+            To resolve nested data. Suppport multiple values with comma
+            separated format.
+          schema:
+            type: string
+          example: >-
+            hasSalesOrg,hasDistributionChannel,hasDivision,hasCurrency
+
+      responses:
+        default:
+          description: >-
+            By default, returns the list of Opportunities without resolving any
+            references and without any labels
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Opportunity_OUTPUT'
+              example:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSM5YzQ1OGFjNmQ5NjA0NjM0OTJlMDkzM2Q4MWUxNTBiNQ==
+                  type: Opportunity
+                  uri: 'http://localhost:8080/iss/Opportunity#9c458ac6d960463492e0933d81e150b5'
+                  objectName: Opp 1
+                  objectDateOfCreation: 1593146530520
+                  objectDateOfUpdate: 1594691428596
+                  salesDocumentDateOfExpiry: 1593187200000
+                  salesDocumentDescription: Short desc
+                  opportunityWeightedVolumeSystemCurrency: 0.3280865
+                  opportunityChanceofSuccess: 10
+                  opportunityQuotedVolume: 0
+                  opportunityRevenueEndDate: 1595174400000
+                  opportunityRevenueStartDate: 1594656000000
+                  opportunityVolume: 5
+                  opportunityWeightedVolume: 0.5
+                  opportunityVolumeSystemCurrency: 3.280865
+                  
+                  hasSalesOrg: ['http://www.inmindcloud.dev.com/application/application-implementation.owl#SalesOrg-US1100']
+                      
+                  hasDistributionChannel: [ 'http://www.inmindcloud.dev.com/application/application-implementation.owl#DC-01' ]
+                      
+                  hasDivision: [
+                      uri: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#Div-00' ]
+                      
+                  hasCurrency:
+                    - 'http://www.inmindcloud.dev.com/application/application-implementation.owl#SGD'
+                
+              
+        x-resolveRelations:
+          description: >-
+            When parameter `resolveRelations` is provided, the related nested
+            data will be resolved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Opportunity_OUTPUT_ALL'
+              example:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSM5YzQ1OGFjNmQ5NjA0NjM0OTJlMDkzM2Q4MWUxNTBiNQ==
+                  type: Opportunity
+                  uri: 'http://localhost:8080/iss/Opportunity#9c458ac6d960463492e0933d81e150b5'
+                  objectName: Opp 1
+                  objectDateOfCreation: 1593146530520
+                  objectDateOfUpdate: 1594691428596
+                  salesDocumentDateOfExpiry: 1593187200000
+                  salesDocumentDescription: Short desc
+                  opportunityWeightedVolumeSystemCurrency: 0.3280865
+                  opportunityChanceofSuccess: 10
+                  opportunityQuotedVolume: 0
+                  opportunityRevenueEndDate: 1595174400000
+                  opportunityRevenueStartDate: 1594656000000
+                  opportunityVolume: 5
+                  opportunityWeightedVolume: 0.5
+                  opportunityVolumeSystemCurrency: 3.280865
+                  
+                  hasSalesOrg:
+                    - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTYWxlc09yZy1VUzExMDA=
+                      type: ""
+                      uri: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#SalesOrg-US1100'
+                      
+                  hasDistributionChannel:
+                    - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNEQy0wMQ==
+                      type: ""
+                      uri: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#DC-01'
+                      
+                  hasDivision:
+                    - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNEaXYtMDA=
+                      type: ""
+                      uri: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#Div-00'
+                      
+                  hasCurrency:
+                    - 'http://www.inmindcloud.dev.com/application/application-implementation.owl#SGD'
+    
+    post:
+      tags:
+        - Opportunity
+      summary: Adds a new opportunity.
+      description: >-
+        Creates a new opportunity and returns the basic information of the opportunity.
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Opportunity_CREATE_INPUT'
+              required:
+                - type
+                - objectName
+                - opportunityVolume
+                - hasCurrency
+                - opportunityContainedBy
+                - salesDocumentDateOfExpiry
+                - salesDocumentDescription
+        required: true
+      responses:
+        '200':
+          description: Returns about the created Account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_CREATE_OUTPUT'
+              example:
+                id: >-
+                  aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+                type: "Opportunity"
+                uri: "http://localhost:8080/iss/Opportunity#a1652881275e4bc6b0bca89420b5434e"
+                opportunityContainedBy: [ "http://localhost:8080/iss/Account#1cb3ffaebebb4374a971f325b3ec42a0" ]
+                salesDocumentDateOfExpiry: 1603728000000
+                objectName: "New Opportunity"
+                hasCurrency: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR" ]
+                salesDocumentDescription: "New Opportunity"
+                opportunityVolume: 100
+                containsCreator: [ "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person" ]
+                containsOwner: [ "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person" ]
+                hasSalesPhase: [ "http://www.inmindcloud.com/application/schema.owl#SalesPhase2" ]
+                hasSalesDocumentStatus: [ "http://www.inmindcloud.com/application/schema.owl#OPEN" ]
+                containsVirtualTeam: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#admin" ]                  
+  
+  /opportunities/count:
+    get:
+      tags:
+        - Opportunity
+      summary: Count the list of opportunity based on filter
+      description: >-
+        Returns the number of opportunities in the system
+      parameters:
+        - name: filter
+          in: query
+          description: >-
+            The filter parameter.
+          examples:
+            contains_operator:
+              value: objectName contains 'Opportunity'
+              summary: contains
+            equal_operator:
+              value: >-
+                objecname eq 'Opportunity'
+              summary: equal
+            not_equal_operator:
+              value: >-
+                objecname ne 'Opportunity'
+              summary: not equal
+            greater_than_operator:
+              value: objectDateOfCreation gt 2020-03-20
+              summary: greater than
+            greater_than_eq_operator:
+              value: objectDateOfCreation ge 2020-03-20
+              summary: greater than equal
+            less_than_operator:
+              value: objectDateOfCreation lt 2020-03-20
+              summary: less than
+            less_than_eq_operator:
+              value: objectDateOfCreation le 2020-03-20
+              summary: less than equal
+            and_operator:
+              value: >-
+                objectName contains 'Opportunity' and salesDocumentVersion eq
+                '1'
+              summary: and
+            or_operator:
+              value: >-
+                objectName contains 'Opportunity' or salesDocumentVersion eq
+                '1'
+              summary: or
+          schema:
+            type: string
+          explode: false
+        
+
+      responses:
+        '200':
+          description: Returns the number of Opportunities.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_COUNT'
+              example:
+                count: 33
+  '/opportunities/{id}':
+    get:
+      tags:
+        - Opportunity
+      summary: Get the details of an opportunity
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSM5YzQ1OGFjNmQ5NjA0NjM0OTJlMDkzM2Q4MWUxNTBiNQ==
+        - name: resolveRelations
+          in: query
+          description: >-
+            To resolve nested data. Suppport multiple values with comma
+            separated format.
+          schema:
+            type: string
+          example: >-
+            hasSalesOrg,hasDistributionChannel,hasDivision,hasCurrency
+      responses:
+        '200':
+          description: >-
+            Returns the details of opportunity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_OUTPUT_ALL'
+              example:
+                - id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSM5YzQ1OGFjNmQ5NjA0NjM0OTJlMDkzM2Q4MWUxNTBiNQ==
+                  type: Opportunity
+                  uri: 'http://localhost:8080/iss/Opportunity#9c458ac6d960463492e0933d81e150b5'
+                  objectName: Opp 1
+                  objectDateOfCreation: 1593146530520
+                  objectDateOfUpdate: 1594691428596
+                  salesDocumentDateOfExpiry: 1593187200000
+                  salesDocumentDescription: Short desc
+                  opportunityWeightedVolumeSystemCurrency: 0.3280865
+                  opportunityChanceofSuccess: 10
+                  opportunityQuotedVolume: 0
+                  opportunityRevenueEndDate: 1595174400000
+                  opportunityRevenueStartDate: 1594656000000
+                  opportunityVolume: 5
+                  opportunityWeightedVolume: 0.5
+                  opportunityVolumeSystemCurrency: 3.280865
+                  
+                  hasSalesOrg:
+                    - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTYWxlc09yZy1VUzExMDA=
+                      type: ""
+                      uri: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#SalesOrg-US1100'
+                      
+                  hasDistributionChannel:
+                    - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNEQy0wMQ==
+                      type: ""
+                      uri: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#DC-01'
+                      
+                  hasDivision:
+                    - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNEaXYtMDA=
+                      type: ""
+                      uri: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#Div-00'
+                      
+                  hasCurrency:
+                    - 'http://www.inmindcloud.dev.com/application/application-implementation.owl#SGD'
+    
+    delete:
+      tags:
+        - Opportunity
+      summary: Delete an opportunity by id.
+      description: >-
+        Cancels the current opportunity transaction by doing a rollback to remove all changes in the memory model since the last commit and returns the id and uri of the opportunity.
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: >-
+            Opportunity id.
+          schema:
+            type: string
+            format: base64-encoded 
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+      responses:
+        '200':
+          description: >-
+            Return empty resource
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {}
+    
+    patch:
+      tags: 
+        - Opportunity
+      summary: Update an opportunity.
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: >-
+            Opportunity id.
+          schema:
+            type: string
+            format: base64-encoded 
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+      requestBody:
+        description: Opportunity object to be updated.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Opportunity_UPDATE_INPUT'
+            example:
+              type: Opportunity
+              objectName: Test Opportunity
+              salesDocumentDateOfExpiry: 1603728000020
+              opportunityWeightedVolume: 250
+      responses:
+        '200':
+          description: Returns the updated Opportunity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_OUTPUT_ALL'
+              example:
+                id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+                type: Opportunity
+                uri: "http://localhost:8080/iss/Opportunity#a1652881275e4bc6b0bca89420b5434e"
+                objectName: opp test
+                objectId: a1652881275e4bc6b0bca89420b5434e
+                opportunityCurrentSalesPhaseStartTime: 1603679737310
+                objectDateOfCreation: 1603679737295
+                salesDocumentDateOfExpiry: 1603728000000
+                opportunityCurrentSalesPhaseDays: 0
+                salesDocumentDescription: test
+                objectDateOfUpdate: 1603698318711
+                salesDocumentAllowedActions: ["lost", "won"]
+                salesDocumentVersion: 1
+                opportunityChanceofSuccess: 50
+                opportunityStartDate: 1603679737295
+                opportunityVolume: 100
+                opportunityWeightedVolume: 50
+                opportunityVolumeSystemCurrency: 100
+                hasCurrency: [
+                    "http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR"
+                ]
+                hasSalesDocumentStatus: [
+                    "http://www.inmindcloud.com/application/schema.owl#OPEN"
+                ]
+                hasSalesPhase: [
+                    "http://www.inmindcloud.com/application/schema.owl#SalesPhase2"
+                ]
+                containsVirtualTeam: [
+                    "http://www.inmindcloud.dev.com/application/application-implementation.owl#admin"
+                ]
+                containsCreator: [
+                  {
+                    id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==",
+                    type: "Employee",
+                    uri: "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person",
+                    label: "admin-Person",
+                    objectName: "admin-Person",
+                    personEmail: "admin@fakemail.com",
+                    personFirstName: "In Mind",
+                    personLastName: "Admin"
+                  }
+                ]
+                containsOwner: [
+                  {
+                    id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==",
+                    type: "Employee",
+                    uri: "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person",
+                    label: "admin-Person",
+                    objectName: "admin-Person",
+                    personEmail: "admin@fakemail.com",
+                    personFirstName: "In Mind",
+                    personLastName: "Admin"
+                  }
+                ]
+                definesPartnerFunctionRecord: [
+                    "http://localhost:8080/iss/PartnerFunctionRecord#466bc8e0d72d4ad8be1bd5d3309df71f"
+                ]
+                linksProduct: [
+                    "http://www.inmindcloud.com/application/products/products-implementation.owl#DDP03"
+                ]
+                opportunityContainedBy: [
+                  {
+                    id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzFjYjNmZmFlYmViYjQzNzRhOTcxZjMyNWIzZWM0MmEw",
+                    type: "Account",
+                    uri: "http://localhost:8080/iss/Account#1cb3ffaebebb4374a971f325b3ec42a0",
+                    objectName: "test",
+                    hasIndustry: [
+                      {
+                        id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNJSG90ZWw=",
+                        type: "",
+                        uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#IHotel"
+                      }
+                    ],
+                    includesAddress: [
+                      {
+                        id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzE3OWY4MjFkOTNmYjRkNDZhMGRlNTc3NjQwYzE2OTBi",
+                        type: "Address",
+                        uri: "http://localhost:8080/iss/Address#179f821d93fb4d46a0de577640c1690b",
+                        objectId: "179f821d93fb4d46a0de577640c1690b",
+                        addressCity: "Singapore",
+                        objectDateOfCreation: 1603339767110,
+                        addressStreet: "Street",
+                        addressMain: true,
+                        hasCountry: [
+                            "http://www.inmindcloud.dev.com/application/application-implementation.owl#SG"
+                        ],
+                        addressIncludedBy: [
+                            "http://localhost:8080/iss/Account#1cb3ffaebebb4374a971f325b3ec42a0"
+                        ],
+                        addressUsedBy: [
+                            "http://localhost:8080/iss/Quote#b2c8595236e049d8b73e2a9426186c52"
+                        ],
+                        containsCreator: [
+                            "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+        
+  '/opportunities/{id}/cancel':
+    post:
+      tags:
+        - Opportunity
+      summary: Cancel the updates made to an opportunity.
+      description: >-
+        Cancels the current opportunity transaction by doing a rollback to remove all changes in the memory model since the last commit and returns the id and uri of the opportunity.
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: >-
+            Opportunity id.
+          schema:
+            type: string
+            format: base64-encoded 
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+      responses:
+        '200':
+          description: Returns the Opportunity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_URI_OUTPUT'
+              example:  
+                id: >-
+                  aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+                type: ""
+                uri: >-
+                  http://localhost:8080/iss/Opportunity#a1652881275e4bc6b0bca89420b5434e
+
+  '/opportunities/pipelines':
+    post:
+      tags:
+        - Sales Phase
+      summary: Returns opportunities based on sales phase.
+      description: Returns a list of opportunities based on the list of sales phase defined in the request body.
+      parameters:
+        - name: count
+          in: query
+          required: true
+          description: The number of results to be returned.
+          schema:
+            type: number
+            example: 10
+      responses:
+        '200':
+          description: Returns the Opportunity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_PIPELINES_OUTPUT'
+              example: 
+                http://www.inmindcloud.dev.com/application/application-implementation.owl#SalesPhase5: []
+                http://www.inmindcloud.com/application/schema.owl#SalesPhase1: []
+                http://www.inmindcloud.dev.com/application/application-implementation.owl#SalesPhase4: []
+                http://www.inmindcloud.dev.com/application/application-implementation.owl#SalesPhase6: []
+                http://www.inmindcloud.dev.com/application/application-implementation.owl#SalesPhase3: []
+                http://www.inmindcloud.com/application/schema.owl#SalesPhase2: [
+                  {
+                    id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNkMmRmYWE0ZjRhNTM0MWE2OTVjOTgwODJhNzIyNTE2NQ==",
+                    type: "Opportunity",
+                    uri: "http://localhost:8080/iss/Opportunity#d2dfaa4f4a5341a695c98082a7225165",
+                    objectName: "created with ui",
+                    salesDocumentDateOfExpiry: 1603728000000,
+                    opportunityCurrentSalesPhaseDays: 0,
+                    salesDocumentDescription: ".",
+                    objectDateOfUpdate: 1603707987170,
+                    opportunityChanceofSuccess: 10,
+                    opportunityVolume: 0,
+                    opportunityVolumeSystemCurrency: 0,
+                    hasCurrency: [
+                      {
+                        id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNFVVI=",
+                        type: "Currency",
+                        uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR",
+                        label: "Euro",
+                        objectName: "Euro",
+                        objectERPId: "EUR"
+                      }
+                    ],
+                    hasSalesPhase: [
+                        "http://www.inmindcloud.com/application/schema.owl#SalesPhase2"
+                    ],
+                    containsOwner: [
+                      {
+                        id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==",
+                        type: "Employee",
+                        uri: "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person",
+                        label: "admin-Person",
+                        personFirstName: "In Mind",
+                        personLastName: "Admin"
+                      }
+                    ],
+                    opportunityContainedBy: [
+                      {
+                        id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzFjYjNmZmFlYmViYjQzNzRhOTcxZjMyNWIzZWM0MmEw",
+                        type: "Account",
+                        uri: "http://localhost:8080/iss/Account#1cb3ffaebebb4374a971f325b3ec42a0",
+                        objectName: "test"
+                      }
+                    ]
+                  }
+                ]
+                http://www.inmindcloud.dev.com/application/application-implementation.owl#SalesPhase7: []
+  
+  '/opportunities/{id}/product':
+    get:
+      tags:
+        - Product
+      summary: Retrieves all products linked to the opportunity.
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: >-
+            Opportunity id.
+          schema:
+            type: string
+            format: base64-encoded 
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSMyMmQ3YjdiMzVmMTU0ZTE2YWRhOWIwNmU5YjYyNDFjOA==
+      responses:
+        '200':
+          description: Returns the basic details of product(s) linked to the opportunity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_LINKS_PRODUCT_OUTPUT'
+              example:
+                id: >-
+                  aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vcHJvZHVjdHMvcHJvZHVjdHMtaW1wbGVtZW50YXRpb24ub3dsI0REUDAz
+                type: Product
+                uri: "http://www.inmindcloud.com/application/products/products-implementation.owl#DDP03"
+                label: "24/7 Technical Support"
+                objectName: "24/7 Technical Support"
+                hasProductStatus: [ "http://www.inmindcloud.com/application/schema.owl#ProductActive" ]
+    
+    post:
+      tags:
+        - Product
+      summary: Adds a product to an opportunity.
+      description: Links an existing product(s) to the opportunity. Supports multiple product uris in a comma separated format.
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: >-
+            Opportunity id.
+          schema:
+            type: string
+            format: base64-encoded 
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSMyMmQ3YjdiMzVmMTU0ZTE2YWRhOWIwNmU5YjYyNDFjOA==
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Opportunity_LINKS_PRODUCT'
+        required: true
+      responses:
+        '200':
+          description: Returns the full details of the newly linked Product(s).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_LINKS_PRODUCT_OUTPUT_ALL'
+              example: 
+                id: >-
+                  aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vcHJvZHVjdHMvcHJvZHVjdHMtaW1wbGVtZW50YXRpb24ub3dsI0REUDAz
+                type: Product
+                uri: "http://www.inmindcloud.com/application/products/products-implementation.owl#DDP03"
+                label: "24/7 Technical Support"
+                objectName: "24/7 Technical Support"
+                objectId: "DP03"
+                productExportToCRM: true
+                productExportToERP: true
+                productIsOptional: false
+                productClassified: false
+                productDiscountAllowed: true
+                hasUnitofMeasure:
+                  - id: >-
+                      aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTZXJ2aWNlcw==
+                    type: ""
+                    uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#Services"
+                hasProductStatus: [ "http://www.inmindcloud.com/application/schema.owl#ProductActive" ]
+                
+                
+    delete:
+      tags:
+        - Product
+      summary: Remove product(s) linked to opportunity.
+      description: >-
+        Supports multiple product ids in comma separated format.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: >-
+            Opportunity id.
+          schema:
+            type: string
+            format: base64-encoded 
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+        - name: linksProduct
+          in: query
+          required: true
+          description: >-
+            Product ids.
+          schema:
+            type: string
+            example: http://www.inmindcloud.com/application/products/products-implementation.owl#DDP03
+      responses:
+        '200':
+          description: >-
+            Return empty resource
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {}
+
+  '/opportunities/{id}/quotes':
+    get:
+      tags:
+        - Quote
+      summary: Retrieves all quotes linked to the opportunity.
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: >-
+            Opportunity id.
+          schema:
+            type: string
+            format: base64-encoded 
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSMyMmQ3YjdiMzVmMTU0ZTE2YWRhOWIwNmU5YjYyNDFjOA==
+      responses:
+        '200':
+          description: Returns the basic details of quotes(s) linked to the opportunity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_LINKS_QUOTES_OUTPUT'
+              example:
+                id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9RdW90ZSNiMmM4NTk1MjM2ZTA0OWQ4YjczZTJhOTQyNjE4NmM1Mg==
+                type: Quote
+                uri: http://localhost:8080/iss/Quote#b2c8595236e049d8b73e2a9426186c52
+                objectDateOfCreation: 1603339865002
+                objectDateOfUpdate: 1603707987170
+                objectName: q1
+                salesDocumentDateOfExpiry: 1611244800000
+                containsCreator: [
+                  {
+                    id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==",
+                    type: "Employee",
+                    uri: "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person",
+                    objectName: "admin-Person"
+                  }
+                ]
+                hasSalesDocumentStatus: [
+                  {
+                    id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNPUEVO",
+                    type: "SalesDocumentStatus",
+                    uri: "http://www.inmindcloud.com/application/schema.owl#OPEN",
+                    objectExternalId: "1",
+                    objectName: "Open"
+                  }
+                ]
+                hasSalesDocumentType: [
+                  {
+                    id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTRFQtT1I=",
+                    type: "SalesDocumentType",
+                    uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#SDT-OR",
+                    objectERPId: "TA",
+                    objectExternalId: "TA",
+                    objectName: "Order-OR"
+                  }
+                ]
+
+  '/opportunities/salesphase':
+    get:
+      tags: 
+        - Sales Phase
+      summary: Retrieves all opportunities that has the specified sales phase.
+      description: Retrieves all opportunities that has the specified sales phase.
+      parameters: 
+        - name: salesphase
+          in: query
+          required: true
+          description: >-
+            Sales phase URI.
+          schema:
+            type: string
+            format: uri
+            example: >-
+              "http://www.inmindcloud.com/application/schema.owl#SalesPhase2"
+      responses:
+        '200':
+          description: Returns the basic details of opportunities that has specified sales phase.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_SALES_PHASE_OUTPUT'
+              example:
+                id: >-
+                  aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+                type: Opportunity
+                uri: "http://localhost:8080/iss/Opportunity#a1652881275e4bc6b0bca89420b5434e"
+                objectDateOfUpdate: 1603698318711
+                objectName: "New Opportunity"
+
+  '/opportunities/{id}/action':
+    patch:
+      tags:
+        - Action
+      summary: Update opportunity's status.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: >-
+            Opportunity id.
+          schema:
+            type: string
+            format: base64-encoded 
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+        - name: action
+          in: query
+          required: true
+          description: >-
+            Status to be updated.
+          schema:
+            type: string
+            example: >-
+              won
+      responses:
+        '200':
+          description: Updated status successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_ACTION_OUTPUT'
+              example:
+                id: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+                type: Opportunity
+                uri: "http://localhost:8080/iss/Opportunity#a1652881275e4bc6b0bca89420b5434e"
+                objectName: New opportunity
+                objectId: a1652881275e4bc6b0bca89420b5434e
+                opportunityCurrentSalesPhaseStartTime: 1603679737310
+                objectDateOfCreation: 1603679737295
+                salesDocumentDateOfExpiry: 1603728000000
+                opportunityCurrentSalesPhaseDays: 0
+                salesDocumentDescription: test
+                objectDateOfUpdate: 1603698318711
+                salesDocumentAllowedActions: "withdraw"
+                salesDocumentVersion: 1
+                objectLastModifiedStateId: "20201026054022.192"
+                opportunityChanceofSuccess: 50
+                opportunityStartDate: 1603679737295
+                opportunityVolume: 100
+                opportunityWeightedVolume: 50
+                opportunityVolumeSystemCurrency: 100
+                hasCurrency: [
+                  "http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR"
+                ]
+                hasSalesDocumentStatus: [
+                  "http://www.inmindcloud.com/application/schema.owl#WON"
+                ]
+                hasSalesPhase: [
+                  "http://www.inmindcloud.com/application/schema.owl#SalesPhase2"
+                ]
+                containsVirtualTeam: [
+                  "http://www.inmindcloud.dev.com/application/application-implementation.owl#admin"
+                ]
+                containsCreator: [
+                  {
+                    id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==",
+                    type: "Employee",
+                    uri: "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person",
+                    label: "admin-Person",
+                    objectName: "admin-Person",
+                    personEmail: "admin@fakemail.com",
+                    personFirstName: "In Mind",
+                    personLastName: "Admin"
+                  }
+                ]
+                containsOwner: [
+                  {
+                    id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==",
+                    type: "Employee",
+                    uri: "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person",
+                    label: "admin-Person",
+                    objectName: "admin-Person",
+                    personEmail: "admin@fakemail.com",
+                    personFirstName: "In Mind",
+                    personLastName: "Admin"
+                  }
+                ]
+                definesPartnerFunctionRecord: [
+                  "http://localhost:8080/iss/PartnerFunctionRecord#466bc8e0d72d4ad8be1bd5d3309df71f"
+                ]
+                linksProduct: [
+                  "http://www.inmindcloud.com/application/products/products-implementation.owl#DDP03"
+                ]
+                opportunityContainedBy: [
+                  {
+                    id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzFjYjNmZmFlYmViYjQzNzRhOTcxZjMyNWIzZWM0MmEw",
+                    type: "Account",
+                    uri: "http://localhost:8080/iss/Account#1cb3ffaebebb4374a971f325b3ec42a0",
+                    objectName: "test",
+                    hasIndustry: [
+                      {
+                        id: "aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNJSG90ZWw=",
+                        type: "",
+                        uri: "http://www.inmindcloud.dev.com/application/application-implementation.owl#IHotel"
+                      }
+                    ],
+                    includesAddress: [
+                      {
+                        id: "aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzE3OWY4MjFkOTNmYjRkNDZhMGRlNTc3NjQwYzE2OTBi",
+                        type: "Address",
+                        uri: "http://localhost:8080/iss/Address#179f821d93fb4d46a0de577640c1690b",
+                        objectId: "179f821d93fb4d46a0de577640c1690b",
+                        addressCity: "singapore",
+                        objectDateOfCreation: 1603339767110,
+                        addressStreet: "q",
+                        addressMain: true,
+                        hasCountry: [
+                            "http://www.inmindcloud.dev.com/application/application-implementation.owl#SG"
+                        ],
+                        addressIncludedBy: [
+                            "http://localhost:8080/iss/Account#1cb3ffaebebb4374a971f325b3ec42a0"
+                        ],
+                        addressUsedBy: [
+                            "http://localhost:8080/iss/Quote#b2c8595236e049d8b73e2a9426186c52"
+                        ],
+                        containsCreator: [
+                            "http://www.inmindcloud.com/security/security-implementation.owl#admin-Person"
+                        ],
+                      }
+                    ]
+                  }
+                ]
+  
+  '/opportunities/{id}/save':
+    patch:
+      tags:
+        - Opportunity
+      summary: Saves the updated opportunity.
+      description: >-
+        Persists all changes in the memory model to the database and returns the id and uri of the opportunity.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded URI
+            example: >-
+              aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+      responses:
+        '200':
+          description: Returns about the saved Opportunity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opportunity_URI_OUTPUT'
+              example:
+                id: >-
+                  aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+                type: ""
+                uri: >-
+                  http://localhost:8080/iss/Opportunity#a1652881275e4bc6b0bca89420b5434e
+components:
+  schemas:
+  
+    Opportunity_TYPE:
+      type: object
+      properties:
+        type:
+          type: string
+          title: Opportunity's type
+          example: Opportunity
+    
+    Opportunity_ID:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+        uri: 
+          type: string
+          example: >-
+            http://localhost:8080/iss/Opportunity#a1652881275e4bc6b0bca89420b5434e
+    
+    Opportunity_OBJECT_NAME:
+      type: object
+      properties:
+        objectName:
+          type: string
+          example: New Opportunity
+      
+    Opportunity_OBJECT_ID:
+      type: object
+      properties:
+        objectId:
+          type: string
+          example: a1652881275e4bc6b0bca89420b5434e
+          
+    Opportunity_CURRENT_SALES_PHASE_START_TIME:
+      type: object
+      properties:
+        opportunityCurrentSalesPhaseStartTime:
+          type: integer
+          format: timestamp
+          example: 1603679737310
+          
+    Opportunity_DATE_OF_CREATION:
+      type: object
+      properties:
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1603679737295
+          
+    Opportunity_SALES_DOCUMENT_DATE_OF_EXPIRY:
+      type: object
+      properties:
+        salesDocumentDateOfExpiry:
+          type: integer
+          format: timestamp
+          example: 1603728000000
+          
+    Opportunity_DATE_OF_UPDATE:
+      type: object
+      properties:
+        objectDateOfUpdate:
+          type: integer
+          format: timestamp
+          example: 1603679737833
+          
+    Opportunity_START_DATE:
+      type: object
+      properties:
+        opportunityStartDate:
+          type: integer
+          format: timestamp
+          example: 1603679737295
+    
+    Opportunity_CONTAINS_CREATOR:
+      type: object
+      properties:
+        containsCreator:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://www.inmindcloud.com/security/security-implementation.owl#admin-Person
+            
+    Opportunity_CONTAINS_OWNER:
+      type: object
+      properties:
+        containsOwner:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://www.inmindcloud.com/security/security-implementation.owl#admin-Person
+            
+    Opportunity_HAS_SALES_PHASE:
+      type: object
+      properties:
+        hasSalesPhase:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://www.inmindcloud.com/application/schema.owl#SalesPhase2
+            
+    Opportunity_HAS_SALES_DOCUMENT_STATUS:
+      type: object
+      properties:
+        hasSalesDocumentStatus:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://www.inmindcloud.com/application/schema.owl#OPEN
+            
+    Opportunity_CONTAINS_VIRTUAL_TEAM:
+      type: object
+      properties:
+        containsVirtualTeam:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://www.inmindcloud.dev.com/application/application-implementation.owl#admin
+    
+    Opportunity_CURRENT_SALES_PHASE_DAYS:
+      type: object
+      properties:
+        opportunityCurrentSalesPhaseDays:
+          type: number
+          example: 10
+    
+    Opportunity_SALES_DOCUMENT_DESCRIPTION:
+      type: object
+      properties:
+        salesDocumentDescription:
+          type: string
+          example: "This is the description."
+    
+    Opportunity_CHANCE_OF_SUCCESS:
+      type: object
+      properties:
+        opportunityChanceofSuccess:
+          type: number
+          example: 10
+          
+    Opportunity_VOLUME:
+      type: object
+      properties:
+        opportunityVolume:
+          type: number
+          example: 100
+          
+    Opportunity_VOLUME_SYSTEM_CURRENCY:
+      type: object
+      properties:
+        opportunityVolumeSystemCurrency:
+          type: number
+          example: 0
+    
+    Opportunity_HAS_CURRENCY_EXPANDED:
+      type: object
+      properties:
+        hasCurrency:
+          type: object
+          properties:
+            id:
+              type: string
+              format: base64-encoded URI
+              example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNFVVI=
+            type:
+              type: string
+              example: Currency
+            uri:
+              type: string
+              format: uri
+              example: http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR
+            label:
+              type: string
+              example: Euro
+            objectName:
+              type: string
+              example: Euro
+            objectERPId:
+              type: string
+              example: EUR
+    
+    Opportunity_HAS_TAG:
+      type: object
+      properties:
+        hasTag:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.dev.com/application/application-implementation.owl#Important
+    
+    Opportunity_CONTAINS_OWNER_EXPANDED:
+      type: object
+      properties:
+        containsOwner:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: base64-encoded URI
+                example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==
+              type:
+                type: string
+                example: Employee
+              uri:
+                type: string
+                format: uri
+                example: http://www.inmindcloud.com/security/security-implementation.owl#admin-Person
+              label:
+                type: string
+                example: admin-Person
+              personFirstName:
+                type: string
+                example: In Mind
+              personLastName:
+                type: string
+                example: Admin
+              personPicture:
+                type: string
+                example: Capture3.PNG|http://www.inmindcloud.dev.com#L2ltYWdlcy9QZXJzb24vYWRtaW4tUGVyc29uL0NhcHR1cmUzLlBORw==
+    
+    Opportunity_CONTAINED_BY_PARAMS:
+      type: object
+      properties:
+        opportunityContainedBy:
+          type: object
+          properties:
+            id:
+              type: string
+              format: base64-encoded URI
+              example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzFjYjNmZmFlYmViYjQzNzRhOTcxZjMyNWIzZWM0MmEw
+            type:
+              type: string
+              example: Account
+            uri:
+              type: string
+              format: uri
+              example: http://localhost:8080/iss/Account#1cb3ffaebebb4374a971f325b3ec42a0
+            objectName:
+              type: string
+              example: John
+    
+    Opportunity_CONTAINS_CREATOR_EXPANDED:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+           aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==
+        type:
+          type: string
+          example: Employee
+        uri:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/security/security-implementation.owl#admin-Person
+        objectName:
+          type: string
+          example: "admin-Person"
+    
+    Opportunity_CONTAINS_CREATOR_ALL:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+           aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vc2VjdXJpdHkvc2VjdXJpdHktaW1wbGVtZW50YXRpb24ub3dsI2FkbWluLVBlcnNvbg==
+        type:
+          type: string
+          example: Employee
+        uri:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/security/security-implementation.owl#admin-Person
+        objectName:
+          type: string
+          example: "admin-Person"
+        personEmail:
+          type: string
+          format: email
+          example: admin@fakemail.com
+        personFirstName:
+          type: string
+          example: In Mind
+        personLastName:
+          type: string
+          example: Admin
+        
+    Opportunity_HAS_SALES_DOCUMENT_STATUS_EXPANDED:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+           aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNPUEVO
+        type:
+          type: string
+          example: SalesDocumentStatus
+        uri:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/application/schema.owl#OPEN
+        objectName:
+          type: string
+          example: "Open"
+        objectExternalId:
+          type: string
+          example: 1
+          
+    Opportunity_HAS_SALES_DOCUMENT_TYPE_EXPANDED:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+           aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNPUEVO
+        type:
+          type: string
+          example: SalesDocumentType
+        uri:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.dev.com/application/application-implementation.owl#SDT-OR
+        objectName:
+          type: string
+          example: "Order-OR"
+        objectExternalId:
+          type: string
+          example: TA
+        objectERPId:
+          type: string
+          example: TA
+      
+    Opportunity_CONTAINED_BY_ALL:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50IzFjYjNmZmFlYmViYjQzNzRhOTcxZjMyNWIzZWM0MmEw
+        type:
+          type: string
+          example: Account
+        uri:
+          type: string
+          format: uri
+          example: http://localhost:8080/iss/Account#1cb3ffaebebb4374a971f325b3ec42a0
+        objectName:
+          type: string
+          example: Account1
+        hasIndustry:
+          type: object
+          properties:
+            id: 
+              type: string
+              format: base64-encoded URI
+              example: >-
+                aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNJSG90ZWw
+            type:
+              type: string
+              example: ""
+            uri:
+              type: string
+              format: uri
+              example: http://www.inmindcloud.dev.com/application/application-implementation.owl#IHotel
+        includesAddress:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: base64-encoded URI
+                example: >-
+                  aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BZGRyZXNzIzE3OWY4MjFkOTNmYjRkNDZhMGRlNTc3NjQwYzE2OTBi
+              type:
+                type: string
+                example: Address
+              uri:
+                type: string
+                format: uri
+                example: http://localhost:8080/iss/Address#179f821d93fb4d46a0de577640c1690b
+              objectId:
+                type: string
+                example: "179f821d93fb4d46a0de577640c1690b"
+              addressCity:
+                type: string
+                example: singapore
+              objectDateOfCreation:
+                type: integer
+                format: timestamp
+                example: 1603339767110
+              addressStreet:
+                type: string
+                example: "street 1"
+              addressMain:
+                type: boolean
+                example: true
+              hasCountry:
+                type: string
+                format: uri
+                example: http://www.inmindcloud.dev.com/application/application-implementation.owl#SG
+              addressIncludedBy:
+                type: string
+                format: uri
+                example: http://localhost:8080/iss/Account#1cb3ffaebebb4374a971f325b3ec42a0
+              addressUsedBy:
+                type: string
+                format: uri
+                example: http://localhost:8080/iss/Quote#b2c8595236e049d8b73e2a9426186c52
+              containsCreator:
+                type: string
+                format: uri
+                example: http://www.inmindcloud.com/security/security-implementation.owl#admin-Person
+    
+    Opportunity_COUNT:
+      type: object
+      properties:
+        count:
+          type: integer
+          title: the number of opportunities
+          example: 33
+    Opportunity_OUTPUT:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSM5YzQ1OGFjNmQ5NjA0NjM0OTJlMDkzM2Q4MWUxNTBiNQ==
+        type:
+          type: string
+          example: Opportunity
+        objectName:
+          type: string
+          example: Opp 1
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1593146530520
+        objectDateOfUpdate:
+          type: integer
+          format: timestamp
+          example: 1594691428596
+        opportunityChanceofSuccess:
+          type: integer
+          minimum: 0
+          maximum: 100
+        opportunityRevenueStartDate:
+          type: integer
+          format: timestamp
+          example: 1594656000000
+        opportunityRevenueEndDate:
+          type: integer
+          format: timestamp
+          example: 1595174400000
+        opportunityVolume:
+          type: integer
+          example: 5000
+        opportunityWeightedVolume: 
+          type: integer
+          example: 500
+        opportunityVolumeSystemCurrency: 
+          type: number
+          example: 3280.865
+        hasSalesOrg:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of opportunity sales organisation
+        hasDistributionChannel:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of opportunity distribution channel
+        hasDivision:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: The URI of opportunity division
+        opportunityContainedBy:
+          type: string
+          description: The URI of opportunity parent
+          example: http://localhost:8080/iss/Account#e6f7dec2342248a19d1d9b1a0d1daf79
+        
+    Opportunity_CREATE_INPUT:
+      type: object
+      properties:
+        type:
+          type: string
+          example: "Opportunity"
+        objectName:
+          type: string
+          example: "New Opportunity"
+        opportunityVolume:
+          type: number
+          example: 100
+        hasCurrency:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR
+        opportunityContainedBy:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://localhost:8080/iss/Account#1cb3ffaebebb4374a971f325b3ec42a0
+        salesDocumentDateOfExpiry:
+          type: integer
+          format: timestamp
+          example: 1603728000000
+        salesDocumentDescription:
+          type: string
+          example: "New Opportunity"
+    
+    Opportunity_CREATE_OUTPUT:
+      allOf:
+        - $ref: '#/components/schemas/Opportunity_ID'
+        - $ref: '#/components/schemas/Opportunity_CONTAINS_CREATOR'
+        - $ref: '#/components/schemas/Opportunity_CONTAINS_OWNER'
+        - $ref: '#/components/schemas/Opportunity_HAS_SALES_PHASE'
+        - $ref: '#/components/schemas/Opportunity_HAS_SALES_DOCUMENT_STATUS'
+        - $ref: '#/components/schemas/Opportunity_CONTAINS_VIRTUAL_TEAM'
+        - $ref: '#/components/schemas/Opportunity_CREATE_INPUT'
+    
+    Opportunity_UPDATE_INPUT:
+      allOf:
+        - $ref: '#/components/schemas/Opportunity_CREATE_INPUT'
+    
+    Opportunity_LINKS_PRODUCT:
+      type: object
+      properties:
+        linksProduct:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://www.inmindcloud.com/application/products/products-implementation.owl#DDP03
+    
+    Opportunity_LINKS_PRODUCT_OUTPUT:
+      type: object
+      properties:
+        id: 
+          type: string
+          example: >-
+            aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vcHJvZHVjdHMvcHJvZHVjdHMtaW1wbGVtZW50YXRpb24ub3dsI0REUDAz
+        type: 
+          type: string
+          example: Product
+        uri: 
+          type: string
+          format: uri
+          example: "http://www.inmindcloud.com/application/products/products-implementation.owl#DDP03"
+        label: 
+          type: string
+          example: "24/7 Technical Support"
+        objectName: 
+          type: string
+          example: "24/7 Technical Support"
+        hasProductStatus: 
+          type: array
+          items:
+            type: string
+            format: uri
+            example: "http://www.inmindcloud.com/application/schema.owl#ProductActive"
+            
+    Opportunity_LINKS_PRODUCT_OUTPUT_ALL:
+      type: object
+      properties:
+        id: 
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vcHJvZHVjdHMvcHJvZHVjdHMtaW1wbGVtZW50YXRpb24ub3dsI0REUDAz
+        type:
+          type: string
+          example: Product
+        uri:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/application/products/products-implementation.owl#DDP03
+        label:
+          type: string
+          example: "24/7 Technical Support"
+        objectName:
+          type: string
+          example: "24/7 Technical Support"
+        objectId:
+          type: string
+          example: DP03
+        productExportToCRM:
+          type: boolean
+          example: true
+        productExportToERP:
+          type: boolean
+          example: true
+        productIsOptional:
+          type: boolean
+          example: false
+        productClassified:
+          type: boolean
+          example: false
+        productDiscountAllowed:
+          type: boolean
+          example: true
+        hasUnitofMeasure:
+          type: object
+          properties:
+            id: 
+              type: string
+              format: base64-encoded URI
+              example: >-
+                aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTZXJ2aWNlcw==
+            type:
+              type: string
+              example: ""
+            uri:
+              type: string
+              format: uri
+              example: http://www.inmindcloud.dev.com/application/application-implementation.owl#Services
+        hasProductStatus:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/application/schema.owl#ProductActive
+    
+    Opportunity_SALES_PHASE_OUTPUT:
+      allOf:
+        - $ref: '#/components/schemas/Opportunity_ID'
+        - $ref: '#/components/schemas/Opportunity_TYPE'
+        - $ref: '#/components/schemas/Opportunity_OBJECT_NAME'
+        - $ref: '#/components/schemas/Opportunity_DATE_OF_UPDATE'
+    
+    Opportunity_ACTION_OUTPUT:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+            aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+        type:
+          $ref: '#/components/schemas/Opportunity_TYPE'
+        uri:
+          type: string
+          format: uri
+          example: http://localhost:8080/iss/Opportunity#a1652881275e4bc6b0bca89420b5434e
+        objectName:
+          $ref: '#/components/schemas/Opportunity_OBJECT_NAME'
+        objectId:
+          type: string
+          example: a1652881275e4bc6b0bca89420b5434e
+        opportunityCurrentSalesPhaseStartTime:
+          $ref: '#/components/schemas/Opportunity_CURRENT_SALES_PHASE_START_TIME'
+        objectDateOfCreation:
+          $ref: '#/components/schemas/Opportunity_DATE_OF_CREATION'
+        salesDocumentDateOfExpiry:
+          $ref: '#/components/schemas/Opportunity_SALES_DOCUMENT_DATE_OF_EXPIRY'
+        opportunityCurrentSalesPhaseDays:
+          type: integer
+          example: 10
+        salesDocumentDescription:
+          $ref: '#/components/schemas/Opportunity_SALES_DOCUMENT_DESCRIPTION'
+        objectDateOfUpdate:
+          $ref: '#/components/schemas/Opportunity_DATE_OF_UPDATE'
+        salesDocumentAllowedActions:
+          type: array
+          items:
+            type: string
+            example: withdraw
+        salesDocumentVersion:
+          type: number
+          example: 1
+        objectLastModifiedStateId:
+          type: string
+          example: 20201026054022.19
+        opportunityChanceofSuccess:
+          $ref: '#/components/schemas/Opportunity_CHANCE_OF_SUCCESS'
+        opportunityStartDate:
+          $ref: '#/components/schemas/Opportunity_START_DATE'
+        opportunityVolume:
+          $ref: '#/components/schemas/Opportunity_VOLUME'
+        opportunityWeightedVolume:
+          type: number
+          example: 50
+        opportunityVolumeSystemCurrency:
+          $ref: '#/components/schemas/Opportunity_VOLUME_SYSTEM_CURRENCY'
+        hasCurrency:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR
+        hasSalesDocumentStatus:
+          $ref: '#/components/schemas/Opportunity_HAS_SALES_DOCUMENT_STATUS'
+        hasSalesPhase:
+          $ref: '#/components/schemas/Opportunity_HAS_SALES_PHASE'
+        containsVirtualTeam:
+          $ref: '#/components/schemas/Opportunity_CONTAINS_VIRTUAL_TEAM'
+        containsCreator:
+          $ref: '#/components/schemas/Opportunity_CONTAINS_CREATOR_ALL'
+        containsOwner:
+          $ref: '#/components/schemas/Opportunity_CONTAINS_CREATOR_ALL'
+        definesPartnerFunctionRecord:
+          type: string
+          format: uri
+          example: http://localhost:8080/iss/PartnerFunctionRecord#466bc8e0d72d4ad8be1bd5d3309df71f
+        linksProduct:
+          type: array
+          items:
+            type: string
+            format: uri
+            example: http://www.inmindcloud.com/application/products/products-implementation.owl#DDP03
+        opportunityContainedBy:
+          $ref: '#/components/schemas/Opportunity_CONTAINED_BY_ALL'
+    
+    Opportunity_LINKS_QUOTES_OUTPUT:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9RdW90ZSNiMmM4NTk1MjM2ZTA0OWQ4YjczZTJhOTQyNjE4NmM1Mg==
+        type:
+          type: string
+          example: Quote
+        uri:
+          type: string
+          format: uri
+          example: http://localhost:8080/iss/Quote#b2c8595236e049d8b73e2a9426186c52
+        objectDateOfCreation:
+          $ref: '#/components/schemas/Opportunity_DATE_OF_CREATION'
+        objectDateOfUpdate:
+          $ref: '#/components/schemas/Opportunity_DATE_OF_UPDATE'
+        objectName:
+          type: string
+          example: Quote1
+        salesDocumentDateOfExpiry:
+          $ref: '#/components/schemas/Opportunity_SALES_DOCUMENT_DATE_OF_EXPIRY'
+        containsCreator:
+          $ref: '#/components/schemas/Opportunity_CONTAINS_CREATOR_EXPANDED'
+        hasSalesDocumentStatus:
+          $ref: '#/components/schemas/Opportunity_HAS_SALES_DOCUMENT_STATUS_EXPANDED'
+        hasSalesDocumentType:
+          $ref: '#/components/schemas/Opportunity_HAS_SALES_DOCUMENT_TYPE_EXPANDED'
+        
+    
+    Opportunity_URI_OUTPUT:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9PcHBvcnR1bml0eSNhMTY1Mjg4MTI3NWU0YmM2YjBiY2E4OTQyMGI1NDM0ZQ==
+        type:
+          type: string
+          example: ""
+        uri:
+          type: string
+          format: uri
+          example: http://localhost:8080/iss/Opportunity#a1652881275e4bc6b0bca89420b5434e
+    
+    Opportunity_PIPELINES_OUTPUT:
+      type: object
+      additionalProperties: 
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/Opportunity_ID'
+          type:
+            $ref: '#/components/schemas/Opportunity_TYPE'
+          objectName:
+            $ref: '#/components/schemas/Opportunity_OBJECT_NAME'
+          salesDocumentDateOfExpiry:
+            $ref: '#/components/schemas/Opportunity_SALES_DOCUMENT_DATE_OF_EXPIRY'
+          opportunityCurrentSalesPhaseDays:
+            $ref: '#/components/schemas/Opportunity_CURRENT_SALES_PHASE_DAYS'
+          salesDocumentDescription:
+            $ref: '#/components/schemas/Opportunity_SALES_DOCUMENT_DESCRIPTION'
+          objectDateOfUpdate:
+            $ref: '#/components/schemas/Opportunity_DATE_OF_UPDATE'
+          opportunityChanceofSuccess:
+            $ref: '#/components/schemas/Opportunity_CHANCE_OF_SUCCESS'
+          opportunityVolume:
+            $ref: '#/components/schemas/Opportunity_VOLUME'
+          opportunityVolumeSystemCurrency:
+            $ref: '#/components/schemas/Opportunity_VOLUME_SYSTEM_CURRENCY'
+          hasCurrency:
+            $ref: '#/components/schemas/Opportunity_HAS_CURRENCY_EXPANDED'
+          hasSalesPhase:
+            $ref: '#/components/schemas/Opportunity_HAS_SALES_PHASE'
+          hasTag:
+            $ref: '#/components/schemas/Opportunity_HAS_TAG'
+          containsOwner:
+            $ref: '#/components/schemas/Opportunity_CONTAINS_OWNER_EXPANDED'
+          opportunityContainedBy:
+            $ref: '#/components/schemas/Opportunity_CONTAINED_BY_PARAMS'
+    
+    Opportunity_SEARCH_INPUT:
+      type: object
+      properties:
+        type: 
+          type: string
+          description: Retrieve the opportunities in the system.
+          example: Search
+          default: 'Search'
+        limit:
+          type: integer
+          description: Defines the maximum number of records that can be returned.
+          example: 5
+        offset:
+          type: integer
+          description: Defines the number of records that should be skipped. Default value is 0.
+          default: 0
+        filter:
+          type: string
+          example: ''
+          description: The filter parameter. If keyword contains space, it must be enclosed betwen two apostrophe('). If keyword is URI, it must be url encoded
+        sort:
+          description: Defines the sorting of the result. 'ASC' for ascending and 'DESC' for descending order. Default order is objectName ASC
+          type: array
+          items:
+            type: string
+            example: 'objectName DESC'
+        elements:
+          type: object
+          description: >-
+            Sets the BDAs and BRAs that will be returned. id, type, uri , label and comment are included by default. If 'elements' is not specified, all the BDAs and BRAs will be returned.
+          properties:
+            bda:
+              type: string
+              description: >-
+                Defines the requested BDAs that will be returned. If set as empty string, only id, type, uri , label and comment will be returned.
+              example: 
+                - objectName
+                - objectId
+            bra:
+              type: string
+              description: >-
+                Defines the requested BRAs that will be returned. If set as empty string, no BRAs will be returned. Ensure the BRA array contains all the dependent resources that are defined in 'include'.
+              example: 
+                - includesAddress
+        include:
+          description: Sets the related nested data that will be resolved.
+          type: array
+          items:
+            type: string
+            example: 'opportunityContainedBy'
+        
+    Opportunity_SEARCH_OUTPUT:
+      allOf:
+        - $ref: '#/components/schemas/Opportunity_OUTPUT'
+            
+    Opportunity_hasSalesOrg:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNTYWxlc09yZy1VUzExMDA=
+        uri:
+          type: string
+          example: http://www.inmindcloud.dev.com/application/application-implementation.owl#SalesOrg-US1100
+          
+    Opportunity_SalesOrg_Expanded:
+      type: object
+      properties:
+        hasSalesOrg:
+          $ref: '#/components/schemas/Opportunity_hasSalesOrg'
+          
+    Opportunity_hasDistributionChannel:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNEQy0wMQ==
+        uri:
+          type: string
+          example: http://www.inmindcloud.dev.com/application/application-implementation.owl#DC-01
+    
+    Opportunity_DitributionChnl_Expanded:
+      type: object
+      properties:
+        hasDistributionChannel:
+          $ref: '#/components/schemas/Opportunity_hasDistributionChannel'
+          
+    Opportunity_hasDivision:
+      type: object
+      properties:
+        id: 
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNEaXYtMDA
+        uri:
+          type: string
+          example: http://www.inmindcloud.dev.com/application/application-implementation.owl#Div-00
+        
+          
+    Opportunity_Division_Expanded:
+      type: object
+      properties:
+        hasDivision:
+          $ref: '#/components/schemas/Opportunity_hasDivision'
+          
+    Opportunity_containedBy:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50I2U2ZjdkZWMyMzQyMjQ4YTE5ZDFkOWIxYTBkMWRhZjc5
+        type:
+          type: string
+          example: Account
+        uri:
+          type: string
+          example: http://localhost:8080/iss/Account#e6f7dec2342248a19d1d9b1a0d1daf79
+        objectName:
+          type: string
+          example: Account1
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1593146464562
+        accountOpportunityVolume:
+          type: integer
+          example: 5000
+        accountOpportunityWeightedVolume:
+          type: integer
+          example: 500
+        hasIndustry:
+          type: object
+          properties:
+            id:
+              type: string
+              format: base64-encoded URI
+              example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNJQ29uc3RydWN0aW9u
+            uri:
+              type: string
+              example: http://www.inmindcloud.dev.com/application/application-implementation.owl#IConstruction
+          
+    Opportunity_ContainedBy_Expanded:
+      type: object
+      properties:
+        opportunityContainedBy:
+          $ref: '#/components/schemas/Opportunity_containedBy'
+            
+    Opportunity_OUTPUT_ALL:
+      allOf:
+        - $ref: '#/components/schemas/Opportunity_OUTPUT'
+        - $ref: '#/components/schemas/Opportunity_SalesOrg_Expanded'
+        - $ref: '#/components/schemas/Opportunity_DitributionChnl_Expanded'
+        - $ref: '#/components/schemas/Opportunity_Division_Expanded'
+        - $ref: '#/components/schemas/Opportunity_ContainedBy_Expanded'
