@@ -1,0 +1,510 @@
+openapi: 3.0.0
+info:
+  title: Role API
+  version: "2102"
+servers:
+  - url: /api
+tags:
+  - name: MasterData
+paths:
+    /roles/allRoles:
+      get:
+        tags:
+        - Role
+        summary: Get All Roles
+        operationId: GetAllRoles
+        parameters: []
+        responses:
+          200:
+            description: 'By default, returns the list of available Roles'
+            headers: {}
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Role_OUTPUT_ALL'
+        deprecated: false
+    /roles/rolesHierarchy:
+      get:
+        tags:
+        - Role
+        summary: Get Roles Hierarchy
+        operationId: GetRolesHierarchy
+        parameters: []
+        responses:
+          200:
+            description: ''
+            headers: {}
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Role_Hierarchy_OUTPUT_ALL'
+        deprecated: false
+    /roles:
+      post:
+        tags:
+        - Role
+        summary: Create Role
+        operationId: CreateRole
+        parameters: []
+        requestBody:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role_CREATE_INPUT'
+              example:
+                objectName: test Role 2
+                type: Role
+          required: true
+        responses:
+          200:
+            description: ''
+            headers: {}
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Role_CREATE_OUTPUT'
+        deprecated: false
+    /roles/{id}:
+      delete:
+        tags:
+        - Role
+        summary: Delete Role
+        operationId: DeleteRole
+        parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          style: simple
+          schema:
+            type: string
+        responses:
+          200:
+            description: ''
+            headers: {}
+        deprecated: false
+      get:
+        tags:
+        - Role
+        summary: Get Role By ID
+        operationId: GetRoleByID
+        parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          style: simple
+          schema:
+            type: string
+        responses:
+          200:
+            description: ''
+            headers: {}
+        deprecated: false
+      patch:
+        tags:
+        - Role
+        summary: Update Role (change header data)
+        operationId: UpdateRole(changeheaderdata)
+        parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          style: simple
+          schema:
+            type: string
+        requestBody:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role_UPDATE_INPUT'
+              example:
+                objectName: test Role 2 (Updated)
+                type: Role
+          required: true
+        responses:
+          200:
+            description: ''
+            headers: {}
+        deprecated: false
+    /roles/search:
+      post:
+        tags:
+        - Role
+        summary: Search Role (by Object Name)
+        operationId: SearchRole(byObjectName)
+        parameters: []
+        requestBody:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role_SEARCH_INPUT'
+              example:
+                filter: label contains 'test Role 2'
+          required: true
+        responses:
+          200:
+            description: ''
+            headers: {}
+        deprecated: false
+components:
+  schemas:
+    Role_ID:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNST0xFX0FETUlO==
+        uri: 
+          type: string
+          example: >-
+            'http://www.inmindcloud.com/application/application-implementation.owl#ROLE_ADMIN'
+            
+    Role_TYPE:
+      type: object
+      properties:
+        type:
+          type: string
+          title: Type of the object
+          example: Role
+    
+    Role_OBJECT_NAME:
+      type: object
+      properties:
+        objectName:
+          type: string
+          example: ROLE_ADMIN
+      
+    Role_OBJECT_ID:
+      type: object
+      properties:
+        objectId:
+          type: string
+          example: a1652881275e4bc6b0bca89420b5434e
+          
+    Role_DATE_OF_CREATION:
+      type: object
+      properties:
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1603679737295
+          
+    Role_DATE_OF_UPDATE:
+      type: object
+      properties:
+        objectDateOfUpdate:
+          type: integer
+          format: timestamp
+          example: 1604639345545
+    
+    Role_HAS_UI_PROFILE:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+           aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNVSV9BRE1JTg
+        type:
+          type: string
+        uri:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/application/application-implementation.owl#UI_ADMIN
+          
+    Role_HAS_PERMISSION:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+           aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNGTElOVFBFUk1JU1NJT04=
+        type:
+          type: string
+        uri:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/application/schema.owl#ALLPERMISSION
+          
+    Role_ID_TYPE_URI:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+           aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNGTElOVFBFUk1JU1NJT04=
+        type:
+          type: string
+        uri:
+          type: string
+          format: uri
+          
+    Role_LINKS_EDITABLE_PRICE_ITEM_TYPE:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+           aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBZGRpdGlvbmFsUHJpY2VJdGVtVHlwZQ==
+        type:
+          type: string
+        uri:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/application/schema.owl#AdditionalPriceItemType
+          
+    Role_LINKS_READABLE_PRICE_ITEM_TYPE:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+           aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBZGRpdGlvbmFsUHJpY2VJdGVtVHlwZQ==
+        type:
+          type: string
+        uri:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/application/application-implementation.owl#PriceItemTypeBB_TECHN
+          
+    Role_HAS_WORKBOOK_TEMPLATE:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: >-
+           aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNXb3JrQm9va1RlbXBsYXRlLVNhbGVzUmVw=
+        type:
+          type: string
+        uri:
+          type: string
+          format: uri
+          example: http://www.inmindcloud.com/application/application-implementation.owl#WorkBookTemplate-SalesRep
+ 
+    Role_OUTPUT:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNST0xFX1NBTEVTX1ZQX0VNRUE=
+        type:
+          type: string
+          example: Role
+        uri:
+          type: string
+          example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#ROLE_SALES_VP_EMEA'
+        label:
+          type: string
+          example: SALES VP
+        objectName:
+          type: string
+          example: ROLE_SALES_VP
+        objectId:
+          type: string
+          example: a1652881275e4bc6b0bca89420b5434e
+        roleAuthority:
+          type: integer
+          example: 2
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1604635526590
+        objectDateOfUpdate:
+          type: integer
+          format: timestamp
+          example: 1604635526640
+        roleApplication:
+          type: string
+          example: ManufacturingX
+        hasUiProfile:
+          allOf:
+              - $ref: '#/components/schemas/Role_HAS_UI_PROFILE'
+        hasPermission:
+          allOf:
+              - $ref: '#/components/schemas/Role_HAS_PERMISSION'
+        hasRestrictionRule:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        hasReadRestrictionRule:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        createsObjectsVisibleFor:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        hasAccessToDataOf:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        linksEditablePriceItemType:
+          allOf:
+              - $ref: '#/components/schemas/Role_LINKS_EDITABLE_PRICE_ITEM_TYPE'
+        linksReadablePriceItemType:
+          allOf:
+              - $ref: '#/components/schemas/Role_LINKS_READABLE_PRICE_ITEM_TYPE'
+        hasWorkbooktTemplate:
+          allOf:
+              - $ref: '#/components/schemas/Role_HAS_WORKBOOK_TEMPLATE'
+        hasReportTemplate:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        hasWidgetProfile:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        inverse_hasRoleSavedSearchException:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+    
+    Role_OUTPUT_ALL:
+      title: Role Output
+      allOf:
+        - $ref: '#/components/schemas/Role_OUTPUT'
+        
+    Role_Hierarchy_OUTPUT_ALL:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNST0xFX1NBTEVTX1ZQX0VNRUE=
+        type:
+          type: string
+          example: Role
+        uri:
+          type: string
+          example: 'http://www.inmindcloud.dev.com/application/application-implementation.owl#ROLE_SALES_VP_EMEA'
+        label:
+          type: string
+          example: SALES VP
+        objectName:
+          type: string
+          example: ROLE_SALES_VP
+        objectId:
+          type: string
+          example: a1652881275e4bc6b0bca89420b5434e
+        roleAuthority:
+          type: integer
+          example: 2
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1604635526590
+        objectDateOfUpdate:
+          type: integer
+          format: timestamp
+          example: 1604635526640
+        roleApplication:
+          type: string
+          example: ManufacturingX
+        hasUiProfile:
+          allOf:
+              - $ref: '#/components/schemas/Role_HAS_UI_PROFILE'
+        hasPermission:
+          allOf:
+              - $ref: '#/components/schemas/Role_HAS_PERMISSION'
+        hasRestrictionRule:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        hasReadRestrictionRule:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        createsObjectsVisibleFor:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        createsObjectsVisibleForHierarchy:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        hasAccessToDataOf:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        hasAccessToDataOfHierarchy:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        linksEditablePriceItemType:
+          allOf:
+              - $ref: '#/components/schemas/Role_LINKS_EDITABLE_PRICE_ITEM_TYPE'
+        linksReadablePriceItemType:
+          allOf:
+              - $ref: '#/components/schemas/Role_LINKS_READABLE_PRICE_ITEM_TYPE'
+        hasWorkbooktTemplate:
+          allOf:
+              - $ref: '#/components/schemas/Role_HAS_WORKBOOK_TEMPLATE'
+        hasReportTemplate:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        hasWidgetProfile:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+        inverse_hasRoleSavedSearchException:
+          allOf:
+              - $ref: '#/components/schemas/Role_ID_TYPE_URI'
+      
+    Role_CREATE_INPUT:
+      title: CreateRoleRequest
+      required:
+      - objectName
+      - type
+      type: object
+      properties:
+        objectName:
+          type: string
+          example: "Role"
+        type:
+          type: string
+          example: "New Role"
+      example:
+        objectName: test Role 2
+        type: Role
+        
+    Role_CREATE_OUTPUT:
+      allOf:
+        - $ref: '#/components/schemas/Role_ID'
+        - $ref: '#/components/schemas/Role_TYPE'
+        - $ref: '#/components/schemas/Role_OBJECT_NAME'
+        - $ref: '#/components/schemas/Role_OBJECT_ID'
+        - $ref: '#/components/schemas/Role_DATE_OF_CREATION'
+        - $ref: '#/components/schemas/Role_DATE_OF_UPDATE'
+        - $ref: '#/components/schemas/Role_CREATE_INPUT'
+    
+    
+    Role_UPDATE_INPUT:
+      title: UpdateRole(changeheaderdata)Request
+      required:
+      - objectName
+      - type
+      type: object
+      properties:
+        objectName:
+          type: string
+        type:
+          type: string
+      example:
+        objectName: test Role 2 (Updated)
+        type: Role
+    
+    Role_SEARCH_INPUT:
+      title: SearchRole(byObjectName)Request
+      required:
+      - filter
+      type: object
+      properties:
+        filter:
+          type: string
+      example:
+        filter: label contains 'test Role 2'
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+- httpBearer: []
