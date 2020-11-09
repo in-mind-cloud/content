@@ -1,64 +1,20 @@
-openapi: 3.0.1
+openapi: 3.0.0
 info:
-  title: Masterdata API
-  version: 1.0.0
+  version: '2102'
+  title: MasterData API
+  description: ''
 servers:
   - url: /api
 tags:
-  - name: Masterdata
+  - name: MasterData
 paths:
-  /{type}/search:
-    post:
-      tags:
-        - Masterdata
-      summary: Search Masterdata API
-      description: Searches and retrives the list of Masterdata for a specific business type based on the query
-      parameters:
-        - name: type
-          in: path
-          required: true
-          description: Business Type of the object.
-          schema:
-            type: string
-          examples:
-            Country:
-              value: Country
-      requestBody:
-        description: Example of Request Payload as Resource
-        content:
-          application/json:
-            schema:
-              allOf:
-                - $ref: '#/components/schemas/Masterdata_Country_SEARCH_INPUT'
-              required: 
-                - type
-        required: true
-      responses:
-        '200':
-          description:   Returns the list of Masterdata as Bundle
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Masterdata_Country_SEARCH_OUTPUT'
-              example:
-                type: Bundle
-                total: 1
-                entry: 
-                  - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNBVA==
-                    type: Country
-                    uri: http://www.inmindcloud.dev.com/application/application-implementation.owl#AT
-                    objectName: Austria
-            
-                    hasBaseCurrency: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR"  ]
-                    hasRegion: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#EMEA" ]
-                      
-  /{type}/:
+  /masterdatas/{type}:
     get:
+      summary: Get All MasterData
       tags:
-        - Masterdata
-      summary: Searches and retrives the list of Masterdata for a specific business type
-      description: >-
-        Searches and retrives the list of Masterdata for a specific business type based on the query
+        - MasterData
+      operationId: GetAllMasterData
+      description: Searches and retrives the list of Masterdata for a specific business type
       parameters:
         - name: type
           in: path
@@ -142,7 +98,6 @@ paths:
             type: string
           example: >-
             hasBaseCurrency,hasRegion,linksCountryRegion
-
       responses:
         default:
           description: >-
@@ -180,78 +135,151 @@ paths:
                   objectName: Austria
                   hasBaseCurrency: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR" ]
                   hasRegion: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#EMEA" ]
-                      
-  /{type}/count:
-    get:
+              
+    post: 
+      summary: Create MasterData
       tags:
-        - Masterdata
-      summary: Count the list of Masterdata based on filter
-      description: >-
-        Returns the number of records for the requested business type in the system.
-      
+        - MasterData
       parameters:
         - name: type
           in: path
           required: true
-          description: Sub type of Masterdata
           schema:
             type: string
-          examples:
-            Country:
-              value: Country
+          description: 'The Type of Master data. For example, Currency'
+      description: >-
+        Creates a new Master Data attribute and returns the basic information of the Master Data.
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/MasterData_CREATE_INPUT'
+              example:
+                objectName: test Account Type 2
+                type: AccountType 
+              required:
+                - type
+                - objectName
+        required: true
             
-        - name: filter
-          in: query
-          description: >-
-            The filter parameter.
-          examples:
-            contains_operator:
-              value: objectName contains '*usa'
-              summary: contains
-            equal_operator:
-              value: >-
-                objecname eq 'usa'
-              summary: equal
-            not_equal_operator:
-              value: >-
-                objecname ne 'usa'
-              summary: not equal
-            greater_than_operator:
-              value: objectDateOfCreation gt 2020-03-20
-              summary: greater than
-            greater_than_eq_operator:
-              value: objectDateOfCreation ge 2020-03-20
-              summary: greater than equal
-            less_than_operator:
-              value: objectDateOfCreation lt 2020-03-20
-              summary: less than
-            less_than_eq_operator:
-              value: objectDateOfCreation le 2020-03-20
-              summary: less than equal
-            and_operator:
-              value: >-
-                objectName contains 'usa' and objectId eq
-                'us'
-              summary: and
-            or_operator:
-              value: >-
-                objectName contains 'usa' or objectId eq
-                'us'
-              summary: or
-          schema:
-            type: string
-          explode: false
-
       responses:
         '200':
-          description: Returns the number of masterdata of specific type.
+          description: 'Returns the created object information'
+          headers: {}
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Masterdata_Country_COUNT'
+                $ref: '#/components/schemas/MasterData_CREATE_OUTPUT'
               example:
-                count: 33
-  '/{type}/{id}':
+                  id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY2NvdW50VHlwZURpcmVjdA==
+                  type: AccountType
+                  uri: 'http://www.inmindcloud.com/application/schema.owl#AccountTypeDirect'
+                  label: Direct
+                  sequenceID: 1
+                  objectName: Account Direct
+                  objectId: AccountTypeDirect
+                  objectExternalId: []
+                  objectERPId: []
+                  attributionImage: []
+                  objectDateOfCreation: []
+                  objectDateOfUpdate: []
+                  attributionFactor: []
+                  objectLastModifiedStateId: []
+  /masterdatas/{type}/count:
+        get:
+          tags:
+            - Masterdata
+          summary: Count the list of Masterdata based on filter
+          description: >-
+            Returns the number of records for the requested business type in the system.
+          
+          parameters:
+            - name: type
+              in: path
+              required: true
+              description: Sub type of Masterdata
+              schema:
+                type: string
+              examples:
+                Country:
+                  value: Country
+                
+            - name: filter
+              in: query
+              description: >-
+                The filter parameter.
+              examples:
+                contains_operator:
+                  value: objectName contains '*usa'
+                  summary: contains
+                equal_operator:
+                  value: >-
+                    objecname eq 'usa'
+                  summary: equal
+                not_equal_operator:
+                  value: >-
+                    objecname ne 'usa'
+                  summary: not equal
+                greater_than_operator:
+                  value: objectDateOfCreation gt 2020-03-20
+                  summary: greater than
+                greater_than_eq_operator:
+                  value: objectDateOfCreation ge 2020-03-20
+                  summary: greater than equal
+                less_than_operator:
+                  value: objectDateOfCreation lt 2020-03-20
+                  summary: less than
+                less_than_eq_operator:
+                  value: objectDateOfCreation le 2020-03-20
+                  summary: less than equal
+                and_operator:
+                  value: >-
+                    objectName contains 'usa' and objectId eq
+                    'us'
+                  summary: and
+                or_operator:
+                  value: >-
+                    objectName contains 'usa' or objectId eq
+                    'us'
+                  summary: or
+              schema:
+                type: string
+              explode: false
+
+          responses:
+            '200':
+              description: Returns the number of masterdata of specific type.
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Masterdata_Country_COUNT'
+                  example:
+                    count: 33
+  /masterdatas/{id}:
+    delete:
+      summary: Delete MasterData by id
+      tags:
+        - MasterData
+      operationId: DeleteMasterData
+      description: >-
+        Delete data with given id
+      parameters:
+        - name: id
+          in: path
+          description: >-
+            MasterData id.
+          required: true
+          schema:
+            type: string
+            format: base64-encoded
+            example: >-
+                aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50VHlwZSNmZDUyZWJlMWIwNmE0ZWQ0OTg4YmE4NzNiMzRlMGEyNw==
+      responses:
+        '204':
+          description: 'Returns empty response with no content'
+  '/masterdatas/{type}/{id}':
     get:
       tags:
         - Masterdata
@@ -299,9 +327,214 @@ paths:
                   objectName: Austria
                   hasBaseCurrency: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR" ]
                   hasRegion: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#EMEA" ]
-                      
+          
+    patch:
+      summary: Update MasterData (change header data)
+      tags:
+        - MasterData
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ''
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: base64-encoded
+            example: >-
+                aHR0cDovL2xvY2FsaG9zdDo4MDgwL2lzcy9BY2NvdW50VHlwZSNmZDUyZWJlMWIwNmE0ZWQ0OTg4YmE4NzNiMzRlMGEyNw==
+      requestBody:
+          description: MasterData object to be updated.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/MasterData_UPDATE_INPUT'
+              example:
+                  objectName: Test Account Type 1(Updated)
+                  type: AccountType
+      responses:
+        '200':
+          description: 'Returns the updated MasterData object'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MasterData_OUTPUT_ALL'
+                example:
+                    id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY2NvdW50VHlwZURpcmVjdA==
+                    type: AccountType
+                    uri: 'http://www.inmindcloud.com/application/schema.owl#AccountTypeDirect'
+                    label: Direct
+                    sequenceID: 1
+                    objectName: Account Direct
+                    objectId: AccountTypeDirect
+                    objectExternalId: []
+                    objectERPId: []
+                    attributionImage: []
+                    objectDateOfCreation: []
+                    objectDateOfUpdate: []
+                    attributionFactor: []
+                    objectLastModifiedStateId: []
+  '/masterdatas/{type}/search':
+    post:
+      tags:
+        - Masterdata
+      summary: Search Masterdata API
+      description: Searches and retrives the list of Masterdata for a specific business type based on the query
+      parameters:
+        - name: type
+          in: path
+          required: true
+          description: Business Type of the object.
+          schema:
+            type: string
+          examples:
+            Country:
+              value: Country
+      requestBody:
+        description: Example of Request Payload as Resource
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Masterdata_Country_SEARCH_INPUT'
+              required: 
+                - type
+        required: true
+      responses:
+        '200':
+          description:   Returns the list of Masterdata as Bundle
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Masterdata_Country_SEARCH_OUTPUT'
+              example:
+                type: Bundle
+                total: 1
+                entry: 
+                  - id: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5kZXYuY29tL2FwcGxpY2F0aW9uL2FwcGxpY2F0aW9uLWltcGxlbWVudGF0aW9uLm93bCNBVA==
+                    type: Country
+                    uri: http://www.inmindcloud.dev.com/application/application-implementation.owl#AT
+                    objectName: Austria
+            
+                    hasBaseCurrency: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#EUR"  ]
+                    hasRegion: [ "http://www.inmindcloud.dev.com/application/application-implementation.owl#EMEA" ]
+  '/masterdatas/{id}/locale':
+    get:
+      summary: Get MasterData Label
+      tags:
+        - MasterData
+      description: 'Gets the locale attributes corresponding to the MasterData object'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            description: ''
+      responses:
+        '200':
+          description: ''
+
 components:
   schemas:
+  
+    MasterData_ID:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY2NvdW50VHlwZURpcmVjdA==
+        uri: 
+          type: string
+          example: >-
+            'http://www.inmindcloud.com/application/schema.owl#AccountTypeDirect'
+    
+    MasterData_OBJECT_NAME:
+      type: object
+      properties:
+        objectName:
+          type: string
+          example: New Account Type
+      
+    MasterData_OBJECT_ID:
+      type: object
+      properties:
+        objectId:
+          type: string
+          example: a1652881275e4bc6b0bca89420b5434e
+    
+    MasterData_DATE_OF_CREATION:
+      type: object
+      properties:
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1604635526590
+    
+    MasterData_DATE_OF_UPDATE:
+      type: object
+      properties:
+        objectDateOfUpdate:
+          type: integer
+          format: timestamp
+          example: 1604639345545
+          
+    MasterData_OUTPUT_ALL:
+      allOf:
+        - $ref: '#/components/schemas/MasterData_OUTPUT'
+		
+    MasterData_OUTPUT:
+      type: object
+      properties:
+        id:
+          type: string
+          format: base64-encoded URI
+          example: aHR0cDovL3d3dy5pbm1pbmRjbG91ZC5jb20vYXBwbGljYXRpb24vc2NoZW1hLm93bCNBY2NvdW50VHlwZURpcmVjdA==
+        type:
+          type: string
+          example: AccountType
+        uri:
+          type: string
+          example: 'http://www.inmindcloud.com/application/schema.owl#AccountTypeDirect'
+        label:
+          type: string
+          example: Direct
+        sequenceID:
+          type: integer
+          example: 1
+        objectName:
+          type: string
+          example: Test Account 1
+        objectId:
+          type: string
+          example: Test Account 1
+        objectDateOfCreation:
+          type: integer
+          format: timestamp
+          example: 1604635526590
+        objectDateOfUpdate:
+          type: integer
+          format: timestamp
+          example: 1604635526640
+          
+    MasterData_CREATE_INPUT:
+      type: object
+      properties:
+        type:
+          type: string
+          example: "AccountType"
+        objectName:
+          type: string
+          example: "Test Account Type"
+    
     Masterdata_Country_COUNT:
       type: object
       properties:
@@ -385,7 +618,20 @@ components:
     Masterdata_Country_SEARCH_OUTPUT:
       allOf:
         - $ref: '#/components/schemas/Masterdata_Country_OUTPUT'
-            
+          
+    MasterData_CREATE_OUTPUT:
+      allOf:
+        - $ref: '#/components/schemas/MasterData_ID'
+        - $ref: '#/components/schemas/MasterData_OBJECT_NAME'
+        - $ref: '#/components/schemas/MasterData_OBJECT_ID'
+        - $ref: '#/components/schemas/MasterData_DATE_OF_CREATION'
+        - $ref: '#/components/schemas/MasterData_DATE_OF_UPDATE'
+        - $ref: '#/components/schemas/MasterData_CREATE_INPUT'
+        
+    MasterData_UPDATE_INPUT:
+      allOf:
+        - $ref: '#/components/schemas/MasterData_CREATE_INPUT'
+        
     Masterdata_Country_OUTPUT_ALL:
       allOf:
         - $ref: '#/components/schemas/Masterdata_Country_OUTPUT'
